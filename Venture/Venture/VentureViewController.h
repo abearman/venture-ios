@@ -8,6 +8,3 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VentureViewController : UIViewController
-
-@end
