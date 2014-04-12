@@ -7,4 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <CoreLocation/CoreLocation.h>
+#import "HomeModel.h"
 
+@interface VentureViewController: UIViewController<CLLocationManagerDelegate, HomeModelProtocol, UITextFieldDelegate>
+
+@end
