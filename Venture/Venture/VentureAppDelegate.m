@@ -7,11 +7,13 @@
 //
 
 #import "VentureAppDelegate.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation VentureAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:@"AIzaSyDqJgObRde_5kO8kyMR9-bMZ7OIbWDvTQY"];
     // Override point for customization after application launch.
     return YES;
 }

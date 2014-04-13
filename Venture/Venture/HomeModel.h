@@ -19,6 +19,6 @@
 
 @property (nonatomic, weak) id<HomeModelProtocol> delegate;
 
--(void)downloadActivity:(void (^)(VentureActivity *))callback;
+-(void)downloadActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling withCallback:(void (^)(VentureActivity *))callback;
 
 @end
