@@ -48,6 +48,10 @@
     //walking bicycling transit driving
     //hungry adventurous bored
     
+    //yelp_rating (numeric)
+    //yelp_rating_img_url --small --large
+    //yelp_thumbnail (image)
+    
     VentureActivity *activity = [[VentureActivity alloc] init];
     
     [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Brain" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -63,12 +67,16 @@
         NSString *address = [suggestion objectForKey:@"address"];
         NSString *lat = [suggestion objectForKey:@"lat"];
         NSString *lng = [suggestion objectForKey:@"lng"];
+        NSString *yelpImageURL = [suggestion objectForKey:@"yelp_rating_img_url"];
+        NSString *imageURL = [suggestion objectForKey:@"yelp_thumbnail"];
         
         activity.title = title;
         activity.address = address;
         activity.justification = justification;
         activity.lat = lat;
         activity.lng = lng;
+        activity.yelpRatingImageURL = yelpImageURL;
+        activity.imageURL = imageURL;
         
         callback(activity);
         

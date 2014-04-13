@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic) double distanceAway;
 @property (nonatomic) double timeAway;
-@property (nonatomic, strong) NSString *yelpRatingURL;
+@property (nonatomic, strong) NSString *yelpRatingImageURL;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) NSString *justification;
 
