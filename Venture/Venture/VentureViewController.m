@@ -16,7 +16,6 @@
 @interface VentureViewController()
 
 @property (weak, nonatomic) IBOutlet UITextField *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *savedActivities;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeOfTransportation;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *activityType;
 
@@ -27,16 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *activityImage1;
 @property (weak, nonatomic) IBOutlet UIImageView *activityYelpRating1;
 @property (weak, nonatomic) IBOutlet UILabel *iChose1;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner1;
-
-@property (weak, nonatomic) IBOutlet UILabel *activityName2;
-@property (weak, nonatomic) IBOutlet UILabel *activityAddress2;
-@property (weak, nonatomic) IBOutlet UILabel *activityJustification2;
-@property (weak, nonatomic) IBOutlet UILabel *activityDistanceAway2;
-@property (weak, nonatomic) IBOutlet UIImageView *activityImage2;
-@property (weak, nonatomic) IBOutlet UIImageView *activityYelpRating2;
-@property (weak, nonatomic) IBOutlet UILabel *iChose2;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner2;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
@@ -44,7 +34,6 @@
 @property (strong, nonatomic) NSMutableArray *activities; // of VentureActivity
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
-@property (weak, nonatomic) IBOutlet UIView *activityView2;
 
 @end
 
@@ -73,17 +62,10 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    self.activityView2.hidden = YES;
-    self.activityView.hidden = NO;
     indexActivitiesArray = 0;
     
-    /*[self.spinner1 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.spinner2 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.spinner1 setColor:[UIColor colorWithWhite: 0.70 alpha:1]];
-    [self.spinner2 setColor:[UIColor colorWithWhite: 0.70 alpha:1]];
-    
-    self.spinner1.hidden = NO;
-    [self.spinner1 startAnimating];*/
+    [self.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.spinner setColor:[UIColor colorWithWhite: 0.70 alpha:1]];
     
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
@@ -94,35 +76,26 @@
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
     
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
+    
     //Loads first suggestion
     int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
     int indexOfFeeling = self.activityType.selectedSegmentIndex;
     [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 
-    UISwipeGestureRecognizer *swipeRight1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeRight)];
-    swipeRight1.direction = UISwipeGestureRecognizerDirectionLeft;
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeRight)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionLeft;
     
-    UISwipeGestureRecognizer *swipeUp1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeUp)];
-    swipeUp1.direction = UISwipeGestureRecognizerDirectionUp;
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeUp)];
+    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
     
-    UISwipeGestureRecognizer *swipeRight2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeRight)];
-    swipeRight2.direction = UISwipeGestureRecognizerDirectionLeft;
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionRight;
     
-    UISwipeGestureRecognizer *swipeUp2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeUp)];
-    swipeUp2.direction = UISwipeGestureRecognizerDirectionUp;
-    
-    UISwipeGestureRecognizer *swipeLeft1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
-    swipeLeft1.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    UISwipeGestureRecognizer *swipeLeft2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
-    swipeLeft2.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.activityView addGestureRecognizer:swipeRight1];
-    [self.activityView addGestureRecognizer:swipeUp1];
-    [self.activityView2 addGestureRecognizer:swipeRight2];
-    [self.activityView2 addGestureRecognizer:swipeUp2];
-    [self.activityView addGestureRecognizer:swipeLeft1];
-    [self.activityView2 addGestureRecognizer:swipeLeft2];
+    [self.activityView addGestureRecognizer:swipeRight];
+    [self.activityView addGestureRecognizer:swipeUp];
+    [self.activityView addGestureRecognizer:swipeLeft];
 }
 
 -(void)getActivityAtIndex {
@@ -159,15 +132,6 @@
         indexActivitiesArray--;
         NSLog(@"Index: %d", indexActivitiesArray);
         
-        /*CATransition *transition = [CATransition animation];
-        transition.duration = 0.75;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = kCATransitionPush;
-        transition.subtype = kCATransitionFromLeft;
-        transition.delegate = self;
-        [self.activityView.layer addAnimation:transition forKey:nil];
-        [self.activityView2.layer addAnimation:transition forKey:nil];*/
-        
         NSLog(@"Index: %d", indexActivitiesArray);
         [self getActivityAtIndex];
     }
@@ -178,21 +142,9 @@
     indexActivitiesArray++;
     NSLog(@"Index: %d", indexActivitiesArray);
     
-    /*CATransition *transition = [CATransition animation];
-    transition.duration = 0.75;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromRight;
-    transition.delegate = self;
-    [self.activityView.layer addAnimation:transition forKey:nil];
-    [self.activityView2.layer addAnimation:transition forKey:nil];*/
-    
     if (indexActivitiesArray <= [self.activities count] - 1) {
         [self getActivityAtIndex];
     } else {
-        self.activityView.hidden = NO;
-        self.activityView2.hidden = YES;
-
         int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
         int indexOfFeeling = self.activityType.selectedSegmentIndex;
         [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
@@ -274,6 +226,8 @@
 }
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
+    [self.spinner startAnimating];
+    
     self.activityName1.text = @"";
     self.activityAddress1.text = @"";
     self.activityJustification1.text = @"";
@@ -343,23 +297,9 @@
                          animations:^{ self.iChose1.alpha = 1;}
                          completion:nil];
         self.iChose1.text = @"I chose this because ... ";
-            
-               //stop spinner
-        /*if (indexActivitiesArray % 2 == 0) {
-            [self.spinner2 stopAnimating];
-            self.spinner2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.spinner2.alpha = 1;}
-                             completion:nil];
-            self.spinner2.hidden = YES;
-        } else {
-            [self.spinner1 stopAnimating];
-            self.spinner1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.spinner1.alpha = 1;}
-                             completion:nil];
-            self.spinner1.hidden = YES;
-        }*/
+        
+        //stop spinner
+        [self.spinner stopAnimating];
     }];
 }
 

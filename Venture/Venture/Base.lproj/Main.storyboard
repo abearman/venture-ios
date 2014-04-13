@@ -106,59 +106,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3EK-gZ-wtJ" userLabel="spinner1">
-                                        <rect key="frame" x="150" y="140" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1B-ue-qNV" userLabel="Activity2">
-                                <rect key="frame" x="0.0" y="134" width="320" height="434"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C8O-Rz-cFj">
-                                        <rect key="frame" x="94" y="87" width="126" height="126"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHV-nu-k7y">
-                                        <rect key="frame" x="115" y="221" width="84" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Justification" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="ZSN-LP-k1n">
-                                        <rect key="frame" x="15" y="265" width="285" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I chose this because ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDI-7a-FHC">
-                                        <rect key="frame" x="15" y="246" width="216" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPJ-m1-Mry">
-                                        <rect key="frame" x="10" y="11" width="295" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-nw-3K7">
-                                        <rect key="frame" x="10" y="31" width="295" height="27"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBv-zk-1rI">
-                                        <rect key="frame" x="132" y="58" width="104" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="BRk-1f-Nxd" userLabel="spinner2">
-                                        <rect key="frame" x="150" y="140" width="20" height="20"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dax-Wn-fsy" userLabel="spinner">
+                                        <rect key="frame" x="147" y="140" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
                                 </subviews>
@@ -171,27 +120,18 @@
                     </view>
                     <connections>
                         <outlet property="activityAddress1" destination="wex-SN-VKX" id="qc0-Ad-WNi"/>
-                        <outlet property="activityAddress2" destination="0Zp-nw-3K7" id="wNs-LZ-lP2"/>
                         <outlet property="activityDistanceAway1" destination="7kj-Fl-Cqy" id="8kg-Dd-SHc"/>
-                        <outlet property="activityDistanceAway2" destination="UBv-zk-1rI" id="CcU-5O-5gb"/>
                         <outlet property="activityImage1" destination="P5l-gF-Vu4" id="5XE-ve-dO1"/>
-                        <outlet property="activityImage2" destination="C8O-Rz-cFj" id="TJQ-e0-ltn"/>
                         <outlet property="activityJustification1" destination="IM8-gE-Kdd" id="0I4-EV-QXy"/>
-                        <outlet property="activityJustification2" destination="ZSN-LP-k1n" id="iRv-6f-M7v"/>
                         <outlet property="activityName1" destination="Djz-sI-1ht" id="IH5-aK-WZk"/>
-                        <outlet property="activityName2" destination="kPJ-m1-Mry" id="AII-dc-oUO"/>
                         <outlet property="activityType" destination="DcK-5i-eeE" id="fmg-zt-yNM"/>
                         <outlet property="activityView" destination="Ilr-QP-XhT" id="qNS-dV-kgW"/>
-                        <outlet property="activityView2" destination="c1B-ue-qNV" id="1PH-UK-txY"/>
                         <outlet property="activityYelpRating1" destination="TYU-PM-jNb" id="Hox-ui-5EF"/>
-                        <outlet property="activityYelpRating2" destination="bHV-nu-k7y" id="rnM-bG-dkS"/>
                         <outlet property="iChose1" destination="AIb-qh-3Bc" id="3S0-xG-GvK"/>
-                        <outlet property="iChose2" destination="XDI-7a-FHC" id="6RX-dz-u2e"/>
                         <outlet property="modeOfTransportation" destination="SBw-vI-y7d" id="1JA-Zf-f5Q"/>
                         <outlet property="searchBar" destination="oYv-Uo-orW" id="NXQ-hk-gPy"/>
                         <outlet property="searchButton" destination="aEc-Gt-z7S" id="eCf-en-0nD"/>
-                        <outlet property="spinner1" destination="3EK-gZ-wtJ" id="gcg-Gi-uYA"/>
-                        <outlet property="spinner2" destination="BRk-1f-Nxd" id="ezz-jc-CDO"/>
+                        <outlet property="spinner" destination="dax-Wn-fsy" id="0Yf-An-KKu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
