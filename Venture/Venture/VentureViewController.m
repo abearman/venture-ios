@@ -41,15 +41,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
 @property (strong, nonatomic) HomeModel *model;
-@property (strong, nonatomic) NSArray *activities; // of VentureActivity
+@property (strong, nonatomic) NSMutableArray *activities; // of VentureActivity
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 @property (weak, nonatomic) IBOutlet UIView *activityView2;
 @property (nonatomic) BOOL activityBool; // True for activityView1
 
 @end
-
-#define FADE_TIME 1.5;
 
 @implementation VentureViewController {
     
@@ -59,6 +57,7 @@
     
     NSString *activityLat;
     NSString *activityLng;
+    int indexActivitiesArray;
 }
 
 // Lazily intantiate the model
@@ -68,8 +67,8 @@
 }
 
 // Lazily instantiate the NSArray of VentureActivity's
-- (NSArray *)activities {
-    if (!_activities) _activities = [[NSArray alloc] init];
+- (NSMutableArray *)activities {
+    if (!_activities) _activities = [[NSMutableArray alloc] init];
     return _activities;
 }
 
@@ -78,6 +77,7 @@
     self.activityBool = YES;
     self.activityView2.hidden = YES;
     self.activityView.hidden = NO;
+    indexActivitiesArray = 0;
     
     [self.spinner1 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner2 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -113,14 +113,105 @@
     UISwipeGestureRecognizer *swipeUp2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeUp)];
     swipeUp2.direction = UISwipeGestureRecognizerDirectionUp;
     
+    UISwipeGestureRecognizer *swipeLeft1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
+    swipeLeft1.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    UISwipeGestureRecognizer *swipeLeft2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
+    swipeLeft2.direction = UISwipeGestureRecognizerDirectionRight;
+    
     [self.activityView addGestureRecognizer:swipeRight1];
     [self.activityView addGestureRecognizer:swipeUp1];
     [self.activityView2 addGestureRecognizer:swipeRight2];
     [self.activityView2 addGestureRecognizer:swipeUp2];
+    [self.activityView addGestureRecognizer:swipeLeft1];
+    [self.activityView2 addGestureRecognizer:swipeLeft2];
+}
+
+-(void)getActivityAtIndex:(int)index {
+    //Retrieve existing element
+    VentureActivity *activity = [self.activities objectAtIndex:indexActivitiesArray];
+    if (self.activityBool) {
+        self.activityName1.text = activity.title;
+        self.activityAddress1.text = activity.address;
+        self.activityJustification1.text = activity.justification;
+        
+        activityLat = activity.lat;
+        activityLng = activity.lng;
+        
+        CLLocation *loc1 = currentLocation;
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
+        
+        double distance = [loc1 distanceFromLocation:loc2];
+        distance /= 1000.0;
+        self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
+        
+        NSString *ImageURL = activity.imageURL;
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+        self.activityImage1.image = [UIImage imageWithData:imageData];
+        
+        NSString *yelpURL = activity.yelpRatingImageURL;
+        NSLog(@"%@", yelpURL);
+        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
+        self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
+        
+        self.iChose1.text = @"I chose this because ... ";
+    } else {
+        self.activityName2.text = activity.title;
+        self.activityAddress2.text = activity.address;
+        self.activityJustification2.text = activity.justification;
+        
+        activityLat = activity.lat;
+        activityLng = activity.lng;
+        
+        CLLocation *loc1 = currentLocation;
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
+        
+        double distance = [loc1 distanceFromLocation:loc2];
+        distance /= 1000.0;
+        self.activityDistanceAway2.text = [NSString stringWithFormat:@"%f km", distance];
+        
+        NSString *ImageURL = activity.imageURL;
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+        self.activityImage2.image = [UIImage imageWithData:imageData];
+        
+        NSString *yelpURL = activity.yelpRatingImageURL;
+        NSLog(@"%@", yelpURL);
+        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
+        self.activityYelpRating2.image = [UIImage imageWithData:imageDataYelp];
+        
+        self.iChose2.text = @"I chose this because ... ";
+    }
+}
+
+-(void)respondToSwipeLeft {
+    NSLog(@"Swiped left");
+    
+    // Go back to previous activity
+    if (indexActivitiesArray > 0) {
+        indexActivitiesArray--;
+        NSLog(self.activityBool ? @"Yes" : @"No");
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.75;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        transition.delegate = self;
+        [self.activityView.layer addAnimation:transition forKey:nil];
+        [self.activityView2.layer addAnimation:transition forKey:nil];
+        
+        NSLog(@"Index: %d", indexActivitiesArray);
+        [self getActivityAtIndex:indexActivitiesArray];
+        self.activityBool = !self.activityBool;
+    }
 }
 
 -(void)respondToSwipeRight {
     NSLog(@"Swiped right");
+    indexActivitiesArray++;
+    self.activityBool = !self.activityBool;
+    NSLog(@"Index: %d", indexActivitiesArray);
+    NSLog(self.activityBool ? @"Yes" : @"No");
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.75;
@@ -131,29 +222,31 @@
     [self.activityView.layer addAnimation:transition forKey:nil];
     [self.activityView2.layer addAnimation:transition forKey:nil];
     
-    if (self.activityBool) {
-        self.activityView.hidden = YES;
-        self.activityView2.hidden = NO;
-        
-        //start spinner
-        self.spinner1.hidden = NO;
-        [self.spinner1 startAnimating];
-        
+    if (indexActivitiesArray <= [self.activities count] - 1) {
+        [self getActivityAtIndex:indexActivitiesArray];
     } else {
-        self.activityView2.hidden = YES;
-        self.activityView.hidden = NO;
-        
-        //start spinner
-        self.spinner2.hidden = NO;
-        [self.spinner2 startAnimating];
-        
+        if (self.activityBool) {
+            self.activityView.hidden = YES;
+            self.activityView2.hidden = NO;
+            
+            //start spinner
+            self.spinner1.hidden = NO;
+            [self.spinner1 startAnimating];
+            
+        } else {
+            self.activityView2.hidden = YES;
+            self.activityView.hidden = NO;
+            
+            //start spinner
+            self.spinner2.hidden = NO;
+            [self.spinner2 startAnimating];
+            
+        }
+    
+        int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+        int indexOfFeeling = self.activityType.selectedSegmentIndex;
+        [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
     }
-    
-    self.activityBool = !self.activityBool;
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
-    
 }
 
 -(void)respondToSwipeUp {
@@ -254,6 +347,8 @@
     
     [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withCallback:^(VentureActivity* activity) {
        
+        [self.activities addObject:activity];
+        
         if (self.activityBool) {
             self.activityName1.alpha = 0;
             [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
