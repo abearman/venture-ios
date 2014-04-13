@@ -35,6 +35,16 @@
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 
+@property (weak, nonatomic) IBOutlet UIView *ratingView;
+@property (weak, nonatomic) IBOutlet UILabel *ratingTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *ratingImage;
+@property (weak, nonatomic) IBOutlet UIButton *ratingThumbsUp;
+@property (weak, nonatomic) IBOutlet UIButton *ratingThumbsDown;
+@property (weak, nonatomic) IBOutlet UIButton *ratingSkip;
+
+
+@property (strong, nonatomic) VentureActivity *savedActivity;
+
 @end
 
 @implementation VentureViewController {
@@ -46,12 +56,63 @@
     NSString *activityLat;
     NSString *activityLng;
     int indexActivitiesArray;
+    
+    NSUUID *udid;
+    int userID;
 }
 
 // Lazily intantiate the model
 - (HomeModel *)model {
     if (!_model) _model = [[HomeModel alloc] init];
     return _model;
+}
+
+- (IBAction)ratePositive:(UIButton *)sender {
+    NSLog(@"%d", userID);
+    
+    NSString *activityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity ID"];
+    NSLog(@"%@", activityID);
+    
+//    if (activityID == nil) {
+//        self.ratingView.hidden = YES;
+//        return;
+//    }
+    
+    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:userID], @"activityId": activityID, @"rating": [[NSNumber alloc] initWithInt:1]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Rating" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    self.ratingView.hidden = YES;
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+}
+
+- (IBAction)rateNegative:(UIButton *)sender {
+    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:userID], @"activityId": self.savedActivity.ID, @"rating": [[NSNumber alloc] initWithInt:0]};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Rating" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    self.ratingView.hidden = YES;
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+}
+
+- (IBAction)skipRating:(UIButton *)sender {
+    self.ratingView.hidden = YES;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
 }
 
 // Lazily instantiate the NSArray of VentureActivity's
@@ -61,6 +122,38 @@
 }
 
 - (void) viewDidLoad {
+    udid = [[UIDevice currentDevice] identifierForVendor];
+    
+    NSDictionary *parameters = @{@"deviceid": udid};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Device" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dict = (NSDictionary *)(responseObject);
+        userID = [[dict objectForKey:@"uid"] integerValue];
+        
+        //Loads first suggestion
+        int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+        int indexOfFeeling = self.activityType.selectedSegmentIndex;
+        [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
+    NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
+    
+    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
+        self.ratingView.hidden = YES;
+    } else {
+        self.ratingView.hidden = NO;
+        self.ratingTitle.text = retrievedActivityTitle;
+        
+        NSString *imgURL = retrievedActivityImgURL;
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+        self.ratingImage.image = [UIImage imageWithData:imgData];
+    }
+    
     [super viewDidLoad];
     indexActivitiesArray = 0;
     
@@ -78,11 +171,6 @@
     
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
-    
-    //Loads first suggestion
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeRight)];
     swipeRight.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -152,6 +240,11 @@
 }
 
 -(void)respondToSwipeUp {
+    [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.title forKey:@"Saved Activity Title"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.imageURL forKey:@"Saved Activity Image"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.ID forKey:@"Saved Activity ID"];
+    NSLog(@"%@", self.savedActivity.ID);
+    
     NSString *destAddr;
     destAddr = [self.activityAddress1.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -236,9 +329,10 @@
     self.activityYelpRating1.image = nil;
     self.iChose1.text = @"";
     
-    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withCallback:^(VentureActivity* activity) {
+    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:userID withCallback:^(VentureActivity* activity) {
        
         [self.activities addObject:activity];
+        self.savedActivity = activity;
         
         self.activityName1.alpha = 0;
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn

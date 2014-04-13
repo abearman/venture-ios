@@ -11,6 +11,7 @@
 @interface VentureActivity : NSObject
 
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *ID;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic) double distanceAway;
 @property (nonatomic) double timeAway;

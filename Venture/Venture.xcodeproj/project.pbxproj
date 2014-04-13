@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		63ACD4622AE64BEBADFEF43A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78645C9CFDEA406684F25E34 /* libPods.a */; };
+		650F280018FA94FA00957885 /* Lobster1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 650F27FF18FA94FA00957885 /* Lobster1.ttf */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster1.ttf; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -216,6 +218,7 @@
 		65F459D618F908D5007761AA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				650F27FF18FA94FA00957885 /* Lobster1.ttf */,
 				65F459D718F908D5007761AA /* VentureTests-Info.plist */,
 				65F459D818F908D5007761AA /* InfoPlist.strings */,
 			);
@@ -333,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				650F280018FA94FA00957885 /* Lobster1.ttf in Resources */,
 				65F459C918F908D5007761AA /* Images.xcassets in Resources */,
 				65F459BB18F908D5007761AA /* InfoPlist.strings in Resources */,
 				65F459EF18F9C5AD007761AA /* Podfile in Resources */,
@@ -527,6 +531,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Venture/Venture-Prefix.pch";
 				INFOPLIST_FILE = "Venture/Venture-Info.plist";
+				"INFOPLIST_FILE[sdk=*]" = "Venture/Venture-Info.plist";
+				INFOPLIST_PREPROCESS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F4EB6BEB-EF5B-4711-8858-32EA5654AC7F";
 				WRAPPER_EXTENSION = app;
@@ -547,6 +553,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Venture/Venture-Prefix.pch";
 				INFOPLIST_FILE = "Venture/Venture-Info.plist";
+				INFOPLIST_PREPROCESS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F4EB6BEB-EF5B-4711-8858-32EA5654AC7F";
 				WRAPPER_EXTENSION = app;

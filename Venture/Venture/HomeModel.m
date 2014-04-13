@@ -19,7 +19,7 @@
 
 @implementation HomeModel
 
--(void)downloadActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling withCallback:(void (^)(VentureActivity *))callback {
+-(void)downloadActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling withUser:(int)userID withCallback:(void (^)(VentureActivity *))callback {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSString *modeOfTransport;
@@ -42,7 +42,7 @@
         feeling = @"bored";
     }
     
-    NSDictionary *parameters = @{@"lat": @"37.43777", @"lng": @"-122.1374", @"uid": @"3", @"transport": modeOfTransport, @"feeling": feeling};
+    NSDictionary *parameters = @{@"lat": @"37.43777", @"lng": @"-122.1374", @"uid": @"3", @"transport": modeOfTransport, @"feeling": feeling, @"uid": [[NSNumber alloc] initWithInt:userID] };
     
     //transport, feeling
     //walking bicycling transit driving
@@ -61,6 +61,7 @@
         NSDictionary *suggestion = [dict objectForKey:@"suggestion"];
         NSString *justification = [dict objectForKey:@"reason"];
         
+        NSString *ID = [suggestion objectForKey:@"id"];
         NSString *title = [suggestion objectForKey:@"title"];
         NSString *address = [suggestion objectForKey:@"address"];
         NSString *lat = [suggestion objectForKey:@"lat"];
@@ -68,6 +69,7 @@
         NSString *yelpImageURL = [suggestion objectForKey:@"yelp_rating_img_url"];
         NSString *imageURL = [suggestion objectForKey:@"yelp_thumbnail"];
         
+        activity.ID = ID;
         activity.title = title;
         activity.address = address;
         activity.justification = justification;
