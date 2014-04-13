@@ -45,7 +45,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 @property (weak, nonatomic) IBOutlet UIView *activityView2;
-@property (nonatomic) BOOL activityBool; // True for activityView1
 
 @end
 
@@ -74,18 +73,17 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    self.activityBool = YES;
     self.activityView2.hidden = YES;
     self.activityView.hidden = NO;
     indexActivitiesArray = 0;
     
-    [self.spinner1 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    /*[self.spinner1 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner2 setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner1 setColor:[UIColor colorWithWhite: 0.70 alpha:1]];
     [self.spinner2 setColor:[UIColor colorWithWhite: 0.70 alpha:1]];
     
     self.spinner1.hidden = NO;
-    [self.spinner1 startAnimating];
+    [self.spinner1 startAnimating];*/
     
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
@@ -127,122 +125,74 @@
     [self.activityView2 addGestureRecognizer:swipeLeft2];
 }
 
--(void)getActivityAtIndex:(int)index {
+-(void)getActivityAtIndex {
     //Retrieve existing element
     VentureActivity *activity = [self.activities objectAtIndex:indexActivitiesArray];
-    if (self.activityBool) {
-        self.activityName1.text = activity.title;
-        self.activityAddress1.text = activity.address;
-        self.activityJustification1.text = activity.justification;
-        
-        activityLat = activity.lat;
-        activityLng = activity.lng;
-        
-        CLLocation *loc1 = currentLocation;
-        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
-        
-        double distance = [loc1 distanceFromLocation:loc2];
-        distance /= 1000.0;
-        self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
-        
-        NSString *ImageURL = activity.imageURL;
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-        self.activityImage1.image = [UIImage imageWithData:imageData];
-        
-        NSString *yelpURL = activity.yelpRatingImageURL;
-        NSLog(@"%@", yelpURL);
-        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
-        self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
-        
-        self.iChose1.text = @"I chose this because ... ";
-    } else {
-        self.activityName2.text = activity.title;
-        self.activityAddress2.text = activity.address;
-        self.activityJustification2.text = activity.justification;
-        
-        activityLat = activity.lat;
-        activityLng = activity.lng;
-        
-        CLLocation *loc1 = currentLocation;
-        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
-        
-        double distance = [loc1 distanceFromLocation:loc2];
-        distance /= 1000.0;
-        self.activityDistanceAway2.text = [NSString stringWithFormat:@"%f km", distance];
-        
-        NSString *ImageURL = activity.imageURL;
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-        self.activityImage2.image = [UIImage imageWithData:imageData];
-        
-        NSString *yelpURL = activity.yelpRatingImageURL;
-        NSLog(@"%@", yelpURL);
-        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
-        self.activityYelpRating2.image = [UIImage imageWithData:imageDataYelp];
-        
-        self.iChose2.text = @"I chose this because ... ";
-    }
+    self.activityName1.text = activity.title;
+    self.activityAddress1.text = activity.address;
+    self.activityJustification1.text = activity.justification;
+    
+    activityLat = activity.lat;
+    activityLng = activity.lng;
+    
+    CLLocation *loc1 = currentLocation;
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
+    
+    double distance = [loc1 distanceFromLocation:loc2];
+    distance /= 1000.0;
+    self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
+    
+    NSString *ImageURL = activity.imageURL;
+    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+    self.activityImage1.image = [UIImage imageWithData:imageData];
+    
+    NSString *yelpURL = activity.yelpRatingImageURL;
+    NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
+    self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
+    
+    self.iChose1.text = @"I chose this because ... ";
 }
 
 -(void)respondToSwipeLeft {
-    NSLog(@"Swiped left");
-    
-    // Go back to previous activity
     if (indexActivitiesArray > 0) {
+        NSLog(@"Swiped left");
         indexActivitiesArray--;
-        NSLog(self.activityBool ? @"Yes" : @"No");
+        NSLog(@"Index: %d", indexActivitiesArray);
         
-        CATransition *transition = [CATransition animation];
+        /*CATransition *transition = [CATransition animation];
         transition.duration = 0.75;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         transition.type = kCATransitionPush;
         transition.subtype = kCATransitionFromLeft;
         transition.delegate = self;
         [self.activityView.layer addAnimation:transition forKey:nil];
-        [self.activityView2.layer addAnimation:transition forKey:nil];
+        [self.activityView2.layer addAnimation:transition forKey:nil];*/
         
         NSLog(@"Index: %d", indexActivitiesArray);
-        [self getActivityAtIndex:indexActivitiesArray];
-        self.activityBool = !self.activityBool;
+        [self getActivityAtIndex];
     }
 }
 
 -(void)respondToSwipeRight {
     NSLog(@"Swiped right");
     indexActivitiesArray++;
-    self.activityBool = !self.activityBool;
     NSLog(@"Index: %d", indexActivitiesArray);
-    NSLog(self.activityBool ? @"Yes" : @"No");
     
-    CATransition *transition = [CATransition animation];
+    /*CATransition *transition = [CATransition animation];
     transition.duration = 0.75;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromRight;
     transition.delegate = self;
     [self.activityView.layer addAnimation:transition forKey:nil];
-    [self.activityView2.layer addAnimation:transition forKey:nil];
+    [self.activityView2.layer addAnimation:transition forKey:nil];*/
     
     if (indexActivitiesArray <= [self.activities count] - 1) {
-        [self getActivityAtIndex:indexActivitiesArray];
+        [self getActivityAtIndex];
     } else {
-        if (self.activityBool) {
-            self.activityView.hidden = YES;
-            self.activityView2.hidden = NO;
-            
-            //start spinner
-            self.spinner1.hidden = NO;
-            [self.spinner1 startAnimating];
-            
-        } else {
-            self.activityView2.hidden = YES;
-            self.activityView.hidden = NO;
-            
-            //start spinner
-            self.spinner2.hidden = NO;
-            [self.spinner2 startAnimating];
-            
-        }
-    
+        self.activityView.hidden = NO;
+        self.activityView2.hidden = YES;
+
         int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
         int indexOfFeeling = self.activityType.selectedSegmentIndex;
         [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
@@ -251,11 +201,8 @@
 
 -(void)respondToSwipeUp {
     NSString *destAddr;
-    if (self.activityBool) {
-       destAddr = [self.activityAddress1.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    } else {
-       destAddr = [self.activityAddress2.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    }
+    destAddr = [self.activityAddress1.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+
     NSString *modeOfTransport;
     int index = [self.modeOfTransportation selectedSegmentIndex];
     if (index == 0) {
@@ -327,163 +274,92 @@
 }
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
-    if (self.activityBool) {
-        self.activityName1.text = @"";
-        self.activityAddress1.text = @"";
-        self.activityJustification1.text = @"";
-        self.activityDistanceAway1.text = @"";
-        self.activityImage1.image = nil;
-        self.activityYelpRating1.image = nil;
-        self.iChose1.text = @"";
-    } else {
-        self.activityName2.text = @"";
-        self.activityAddress2.text = @"";
-        self.activityJustification2.text = @"";
-        self.activityDistanceAway2.text = @"";
-        self.activityImage2.image = nil;
-        self.activityYelpRating2.image = nil;
-        self.iChose2.text = @"";
-    }
+    self.activityName1.text = @"";
+    self.activityAddress1.text = @"";
+    self.activityJustification1.text = @"";
+    self.activityDistanceAway1.text = @"";
+    self.activityImage1.image = nil;
+    self.activityYelpRating1.image = nil;
+    self.iChose1.text = @"";
     
     [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withCallback:^(VentureActivity* activity) {
        
         [self.activities addObject:activity];
         
-        if (self.activityBool) {
-            self.activityName1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityName1.alpha = 1;}
-                             completion:nil];
-            self.activityName1.text = activity.title;
+        self.activityName1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityName1.alpha = 1;}
+                         completion:nil];
+        self.activityName1.text = activity.title;
+        
+        self.activityAddress1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityAddress1.alpha = 1;}
+                         completion:nil];
+        self.activityAddress1.text = activity.address;
+        
+        self.activityJustification1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityJustification1.alpha = 1;}
+                         completion:nil];
+        self.activityJustification1.text = activity.justification;
+        
+        self.activityImage1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityImage1.alpha = 1;}
+                         completion:nil];
+        NSString *ImageURL = activity.imageURL;
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+        self.activityImage1.image = [UIImage imageWithData:imageData];
+        
+        self.activityYelpRating1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityYelpRating1.alpha = 1;}
+                         completion:nil];
+        NSString *yelpURL = activity.yelpRatingImageURL;
+        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
+        self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
+        
+        //Do google maps stuff to get time of travel and distance away
+        activityLat = activity.lat;
+        activityLng = activity.lng;
+        
+        CLLocation *loc1 = currentLocation;
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
+        
+        double distance = [loc1 distanceFromLocation:loc2];
+        distance /= 1000.0;
+        
+        self.activityDistanceAway1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.activityDistanceAway1.alpha = 1;}
+                         completion:nil];
+        self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
+        
+         NSLog(@"Activity View 1 loaded");
+        
+        self.iChose1.alpha = 0;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ self.iChose1.alpha = 1;}
+                         completion:nil];
+        self.iChose1.text = @"I chose this because ... ";
             
-            self.activityAddress1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityAddress1.alpha = 1;}
-                             completion:nil];
-            self.activityAddress1.text = activity.address;
-            
-            self.activityJustification1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityJustification1.alpha = 1;}
-                             completion:nil];
-            self.activityJustification1.text = activity.justification;
-            
-            self.activityImage1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityImage1.alpha = 1;}
-                             completion:nil];
-            NSString *ImageURL = activity.imageURL;
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-            self.activityImage1.image = [UIImage imageWithData:imageData];
-            
-            self.activityYelpRating1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityYelpRating1.alpha = 1;}
-                             completion:nil];
-            NSString *yelpURL = activity.yelpRatingImageURL;
-            NSLog(@"%@", yelpURL);
-            NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
-            self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
-            
-            //Do google maps stuff to get time of travel and distance away
-            activityLat = activity.lat;
-            activityLng = activity.lng;
-            
-            CLLocation *loc1 = currentLocation;
-            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
-            
-            double distance = [loc1 distanceFromLocation:loc2];
-            distance /= 1000.0;
-            
-            self.activityDistanceAway1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityDistanceAway1.alpha = 1;}
-                             completion:nil];
-            self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
-            
-             NSLog(@"Activity View 1 loaded");
-            
-            self.iChose1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.iChose1.alpha = 1;}
-                             completion:nil];
-            self.iChose1.text = @"I chose this because ... ";
-            
-        } else {
-            self.activityName2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityName2.alpha = 1;}
-                             completion:nil];
-            self.activityName2.text = activity.title;
-            
-            self.activityAddress2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityAddress2.alpha = 1;}
-                             completion:nil];
-            self.activityAddress2.text = activity.address;
-            
-            self.activityJustification2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityJustification2.alpha = 1;}
-                             completion:nil];
-            self.activityJustification2.text = activity.justification;
-            
-            self.activityImage2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityImage2.alpha = 1;}
-                             completion:nil];
-            NSString *ImageURL = activity.imageURL;
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-            self.activityImage2.image = [UIImage imageWithData:imageData];
-            
-            self.activityYelpRating2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityYelpRating2.alpha = 1;}
-                             completion:nil];
-            NSString *yelpURL = activity.yelpRatingImageURL;
-            NSLog(@"%@", yelpURL);
-            NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
-            self.activityYelpRating2.image = [UIImage imageWithData:imageDataYelp];
-            
-            //Do google maps stuff to get time of travel and distance away
-            activityLat = activity.lat;
-            activityLng = activity.lng;
-            
-            CLLocation *loc1 = currentLocation;
-            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activityLat doubleValue] longitude:[activityLng doubleValue]];
-            
-            double distance = [loc1 distanceFromLocation:loc2];
-            distance /= 1000.0;
-            
-            self.activityDistanceAway2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.activityDistanceAway2.alpha = 1;}
-                             completion:nil];
-            self.activityDistanceAway2.text = [NSString stringWithFormat:@"%f km", distance];
-            
-            NSLog(@"Activity View 2 loaded");
-            self.iChose2.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.iChose2.alpha = 1;}
-                             completion:nil];
-            self.iChose2.text = @"I chose this because ... ";
-        }
-        //stop spinner
-        if (self.activityBool) {
-            [self.spinner1 stopAnimating];
-            self.spinner1.alpha = 0;
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ self.spinner1.alpha = 1;}
-                             completion:nil];
-            self.spinner1.hidden = YES;
-        } else {
+               //stop spinner
+        /*if (indexActivitiesArray % 2 == 0) {
             [self.spinner2 stopAnimating];
             self.spinner2.alpha = 0;
             [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
                              animations:^{ self.spinner2.alpha = 1;}
                              completion:nil];
             self.spinner2.hidden = YES;
-        }
+        } else {
+            [self.spinner1 stopAnimating];
+            self.spinner1.alpha = 0;
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{ self.spinner1.alpha = 1;}
+                             completion:nil];
+            self.spinner1.hidden = YES;
+        }*/
     }];
 }
 
