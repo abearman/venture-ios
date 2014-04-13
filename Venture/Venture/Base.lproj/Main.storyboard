@@ -16,14 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Alternate Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oYv-Uo-orW">
-                                <rect key="frame" x="10" y="26" width="258" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Alternate Location" translatesAutoresizingMaskIntoConstraints="NO" id="1CW-XB-0Ej">
+                                <rect key="frame" x="-1" y="20" width="321" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="SBw-vI-y7d">
-                                <rect key="frame" x="185" y="64" width="120" height="29"/>
+                            </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="bordered" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="SBw-vI-y7d">
+                                <rect key="frame" x="97" y="71" width="120" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="" image="walk"/>
@@ -37,7 +36,7 @@
                                 </segments>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-5i-eeE">
-                                <rect key="frame" x="15" y="108" width="285" height="29"/>
+                                <rect key="frame" x="15" y="130" width="285" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Hungry"/>
@@ -45,65 +44,45 @@
                                     <segment title="Bored"/>
                                 </segments>
                             </segmentedControl>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I'm feeling ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaO-vF-Pyq">
-                                <rect key="frame" x="20" y="74" width="106" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I'M FEELING ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaO-vF-Pyq">
+                                <rect key="frame" x="117" y="107" width="106" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEc-Gt-z7S">
-                                <rect key="frame" x="275" y="26" width="29" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Button" image="search">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="searchButtonClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6gb-Xy-jfE"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ilr-QP-XhT" userLabel="Activity1">
-                                <rect key="frame" x="0.0" y="137" width="320" height="434"/>
+                                <rect key="frame" x="0.0" y="166" width="320" height="434"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P5l-gF-Vu4">
-                                        <rect key="frame" x="97" y="109" width="126" height="126"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TYU-PM-jNb">
-                                        <rect key="frame" x="118" y="243" width="84" height="17"/>
+                                        <rect key="frame" x="118" y="261" width="84" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Justification" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="IM8-gE-Kdd">
-                                        <rect key="frame" x="10" y="274" width="285" height="72"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Justification" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="178" translatesAutoresizingMaskIntoConstraints="NO" id="IM8-gE-Kdd" userLabel="Justification">
+                                        <rect key="frame" x="98" y="268" width="178" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I chose this because ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIb-qh-3Bc">
-                                        <rect key="frame" x="10" y="274" width="216" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djz-sI-1ht">
-                                        <rect key="frame" x="10" y="11" width="295" height="18"/>
+                                        <rect key="frame" x="10" y="10" width="295" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wex-SN-VKX">
-                                        <rect key="frame" x="10" y="31" width="295" height="27"/>
+                                        <rect key="frame" x="10" y="32" width="295" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kj-Fl-Cqy">
-                                        <rect key="frame" x="132" y="58" width="104" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kj-Fl-Cqy">
+                                        <rect key="frame" x="105" y="57" width="104" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dax-Wn-fsy" userLabel="spinner">
@@ -121,7 +100,7 @@
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-fc-8Vk">
                                         <rect key="frame" x="20" y="65" width="281" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -162,6 +141,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ballbot" translatesAutoresizingMaskIntoConstraints="NO" id="deu-WI-oW6" userLabel="venturebot">
+                                <rect key="frame" x="5" y="450" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -169,13 +152,11 @@
                     <connections>
                         <outlet property="activityAddress1" destination="wex-SN-VKX" id="qc0-Ad-WNi"/>
                         <outlet property="activityDistanceAway1" destination="7kj-Fl-Cqy" id="8kg-Dd-SHc"/>
-                        <outlet property="activityImage1" destination="P5l-gF-Vu4" id="5XE-ve-dO1"/>
                         <outlet property="activityJustification1" destination="IM8-gE-Kdd" id="0I4-EV-QXy"/>
                         <outlet property="activityName1" destination="Djz-sI-1ht" id="IH5-aK-WZk"/>
                         <outlet property="activityType" destination="DcK-5i-eeE" id="fmg-zt-yNM"/>
                         <outlet property="activityView" destination="Ilr-QP-XhT" id="qNS-dV-kgW"/>
                         <outlet property="activityYelpRating1" destination="TYU-PM-jNb" id="Hox-ui-5EF"/>
-                        <outlet property="iChose1" destination="AIb-qh-3Bc" id="3S0-xG-GvK"/>
                         <outlet property="modeOfTransportation" destination="SBw-vI-y7d" id="1JA-Zf-f5Q"/>
                         <outlet property="ratingImage" destination="LeQ-qn-nOt" id="e1E-TR-vfl"/>
                         <outlet property="ratingSkip" destination="Y7Y-hP-xAs" id="nl6-qU-qWi"/>
@@ -183,9 +164,9 @@
                         <outlet property="ratingThumbsUp" destination="SQJ-dK-azA" id="Ij8-Jr-KI1"/>
                         <outlet property="ratingTitle" destination="Rez-fc-8Vk" id="rMk-7v-ndh"/>
                         <outlet property="ratingView" destination="iTw-Xj-ZVQ" id="IYd-2X-ZLL"/>
-                        <outlet property="searchBar" destination="oYv-Uo-orW" id="NXQ-hk-gPy"/>
-                        <outlet property="searchButton" destination="aEc-Gt-z7S" id="eCf-en-0nD"/>
+                        <outlet property="searchBar" destination="1CW-XB-0Ej" id="2v2-OS-AQC"/>
                         <outlet property="spinner" destination="dax-Wn-fsy" id="0Yf-An-KKu"/>
+                        <outlet property="ventureBotImageView" destination="deu-WI-oW6" id="XeY-hN-qk6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -194,10 +175,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ballbot" width="2048" height="2048"/>
         <image name="bicycle-512" width="512" height="512"/>
         <image name="bus-1" width="128" height="128"/>
         <image name="drive-1" width="128" height="128"/>
-        <image name="search" width="128" height="128"/>
         <image name="thumbsdown" width="128" height="128"/>
         <image name="thumbsup" width="128" height="128"/>
         <image name="walk" width="40" height="40"/>

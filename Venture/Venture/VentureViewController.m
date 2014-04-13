@@ -12,10 +12,11 @@
 #import <AFHTTPRequestOperationManager.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <pthread.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface VentureViewController()
 
-@property (weak, nonatomic) IBOutlet UITextField *searchBar;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeOfTransportation;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *activityType;
 
@@ -23,12 +24,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityAddress1;
 @property (weak, nonatomic) IBOutlet UILabel *activityJustification1;
 @property (weak, nonatomic) IBOutlet UILabel *activityDistanceAway1;
-@property (weak, nonatomic) IBOutlet UIImageView *activityImage1;
 @property (weak, nonatomic) IBOutlet UIImageView *activityYelpRating1;
-@property (weak, nonatomic) IBOutlet UILabel *iChose1;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
+@property (strong, nonatomic) NSString *activityImgStr;
+@property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
 
 @property (strong, nonatomic) HomeModel *model;
 @property (strong, nonatomic) NSMutableArray *activities; // of VentureActivity
@@ -41,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *ratingThumbsUp;
 @property (weak, nonatomic) IBOutlet UIButton *ratingThumbsDown;
 @property (weak, nonatomic) IBOutlet UIButton *ratingSkip;
-
 
 @property (strong, nonatomic) VentureActivity *savedActivity;
 
@@ -59,6 +57,8 @@
     
     NSUUID *udid;
     int userID;
+    
+    UIImageView *imageView;
 }
 
 // Lazily intantiate the model
@@ -121,6 +121,24 @@
     return _activities;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    NSLog(@"View will appear");
+    
+    NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
+    NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
+    
+    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
+        self.ratingView.hidden = YES;
+    } else {
+        self.ratingView.hidden = NO;
+        self.ratingTitle.text = retrievedActivityTitle;
+        
+        NSString *imgURL = retrievedActivityImgURL;
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+        self.ratingImage.image = [UIImage imageWithData:imgData];
+    }
+}
+
 - (void) viewDidLoad {
     udid = [[UIDevice currentDevice] identifierForVendor];
     
@@ -140,20 +158,6 @@
         NSLog(@"Error: %@", error);
     }];
     
-    NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
-    NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
-    
-    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
-        self.ratingView.hidden = YES;
-    } else {
-        self.ratingView.hidden = NO;
-        self.ratingTitle.text = retrievedActivityTitle;
-        
-        NSString *imgURL = retrievedActivityImgURL;
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-        self.ratingImage.image = [UIImage imageWithData:imgData];
-    }
-    
     [super viewDidLoad];
     indexActivitiesArray = 0;
     
@@ -162,12 +166,12 @@
     
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
-    self.searchBar.delegate = self;
     
     //Starts up location tracking
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
+    self.searchBar.delegate = self;
     
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
@@ -203,19 +207,29 @@
     distance /= 1000.0;
     self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
     
+    /* Display image as circle*/
     NSString *ImageURL = activity.imageURL;
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-    self.activityImage1.image = [UIImage imageWithData:imageData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    imageView = [[UIImageView alloc] initWithImage:image];
+    
+    double x = (self.view.frame.size.width / 2.0) - 75;
+    double y = 100;
+    [imageView setFrame:CGRectMake(x,y,150,150)];
+    
+    imageView.backgroundColor = [UIColor clearColor];
+    imageView.layer.cornerRadius = 150 / 2;
+    imageView.layer.masksToBounds = YES;
+    [self.activityView addSubview: imageView];
     
     NSString *yelpURL = activity.yelpRatingImageURL;
     NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
     self.activityYelpRating1.image = [UIImage imageWithData:imageDataYelp];
-    
-    self.iChose1.text = @"I chose this because ... ";
 }
 
 -(void)respondToSwipeLeft {
     if (indexActivitiesArray > 0) {
+        [imageView removeFromSuperview];
         NSLog(@"Swiped left");
         indexActivitiesArray--;
         NSLog(@"Index: %d", indexActivitiesArray);
@@ -226,6 +240,7 @@
 }
 
 -(void)respondToSwipeRight {
+    [imageView removeFromSuperview];
     NSLog(@"Swiped right");
     indexActivitiesArray++;
     NSLog(@"Index: %d", indexActivitiesArray);
@@ -297,9 +312,9 @@
     return YES;
 }
 
-- (IBAction)searchButtonClicked:(id)sender {
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
     NSString *specifiedLoc = self.searchBar.text;
-    [self textFieldShouldReturn:self.searchBar];
     
     [geocoder geocodeAddressString:specifiedLoc
                  completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -311,7 +326,7 @@
                                [error localizedDescription]);
                      }
                  }
-    ];
+     ];
     
     int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
     int indexOfFeeling = self.activityType.selectedSegmentIndex;
@@ -325,12 +340,12 @@
     self.activityAddress1.text = @"";
     self.activityJustification1.text = @"";
     self.activityDistanceAway1.text = @"";
-    self.activityImage1.image = nil;
+    self.activityImgStr = nil;
     self.activityYelpRating1.image = nil;
-    self.iChose1.text = @"";
     
-    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:userID withCallback:^(VentureActivity* activity) {
-       
+    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:userID withCallback:^
+        (VentureActivity* activity) {
+            
         [self.activities addObject:activity];
         self.savedActivity = activity;
         
@@ -352,13 +367,24 @@
                          completion:nil];
         self.activityJustification1.text = activity.justification;
         
-        self.activityImage1.alpha = 0;
+        self.activityImgStr = activity.imageURL;
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.activityImgStr]];
+        UIImage *image = [UIImage imageWithData:imageData];
+        imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.alpha = 0;
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityImage1.alpha = 1;}
+                         animations:^{ imageView.alpha = 1;}
                          completion:nil];
-        NSString *ImageURL = activity.imageURL;
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-        self.activityImage1.image = [UIImage imageWithData:imageData];
+        
+        /* Display image as circle*/
+        double x = (self.view.frame.size.width / 2.0) - 75;
+        double y = 100;
+        [imageView setFrame:CGRectMake(x,y,150,150)];
+        
+        imageView.backgroundColor = [UIColor clearColor];
+        imageView.layer.cornerRadius = 150 / 2;
+        imageView.layer.masksToBounds = YES;
+        [self.activityView addSubview: imageView];
         
         self.activityYelpRating1.alpha = 0;
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
@@ -383,14 +409,6 @@
                          animations:^{ self.activityDistanceAway1.alpha = 1;}
                          completion:nil];
         self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
-        
-         NSLog(@"Activity View 1 loaded");
-        
-        self.iChose1.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.iChose1.alpha = 1;}
-                         completion:nil];
-        self.iChose1.text = @"I chose this because ... ";
         
         //stop spinner
         [self.spinner stopAnimating];
