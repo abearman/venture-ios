@@ -16,6 +16,7 @@
 
 @interface VentureViewController()
 
+@property (weak, nonatomic) IBOutlet UILabel *appTitle;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeOfTransportation;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *activityType;
@@ -121,8 +122,20 @@
     return _activities;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    NSLog(@"View will appear");
+
+- (void) viewDidLoad {
+    /*for (NSString *family in [UIFont familyNames]) {
+        NSLog(@"%@", family);
+        for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
+            NSLog(@"  %@", name);
+        }
+    }*/
+    
+    self.appTitle.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gradient"]];
+    self.appTitle.font = [UIFont fontWithName:@"Lobster" size:40];
+    [self.appTitle sizeToFit];
+
+    udid = [[UIDevice currentDevice] identifierForVendor];
     
     NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
     NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
@@ -131,16 +144,13 @@
         self.ratingView.hidden = YES;
     } else {
         self.ratingView.hidden = NO;
+        self.activityView.hidden = YES;
         self.ratingTitle.text = retrievedActivityTitle;
         
         NSString *imgURL = retrievedActivityImgURL;
         NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
         self.ratingImage.image = [UIImage imageWithData:imgData];
     }
-}
-
-- (void) viewDidLoad {
-    udid = [[UIDevice currentDevice] identifierForVendor];
     
     NSDictionary *parameters = @{@"deviceid": udid};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -188,6 +198,42 @@
     [self.activityView addGestureRecognizer:swipeRight];
     [self.activityView addGestureRecognizer:swipeUp];
     [self.activityView addGestureRecognizer:swipeLeft];
+}
+
+-(UIColor*)colorWithHexString:(NSString*)hex
+{
+    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // String should be 6 or 8 characters
+    if ([cString length] < 6) return [UIColor grayColor];
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    if ([cString length] != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
 }
 
 -(void)getActivityAtIndex {
@@ -313,6 +359,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [imageView removeFromSuperview];
     [searchBar resignFirstResponder];
     NSString *specifiedLoc = self.searchBar.text;
     

@@ -21,7 +21,6 @@
 		65F459D018F908D5007761AA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459CF18F908D5007761AA /* XCTest.framework */; };
 		65F459D118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459D218F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
-		65F459DA18F908D5007761AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65F459D818F908D5007761AA /* InfoPlist.strings */; };
 		65F459DC18F908D5007761AA /* VentureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459DB18F908D5007761AA /* VentureTests.m */; };
 		65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E618F9B3A7007761AA /* VentureActivity.m */; };
 		65F459EA18F9B91C007761AA /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E918F9B91C007761AA /* HomeModel.m */; };
@@ -53,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster1.ttf; sourceTree = "<group>"; };
+		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Lobster1.ttf; path = VentureTests/Lobster1.ttf; sourceTree = SOURCE_ROOT; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -70,8 +69,6 @@
 		65F459C818F908D5007761AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		65F459CE18F908D5007761AA /* VentureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VentureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459CF18F908D5007761AA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		65F459D718F908D5007761AA /* VentureTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VentureTests-Info.plist"; sourceTree = "<group>"; };
-		65F459D918F908D5007761AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65F459DB18F908D5007761AA /* VentureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VentureTests.m; sourceTree = "<group>"; };
 		65F459E518F9B3A7007761AA /* VentureActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureActivity.h; sourceTree = "<group>"; };
 		65F459E618F9B3A7007761AA /* VentureActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureActivity.m; sourceTree = "<group>"; };
@@ -134,12 +131,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65332DA618FC7BBC00E5C5EC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				650F27FF18FA94FA00957885 /* Lobster1.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		65F459A418F908D5007761AA = {
 			isa = PBXGroup;
 			children = (
 				65F459EE18F9C5AD007761AA /* Podfile */,
 				65F459B618F908D5007761AA /* Venture */,
-				65F459D618F908D5007761AA /* Supporting Files */,
 				65F459D518F908D5007761AA /* VentureTests */,
 				65F459AF18F908D5007761AA /* Frameworks */,
 				65F459AE18F908D5007761AA /* Products */,
@@ -185,6 +189,7 @@
 		65F459B618F908D5007761AA /* Venture */ = {
 			isa = PBXGroup;
 			children = (
+				65332DA618FC7BBC00E5C5EC /* Resources */,
 				65F459ED18F9B93B007761AA /* View */,
 				65F459EC18F9B933007761AA /* Controller */,
 				65F459C818F908D5007761AA /* Images.xcassets */,
@@ -212,17 +217,6 @@
 			children = (
 				65F459DB18F908D5007761AA /* VentureTests.m */,
 			);
-			path = VentureTests;
-			sourceTree = "<group>";
-		};
-		65F459D618F908D5007761AA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				650F27FF18FA94FA00957885 /* Lobster1.ttf */,
-				65F459D718F908D5007761AA /* VentureTests-Info.plist */,
-				65F459D818F908D5007761AA /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			path = VentureTests;
 			sourceTree = "<group>";
 		};
@@ -349,7 +343,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65F459DA18F908D5007761AA /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,14 +429,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		65F459D818F908D5007761AA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				65F459D918F908D5007761AA /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -523,7 +508,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Keenon Werling (UMP2MFKEHV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/AmyBear/Downloads/GoogleMaps-iOS-1.7.2",
@@ -545,7 +530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Keenon Werling (UMP2MFKEHV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/AmyBear/Downloads/GoogleMaps-iOS-1.7.2",

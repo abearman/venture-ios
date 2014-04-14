@@ -11,8 +11,6 @@
 
 @protocol HomeModelProtocol <NSObject>
 
--(void)itemsDownloaded:(NSArray *)items;
-
 @end
 
 @interface HomeModel : NSObject<NSURLConnectionDataDelegate>

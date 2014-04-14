@@ -42,7 +42,7 @@
         feeling = @"bored";
     }
     
-    NSDictionary *parameters = @{@"lat": @"37.43777", @"lng": @"-122.1374", @"uid": @"3", @"transport": modeOfTransport, @"feeling": feeling, @"uid": [[NSNumber alloc] initWithInt:userID] };
+    NSDictionary *parameters = @{@"lat": @"37.43777", @"lng": @"-122.1374", @"transport": modeOfTransport, @"feeling": feeling, @"uid": [[NSNumber alloc] initWithInt:userID] };
     
     //transport, feeling
     //walking bicycling transit driving
