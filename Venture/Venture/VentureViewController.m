@@ -391,16 +391,20 @@
                      if (!error) {
                          CLPlacemark *placemark = [placemarks firstObject];
                          currentLocation = placemark.location;
+                         [locationManager stopUpdatingLocation];
+                         NSLog(@"New loc: %f, %f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+                         [self.activities removeAllObjects];
+                         indexActivitiesArray = 0;
+                         
+                         int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+                         int indexOfFeeling = self.activityType.selectedSegmentIndex;
+                         [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
                      } else {
                          NSLog(@"There was a forward geocoding error\n%@",
                                [error localizedDescription]);
                      }
                  }
      ];
-    
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 }
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
