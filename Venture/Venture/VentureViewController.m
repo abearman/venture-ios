@@ -88,10 +88,18 @@
     }];
     
     self.ratingView.hidden = YES;
+    self.activityView.hidden = NO;
+    [imageView removeFromSuperview];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    
+    //Loads another suggestion
+    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+    int indexOfFeeling = self.activityType.selectedSegmentIndex;
+    
+    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 }
 
 - (IBAction)rateNegative:(UIButton *)sender {
@@ -103,17 +111,32 @@
         NSLog(@"Error: %@", error);
     }];
     self.ratingView.hidden = YES;
+    self.activityView.hidden = NO;
+    [imageView removeFromSuperview];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    
+    //Loads another suggestion
+    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+    int indexOfFeeling = self.activityType.selectedSegmentIndex;
+    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 }
 
 - (IBAction)skipRating:(UIButton *)sender {
     self.ratingView.hidden = YES;
+    self.activityView.hidden = NO;
+    [imageView removeFromSuperview];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    
+    //Loads another suggestion
+    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+    int indexOfFeeling = self.activityType.selectedSegmentIndex;
+    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 }
 
 // Lazily instantiate the NSArray of VentureActivity's

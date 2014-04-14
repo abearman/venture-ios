@@ -55,7 +55,7 @@
     VentureActivity *activity = [[VentureActivity alloc] init];
     
     [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Brain" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@"JSON: %@", responseObject);
+        NSLog(@"JSON: %@", responseObject);
         
         NSDictionary *dict = (NSDictionary *)(responseObject);
         NSDictionary *suggestion = [dict objectForKey:@"suggestion"];
