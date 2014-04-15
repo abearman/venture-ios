@@ -19,7 +19,7 @@
 
 @implementation HomeModel
 
--(void)downloadActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling withUser:(int)userID withCallback:(void (^)(VentureActivity *))callback {
+-(void)downloadActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling withUser:(int)userID atLatitude:(double)latitude atLongitude:(double)longitude withCallback:(void (^)(VentureActivity *))callback {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSString *modeOfTransport;
@@ -42,7 +42,9 @@
         feeling = @"bored";
     }
     
-    NSDictionary *parameters = @{@"lat": @"37.43777", @"lng": @"-122.1374", @"transport": modeOfTransport, @"feeling": feeling, @"uid": [[NSNumber alloc] initWithInt:userID] };
+    NSString *latStr = [NSString stringWithFormat:@"%f", latitude];
+    NSString *lngStr = [NSString stringWithFormat:@"%f", longitude];
+    NSDictionary *parameters = @{@"lat":latStr, @"lng":lngStr, @"transport": modeOfTransport, @"feeling": feeling, @"uid": [[NSNumber alloc] initWithInt:userID] };
     
     //transport, feeling
     //walking bicycling transit driving
@@ -55,7 +57,7 @@
     VentureActivity *activity = [[VentureActivity alloc] init];
     
     [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Brain" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+        //NSLog(@"JSON: %@", responseObject);
         
         NSDictionary *dict = (NSDictionary *)(responseObject);
         NSDictionary *suggestion = [dict objectForKey:@"suggestion"];

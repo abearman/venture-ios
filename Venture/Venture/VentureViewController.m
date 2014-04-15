@@ -62,6 +62,46 @@
     UIImageView *imageView;
 }
 
+- (int)mouse {
+    return 0;
+}
+
+-(void)unregisterForNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Became active" object:nil];
+}
+
+/***** To register and unregister for notification on recieving messages *****/
+- (void)registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(yourCustomMethod:)
+                                                 name:@"Became active" object:nil];
+}
+
+/*** Your custom method called on notification ***/
+-(void)yourCustomMethod:(NSNotification*)_notification {
+    [[self navigationController] popToRootViewControllerAnimated:YES];
+    NSLog(@"Notification received that app became active!");
+    
+    NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
+    NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
+    
+    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
+        self.ratingView.hidden = YES;
+    } else {
+        self.ratingView.hidden = NO;
+        self.activityView.hidden = YES;
+        self.ratingTitle.text = retrievedActivityTitle;
+        
+        NSString *imgURL = retrievedActivityImgURL;
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+        self.ratingImage.image = [UIImage imageWithData:imgData];
+        
+        [self.activities removeAllObjects];
+        indexActivitiesArray = 0;
+        [imageView removeFromSuperview];
+    }
+}
+
 // Lazily intantiate the model
 - (HomeModel *)model {
     if (!_model) _model = [[HomeModel alloc] init];
@@ -145,35 +185,18 @@
     return _activities;
 }
 
+-(void)viewDidUnload {
+    [self unregisterForNotifications];
+}
 
 - (void) viewDidLoad {
-    /*for (NSString *family in [UIFont familyNames]) {
-        NSLog(@"%@", family);
-        for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
-            NSLog(@"  %@", name);
-        }
-    }*/
+    [self registerForNotifications];
     
     self.appTitle.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gradient"]];
     self.appTitle.font = [UIFont fontWithName:@"Lobster" size:40];
     [self.appTitle sizeToFit];
 
     udid = [[UIDevice currentDevice] identifierForVendor];
-    
-    NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
-    NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
-    
-    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
-        self.ratingView.hidden = YES;
-    } else {
-        self.ratingView.hidden = NO;
-        self.activityView.hidden = YES;
-        self.ratingTitle.text = retrievedActivityTitle;
-        
-        NSString *imgURL = retrievedActivityImgURL;
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-        self.ratingImage.image = [UIImage imageWithData:imgData];
-    }
     
     NSDictionary *parameters = @{@"deviceid": udid};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -367,7 +390,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"didUpdateToLocation: %@", newLocation);
+    //NSLog(@"didUpdateToLocation: %@", newLocation);
     currentLocation = newLocation;
     
     /*if (currentLocation != nil) {
@@ -417,7 +440,7 @@
     self.activityImgStr = nil;
     self.activityYelpRating1.image = nil;
     
-    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:userID withCallback:^
+    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:userID atLatitude:currentLocation.coordinate.latitude atLongitude:currentLocation.coordinate.longitude withCallback:^
         (VentureActivity* activity) {
             
         [self.activities addObject:activity];
