@@ -27,8 +27,6 @@
 		65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E618F9B3A7007761AA /* VentureActivity.m */; };
 		65F459EA18F9B91C007761AA /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E918F9B91C007761AA /* HomeModel.m */; };
 		65F459EF18F9C5AD007761AA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 65F459EE18F9C5AD007761AA /* Podfile */; };
-		65F459F118F9E445007761AA /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F018F9E445007761AA /* GoogleMaps.framework */; };
-		65F459F318F9EC9C007761AA /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 65F459F218F9EC9C007761AA /* GoogleMaps.bundle */; };
 		65F459F518F9ECDE007761AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F418F9ECDE007761AA /* AVFoundation.framework */; };
 		65F459F718F9ECE4007761AA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F618F9ECE4007761AA /* CoreData.framework */; };
 		65F459F918F9ECEF007761AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F818F9ECEF007761AA /* CoreLocation.framework */; };
@@ -79,8 +77,6 @@
 		65F459E818F9B91C007761AA /* HomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeModel.h; sourceTree = "<group>"; };
 		65F459E918F9B91C007761AA /* HomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeModel.m; sourceTree = "<group>"; };
 		65F459EE18F9C5AD007761AA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		65F459F018F9E445007761AA /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../../Downloads/GoogleMaps-iOS-1.7.2/GoogleMaps.framework"; sourceTree = "<group>"; };
-		65F459F218F9EC9C007761AA /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../../Downloads/GoogleMaps-iOS-1.7.2/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		65F459F418F9ECDE007761AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		65F459F618F9ECE4007761AA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		65F459F818F9ECEF007761AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -118,7 +114,6 @@
 				65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */,
 				65F459B518F908D5007761AA /* UIKit.framework in Frameworks */,
 				65F459B118F908D5007761AA /* Foundation.framework in Frameworks */,
-				65F459F118F9E445007761AA /* GoogleMaps.framework in Frameworks */,
 				63ACD4622AE64BEBADFEF43A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,8 +177,6 @@
 				65F459F818F9ECEF007761AA /* CoreLocation.framework */,
 				65F459F618F9ECE4007761AA /* CoreData.framework */,
 				65F459F418F9ECDE007761AA /* AVFoundation.framework */,
-				65F459F218F9EC9C007761AA /* GoogleMaps.bundle */,
-				65F459F018F9E445007761AA /* GoogleMaps.framework */,
 				65F459B018F908D5007761AA /* Foundation.framework */,
 				65F459B218F908D5007761AA /* CoreGraphics.framework */,
 				65F459B418F908D5007761AA /* UIKit.framework */,
@@ -342,7 +335,6 @@
 				65F459BB18F908D5007761AA /* InfoPlist.strings in Resources */,
 				65F459EF18F9C5AD007761AA /* Podfile in Resources */,
 				65F459C418F908D5007761AA /* Main.storyboard in Resources */,
-				65F459F318F9EC9C007761AA /* GoogleMaps.bundle in Resources */,
 				657C9F2C18FCD24D000792DB /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
