@@ -73,12 +73,13 @@
 /***** To register and unregister for notification on recieving messages *****/
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(yourCustomMethod:)
+                                             selector:@selector(displayRatingsView:)
                                                  name:@"Became active" object:nil];
 }
 
 /*** Your custom method called on notification ***/
--(void)yourCustomMethod:(NSNotification*)_notification {
+-(void)displayRatingsView:(NSNotification*)_notification {
+    self.activityView.hidden = YES;
     [[self navigationController] popToRootViewControllerAnimated:YES];
     NSLog(@"Notification received that app became active!");
     
@@ -87,10 +88,11 @@
     
     if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
         self.ratingView.hidden = YES;
+        self.activityView.hidden = NO;
     } else {
         self.ratingView.hidden = NO;
         self.activityView.hidden = YES;
-        self.ratingTitle.text = retrievedActivityTitle;
+        self.ratingTitle.text = [NSString stringWithFormat:@"%@?", retrievedActivityTitle];
         
         NSString *imgURL = retrievedActivityImgURL;
         NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
