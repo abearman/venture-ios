@@ -196,6 +196,7 @@
 
 - (void) viewDidLoad {
     [self registerForNotifications];
+    [self.searchBar setShowsCancelButton:YES animated:YES];
     
     self.appTitle.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gradient"]];
     self.appTitle.font = [UIFont fontWithName:@"Lobster" size:40];
@@ -411,9 +412,13 @@
     return YES;
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [imageView removeFromSuperview];
-    [searchBar resignFirstResponder];
+    [self.searchBar resignFirstResponder];
     NSString *specifiedLoc = self.searchBar.text;
     
     [geocoder geocodeAddressString:specifiedLoc

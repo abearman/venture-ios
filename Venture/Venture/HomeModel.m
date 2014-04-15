@@ -68,7 +68,7 @@
         NSString *address = [suggestion objectForKey:@"address"];
         NSString *lat = [suggestion objectForKey:@"lat"];
         NSString *lng = [suggestion objectForKey:@"lng"];
-        NSString *yelpImageURL = [suggestion objectForKey:@"yelp_rating_img_url"];
+        NSString *yelpImageURL = [suggestion objectForKey:@"yelp_rating_img_url_large"];
         NSString *imageURL = [suggestion objectForKey:@"yelp_thumbnail"];
         
         activity.ID = ID;
