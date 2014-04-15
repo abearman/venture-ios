@@ -10,6 +10,7 @@
 		63ACD4622AE64BEBADFEF43A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78645C9CFDEA406684F25E34 /* libPods.a */; };
 		650F280018FA94FA00957885 /* Lobster1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 650F27FF18FA94FA00957885 /* Lobster1.ttf */; };
 		657C9F2A18FCCF51000792DB /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657C9F2918FCCF51000792DB /* GoogleMaps.framework */; };
+		657C9F2C18FCD24D000792DB /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Lobster1.ttf; path = VentureTests/Lobster1.ttf; sourceTree = SOURCE_ROOT; };
 		657C9F2918FCCF51000792DB /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -166,6 +168,7 @@
 		65F459AF18F908D5007761AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */,
 				657C9F2918FCCF51000792DB /* GoogleMaps.framework */,
 				65F45A0A18F9ED39007761AA /* SystemConfiguration.framework */,
 				65F45A0818F9ED30007761AA /* QuartzCore.framework */,
@@ -340,6 +343,7 @@
 				65F459EF18F9C5AD007761AA /* Podfile in Resources */,
 				65F459C418F908D5007761AA /* Main.storyboard in Resources */,
 				65F459F318F9EC9C007761AA /* GoogleMaps.bundle in Resources */,
+				657C9F2C18FCD24D000792DB /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
