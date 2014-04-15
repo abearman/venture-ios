@@ -136,6 +136,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //Loads another suggestion
     int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
@@ -159,6 +160,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //Loads another suggestion
     int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
@@ -174,6 +176,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //Loads another suggestion
     int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
@@ -352,6 +355,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.title forKey:@"Saved Activity Title"];
     [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.imageURL forKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] setObject:self.savedActivity.ID forKey:@"Saved Activity ID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSLog(@"%@", self.savedActivity.ID);
     
     NSString *destAddr;
