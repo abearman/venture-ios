@@ -34,6 +34,8 @@
 @property (strong, nonatomic) HomeModel *model;
 @property (strong, nonatomic) NSMutableArray *activities; // of VentureActivity
 
+@property (strong, nonatomic) NSMutableDictionary *activitiesDict; // Keys: "Hungry", "Adventurous", "Bored"
+
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 
 @property (strong, nonatomic) VentureActivity *savedActivity;
@@ -88,6 +90,12 @@
 - (NSMutableArray *)activities {
     if (!_activities) _activities = [[NSMutableArray alloc] init];
     return _activities;
+}
+
+// Lazily instantiate the NSMutableDictionary of VentureActivity's
+- (NSMutableDictionary *)activitiesDict {
+    if (!_activitiesDict) _activitiesDict = [[NSMutableDictionary alloc] init];
+    return _activitiesDict;
 }
 
 -(void)viewDidUnload {
