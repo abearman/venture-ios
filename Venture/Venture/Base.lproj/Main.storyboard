@@ -140,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-392" y="-113"/>
+            <point key="canvasLocation" x="-318" y="-113"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Dm-o2-sqY">
@@ -243,7 +243,7 @@
                         <outlet property="ratingPositiveButton" destination="SQJ-dK-azA" id="et0-be-b2m"/>
                         <outlet property="ratingSkipButton" destination="Y7Y-hP-xAs" id="hwD-pI-QR6"/>
                         <outlet property="ratingTitle" destination="Rez-fc-8Vk" id="Qmz-mK-9R1"/>
-                        <segue destination="vXZ-lx-hvc" kind="push" identifier="Done With Rating" id="u3G-bF-aPJ"/>
+                        <segue destination="vXZ-lx-hvc" kind="modal" identifier="Done With Rating" id="xAB-HE-Epc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XbH-gh-Ovg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,6 +266,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="u3G-bF-aPJ"/>
+        <segue reference="xAB-HE-Epc"/>
     </inferredMetricsTieBreakers>
 </document>

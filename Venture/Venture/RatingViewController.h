@@ -10,4 +10,6 @@
 
 @interface RatingViewController : UIViewController
 
+@property (nonatomic) int userID;
+
 @end

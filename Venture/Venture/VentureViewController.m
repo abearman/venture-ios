@@ -13,6 +13,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <pthread.h>
 #import <QuartzCore/QuartzCore.h>
+#import "RatingViewController.h"
 
 @interface VentureViewController()
 
@@ -55,10 +56,6 @@
     UIImageView *imageView;
 }
 
-- (int)mouse {
-    return 0;
-}
-
 -(void)unregisterForNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Became active" object:nil];
 }
@@ -98,6 +95,7 @@
 }
 
 - (void) viewDidLoad {
+    NSLog(@"View did load");
     [[self navigationController] setNavigationBarHidden:YES];
     [self registerForNotifications];
     [self.searchBar setShowsCancelButton:YES animated:YES];
@@ -161,8 +159,9 @@
         [self.activities removeAllObjects];
         indexActivitiesArray = 0;
         [imageView removeFromSuperview]; // Necessary?
-    } else if ([segue.identifier isEqualToString:@"Done With Rating"]) {
         
+        RatingViewController *rvc = [segue destinationViewController];
+        rvc.userID = userID;
     }
 }
 

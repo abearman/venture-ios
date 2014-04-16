@@ -7,6 +7,7 @@
 //
 
 #import "RatingViewController.h"
+#import <AFHTTPRequestOperationManager.h>
 
 @interface RatingViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *ratingTitle;
@@ -30,10 +31,16 @@
     self.ratingImageView.image = [UIImage imageWithData:imgData];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"Done With Rating"]) {
+
+    }
+}
+
+
 - (IBAction)ratePositive:(UIButton *)sender {
-    /*NSString *activityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity ID"];
-    
-    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:userID], @"activityId": activityID, @"rating": [[NSNumber alloc] initWithInt:1]};
+    NSString *activityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity ID"];
+    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:self.userID], @"activityId": activityID, @"rating": [[NSNumber alloc] initWithInt:1]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Rating" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -41,19 +48,16 @@
         NSLog(@"Error: %@", error);
     }];
     
-    self.ratingView.hidden = YES;
-    self.activityView.hidden = NO;
-    [imageView removeFromSuperview];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //Loads another suggestion
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
+    [self performSegueWithIdentifier:@"Done With Rating" sender:self];
     
+    //Loads another suggestion
+    /*int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
+    int indexOfFeeling = self.activityType.selectedSegmentIndex;
     [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];*/
 }
 

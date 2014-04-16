@@ -13,6 +13,4 @@
 
 @interface VentureViewController: UIViewController<CLLocationManagerDelegate, HomeModelProtocol, UITextFieldDelegate>
 
--(int)mouse;
-
 @end
