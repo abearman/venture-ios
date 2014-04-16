@@ -225,6 +225,7 @@
         
         NSLog(@"Index: %d", indexActivitiesArray);
         [self getActivityAtIndex];
+        self.savedActivity = [self.activities objectAtIndex:indexActivitiesArray];
     }
 }
 
@@ -342,7 +343,7 @@
             
         [self.activities addObject:activity];
         self.savedActivity = activity;
-        
+            
         self.activityName1.alpha = 0;
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
                          animations:^{ self.activityName1.alpha = 1;}

@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSString *yelpRatingImageURL;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) NSString *justification;
-
+@property (nonatomic) BOOL foundSomething;
 @property (nonatomic, strong) NSString *lat;
 @property (nonatomic, strong) NSString *lng;
 

@@ -70,6 +70,7 @@
         NSString *lng = [suggestion objectForKey:@"lng"];
         NSString *yelpImageURL = [suggestion objectForKey:@"yelp_rating_img_url_large"];
         NSString *imageURL = [suggestion objectForKey:@"yelp_thumbnail"];
+        NSString *foundSomething = [suggestion objectForKeyedSubscript:@"found_something"];
         
         activity.ID = ID;
         activity.title = title;
@@ -79,6 +80,7 @@
         activity.lng = lng;
         activity.yelpRatingImageURL = yelpImageURL;
         activity.imageURL = imageURL;
+        activity.foundSomething = [foundSomething isEqualToString:@"true"];
         
         callback(activity);
         
