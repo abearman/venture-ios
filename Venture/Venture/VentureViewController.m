@@ -195,6 +195,7 @@
 }
 
 - (void) viewDidLoad {
+    [[self navigationController] setNavigationBarHidden:YES];
     [self registerForNotifications];
     [self.searchBar setShowsCancelButton:YES animated:YES];
     

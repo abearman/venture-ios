@@ -11,6 +11,7 @@
 		650F280018FA94FA00957885 /* Lobster1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 650F27FF18FA94FA00957885 /* Lobster1.ttf */; };
 		657C9F2A18FCCF51000792DB /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657C9F2918FCCF51000792DB /* GoogleMaps.framework */; };
 		657C9F2C18FCD24D000792DB /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */; };
+		657C9F4818FE357F000792DB /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657C9F4718FE357F000792DB /* RatingViewController.m */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -55,6 +56,8 @@
 		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Lobster1.ttf; path = VentureTests/Lobster1.ttf; sourceTree = SOURCE_ROOT; };
 		657C9F2918FCCF51000792DB /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		657C9F4618FE357F000792DB /* RatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingViewController.h; sourceTree = "<group>"; };
+		657C9F4718FE357F000792DB /* RatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingViewController.m; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -244,6 +247,8 @@
 			isa = PBXGroup;
 			children = (
 				65F459C218F908D5007761AA /* Main.storyboard */,
+				657C9F4618FE357F000792DB /* RatingViewController.h */,
+				657C9F4718FE357F000792DB /* RatingViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				65F459EA18F9B91C007761AA /* HomeModel.m in Sources */,
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
+				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,
 				65F459BD18F908D5007761AA /* main.m in Sources */,
 				65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */,
 			);
