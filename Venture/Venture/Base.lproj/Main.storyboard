@@ -173,6 +173,13 @@
                                 <rect key="frame" x="-1" y="58" width="321" height="426"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How did you like" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dve-q5-lkL">
+                                        <rect key="frame" x="79" y="41" width="162" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rez-fc-8Vk">
                                         <rect key="frame" x="20" y="70" width="281" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -191,6 +198,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="ratePositive:" destination="Y0M-3s-LFc" eventType="touchUpInside" id="Jln-SK-l43"/>
                                             <action selector="ratePositive:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bjI-JL-Z2F"/>
                                         </connections>
                                     </button>
@@ -202,6 +210,7 @@
                                         </state>
                                         <connections>
                                             <action selector="rateNegative:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Jl9-pA-dEh"/>
+                                            <action selector="rateNegative:" destination="Y0M-3s-LFc" eventType="touchUpInside" id="OYt-YY-kzF"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Y-hP-xAs">
@@ -213,16 +222,10 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="skipRating:" destination="Y0M-3s-LFc" eventType="touchUpInside" id="9v8-M5-gyG"/>
                                             <action selector="skipRating:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qH7-2U-oJ1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How did you like" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dve-q5-lkL">
-                                        <rect key="frame" x="79" y="41" width="162" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -234,6 +237,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="qLw-Ww-veZ"/>
+                    <connections>
+                        <outlet property="ratingImageView" destination="LeQ-qn-nOt" id="xH5-i0-uSA"/>
+                        <outlet property="ratingNegativeButton" destination="XN8-p8-MYP" id="fR1-jf-Yza"/>
+                        <outlet property="ratingPositiveButton" destination="SQJ-dK-azA" id="et0-be-b2m"/>
+                        <outlet property="ratingSkipButton" destination="Y7Y-hP-xAs" id="hwD-pI-QR6"/>
+                        <outlet property="ratingTitle" destination="Rez-fc-8Vk" id="Qmz-mK-9R1"/>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="Done With Rating" id="u3G-bF-aPJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XbH-gh-Ovg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -254,4 +265,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="u3G-bF-aPJ"/>
+    </inferredMetricsTieBreakers>
 </document>

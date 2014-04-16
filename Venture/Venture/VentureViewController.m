@@ -35,13 +35,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 
-@property (weak, nonatomic) IBOutlet UIView *ratingView;
-@property (weak, nonatomic) IBOutlet UILabel *ratingTitle;
-@property (weak, nonatomic) IBOutlet UIImageView *ratingImage;
-@property (weak, nonatomic) IBOutlet UIButton *ratingThumbsUp;
-@property (weak, nonatomic) IBOutlet UIButton *ratingThumbsDown;
-@property (weak, nonatomic) IBOutlet UIButton *ratingSkip;
-
 @property (strong, nonatomic) VentureActivity *savedActivity;
 
 @end
@@ -79,28 +72,12 @@
 
 /*** Your custom method called on notification ***/
 -(void)displayRatingsView:(NSNotification*)_notification {
-    self.activityView.hidden = YES;
     [[self navigationController] popToRootViewControllerAnimated:YES];
-    NSLog(@"Notification received that app became active!");
-    
     NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
     NSString *retrievedActivityImgURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Image"];
     
-    if (retrievedActivityTitle == nil || retrievedActivityImgURL == nil) {
-        self.ratingView.hidden = YES;
-        self.activityView.hidden = NO;
-    } else {
-        self.ratingView.hidden = NO;
-        self.activityView.hidden = YES;
-        self.ratingTitle.text = [NSString stringWithFormat:@"%@?", retrievedActivityTitle];
-        
-        NSString *imgURL = retrievedActivityImgURL;
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-        self.ratingImage.image = [UIImage imageWithData:imgData];
-        
-        [self.activities removeAllObjects];
-        indexActivitiesArray = 0;
-        [imageView removeFromSuperview];
+    if (!(retrievedActivityTitle == nil || retrievedActivityImgURL == nil)) {
+        [self performSegueWithIdentifier:@"Start Rating" sender:self];
     }
 }
 
@@ -108,80 +85,6 @@
 - (HomeModel *)model {
     if (!_model) _model = [[HomeModel alloc] init];
     return _model;
-}
-
-- (IBAction)ratePositive:(UIButton *)sender {
-    NSLog(@"%d", userID);
-    
-    NSString *activityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity ID"];
-    NSLog(@"%@", activityID);
-    
-//    if (activityID == nil) {
-//        self.ratingView.hidden = YES;
-//        return;
-//    }
-    
-    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:userID], @"activityId": activityID, @"rating": [[NSNumber alloc] initWithInt:1]};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Rating" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    
-    self.ratingView.hidden = YES;
-    self.activityView.hidden = NO;
-    [imageView removeFromSuperview];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //Loads another suggestion
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
-}
-
-- (IBAction)rateNegative:(UIButton *)sender {
-    NSDictionary *parameters = @{@"uid": [[NSNumber alloc] initWithInt:userID], @"activityId": self.savedActivity.ID, @"rating": [[NSNumber alloc] initWithInt:0]};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Rating" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    self.ratingView.hidden = YES;
-    self.activityView.hidden = NO;
-    [imageView removeFromSuperview];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //Loads another suggestion
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
-}
-
-- (IBAction)skipRating:(UIButton *)sender {
-    self.ratingView.hidden = YES;
-    self.activityView.hidden = NO;
-    [imageView removeFromSuperview];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity ID"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Image"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Saved Activity Title"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //Loads another suggestion
-    int indexOfTransport = self.modeOfTransportation.selectedSegmentIndex;
-    int indexOfFeeling = self.activityType.selectedSegmentIndex;
-    [self getNewActivity:indexOfTransport atFeeling:indexOfFeeling];
 }
 
 // Lazily instantiate the NSArray of VentureActivity's
@@ -251,6 +154,16 @@
     [self.activityView addGestureRecognizer:swipeRight];
     [self.activityView addGestureRecognizer:swipeUp];
     [self.activityView addGestureRecognizer:swipeLeft];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"Start Rating"]){
+        [self.activities removeAllObjects];
+        indexActivitiesArray = 0;
+        [imageView removeFromSuperview]; // Necessary?
+    } else if ([segue.identifier isEqualToString:@"Done With Rating"]) {
+        
+    }
 }
 
 - (IBAction)modeOfTransportChanged:(UISegmentedControl *)sender {
@@ -375,15 +288,9 @@
     [errorAlert show];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     //NSLog(@"didUpdateToLocation: %@", newLocation);
     currentLocation = newLocation;
-    
-    /*if (currentLocation != nil) {
-        NSString *lng = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
-        NSString *lat = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
-    }*/
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
