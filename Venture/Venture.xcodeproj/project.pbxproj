@@ -9,9 +9,14 @@
 /* Begin PBXBuildFile section */
 		63ACD4622AE64BEBADFEF43A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78645C9CFDEA406684F25E34 /* libPods.a */; };
 		650F280018FA94FA00957885 /* Lobster1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 650F27FF18FA94FA00957885 /* Lobster1.ttf */; };
+		652B1EC2192EE8D600CD967C /* SuggestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 652B1EC1192EE8D600CD967C /* SuggestionVC.m */; };
 		657C9F2A18FCCF51000792DB /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657C9F2918FCCF51000792DB /* GoogleMaps.framework */; };
 		657C9F2C18FCD24D000792DB /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */; };
 		657C9F4818FE357F000792DB /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657C9F4718FE357F000792DB /* RatingViewController.m */; };
+		659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */; };
+		659C9B79192F072D00F1AF59 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659C9B78192F072D00F1AF59 /* MapKit.framework */; };
+		659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */; };
+		659C9B85192F1FE300F1AF59 /* CreateAdventureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B84192F1FE300F1AF59 /* CreateAdventureVC.m */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -54,10 +59,19 @@
 
 /* Begin PBXFileReference section */
 		650F27FF18FA94FA00957885 /* Lobster1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Lobster1.ttf; path = VentureTests/Lobster1.ttf; sourceTree = SOURCE_ROOT; };
+		652B1EC0192EE8D600CD967C /* SuggestionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestionVC.h; sourceTree = "<group>"; };
+		652B1EC1192EE8D600CD967C /* SuggestionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestionVC.m; sourceTree = "<group>"; };
 		657C9F2918FCCF51000792DB /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		657C9F4618FE357F000792DB /* RatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingViewController.h; sourceTree = "<group>"; };
 		657C9F4718FE357F000792DB /* RatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingViewController.m; sourceTree = "<group>"; };
+		659C9B75192F010E00F1AF59 /* TrackAdventureVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackAdventureVC.h; sourceTree = "<group>"; };
+		659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackAdventureVC.m; sourceTree = "<group>"; };
+		659C9B78192F072D00F1AF59 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		659C9B80192F157700F1AF59 /* CreateAdventureTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAdventureTVC.h; sourceTree = "<group>"; };
+		659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAdventureTVC.m; sourceTree = "<group>"; };
+		659C9B83192F1FE300F1AF59 /* CreateAdventureVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAdventureVC.h; sourceTree = "<group>"; };
+		659C9B84192F1FE300F1AF59 /* CreateAdventureVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAdventureVC.m; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -101,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				659C9B79192F072D00F1AF59 /* MapKit.framework in Frameworks */,
 				65F45A0B18F9ED39007761AA /* SystemConfiguration.framework in Frameworks */,
 				65F45A0918F9ED30007761AA /* QuartzCore.framework in Frameworks */,
 				65F45A0718F9ED28007761AA /* OpenGLES.framework in Frameworks */,
@@ -166,6 +181,7 @@
 		65F459AF18F908D5007761AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				659C9B78192F072D00F1AF59 /* MapKit.framework */,
 				657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */,
 				657C9F2918FCCF51000792DB /* GoogleMaps.framework */,
 				65F45A0A18F9ED39007761AA /* SystemConfiguration.framework */,
@@ -239,6 +255,14 @@
 			children = (
 				65F459C518F908D5007761AA /* VentureViewController.h */,
 				65F459C618F908D5007761AA /* VentureViewController.m */,
+				652B1EC0192EE8D600CD967C /* SuggestionVC.h */,
+				652B1EC1192EE8D600CD967C /* SuggestionVC.m */,
+				659C9B75192F010E00F1AF59 /* TrackAdventureVC.h */,
+				659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */,
+				659C9B80192F157700F1AF59 /* CreateAdventureTVC.h */,
+				659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */,
+				659C9B83192F1FE300F1AF59 /* CreateAdventureVC.h */,
+				659C9B84192F1FE300F1AF59 /* CreateAdventureVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -392,10 +416,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				65F459EA18F9B91C007761AA /* HomeModel.m in Sources */,
+				659C9B85192F1FE300F1AF59 /* CreateAdventureVC.m in Sources */,
+				659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */,
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
+				652B1EC2192EE8D600CD967C /* SuggestionVC.m in Sources */,
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,
 				65F459BD18F908D5007761AA /* main.m in Sources */,
+				659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */,
 				65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

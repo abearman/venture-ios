@@ -103,7 +103,8 @@
 }
 
 - (void) viewDidLoad {
-    NSLog(@"View did load");
+    
+    
     [[self navigationController] setNavigationBarHidden:YES];
     [self registerForNotifications];
     [self.searchBar setShowsCancelButton:YES animated:YES];
@@ -143,6 +144,7 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
+    
     self.searchBar.delegate = self;
     
     self.spinner.hidesWhenStopped = YES;
