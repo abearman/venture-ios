@@ -50,13 +50,6 @@
     [self setUpUIofTable];
 }
 
-- (void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    //if (self.actionSheet.window) { // If the action sheet is on screen, window is non-nil
-        [self.actionSheet dismissWithClickedButtonIndex:self.actionSheet.cancelButtonIndex animated:animated];
-    //}
-}
-
 - (void) setUpUIofTable {
     self.descriptionCell.textLabel.text = @"Description";
     self.nameCell.textLabel.text = @"Name";
