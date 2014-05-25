@@ -13,6 +13,9 @@
 
 -(id)initWithLocationTracker:(VentureLocationTracker *)tracker;
 
+-(int)numberOfCachedAdventures;
+-(NSDictionary *)getCachedAdventureAtIndex:(int)i;
+-(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback;
 -(void)rateAdventure:(int)adventureId rating:(int)rating;
 -(void)associateFacebook:(NSString*)fuid;
 -(void)submitAdventure:(NSDictionary *)adventure;

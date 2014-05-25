@@ -17,5 +17,9 @@
 @property (readonly) NSString *lngAcc;
 @property (readonly) NSString *altitude;
 @property (readonly) NSString *altitudeAcc;
+@property CLLocation *currentLocation;
+
+-(void)setLocationToAddress:(NSString *)location;
+-(void)clearAddress;
 
 @end

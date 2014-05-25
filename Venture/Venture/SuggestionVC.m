@@ -14,20 +14,16 @@
 #import <pthread.h>
 #import <QuartzCore/QuartzCore.h>
 #import "RatingViewController.h"
-#import "HomeModel.h"
+#import "VentureLocationTracker.h"
+#import "VentureServerLayer.h"
 
 @interface SuggestionVC() <UISearchBarDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
 /* Model */
-@property (strong, nonatomic) HomeModel *model;
-@property (nonatomic) NSInteger userID;
 @property (nonatomic) NSInteger modeOfTransportation;
 @property (nonatomic) NSInteger activityType;
-
-/* Location */
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation *currentLocation;
-@property (strong, nonatomic) CLGeocoder *geocoder;
+@property (nonatomic) VentureLocationTracker *locationTracker;
+@property (nonatomic) VentureServerLayer *serverLayer;
 
 /* UI Outlets */
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -38,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityAddress;
 @property (weak, nonatomic) IBOutlet UILabel *activityDistanceAway;
 @property (weak, nonatomic) IBOutlet UIImageView *activityYelpRating;
-@property (strong, nonatomic) NSString *activityImgStr;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *activityJustification;
 @property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
@@ -47,52 +42,20 @@
 
 @implementation SuggestionVC
 
-@synthesize geocoder;
-@synthesize currentLocation;
-@synthesize locationManager;
-
 - (void) viewDidLoad {
     [super viewDidLoad];
     self.activityView.userInteractionEnabled = YES;
-    
+
+    self.locationTracker = [[VentureLocationTracker alloc] init];
+    self.serverLayer = [[VentureServerLayer alloc] initWithLocationTracker:self.locationTracker];
+
     self.modeOfTransportation = self.activityType = 0;
+
     [self setUpNavigationBar];
     [self setUpSearchBar];
-    [self startUpdatingLocation];
     [self setUpGestureRecognizers];
-    [self loadFirstSuggestion];
-}
 
-/*** LAZY INSTANTIATION OF OBJECTS ***/
-- (HomeModel *)model {
-    if (!_model) _model = [[HomeModel alloc] init];
-    return _model;
-}
-
-/*** LOCATION STUFF ***/
-
-- (void) startUpdatingLocation {
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.currentLocation = [[CLLocation alloc] init];
-    self.geocoder = [[CLGeocoder alloc] init];
-    
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-}
-
-#pragma mark CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //NSLog(@"didUpdateToLocation: %@", newLocation);
-    self.currentLocation = newLocation;
+    [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
 }
 
 /*** NAVIGATION BAR AND SEARCH BAR ***/
@@ -127,22 +90,9 @@
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
      NSString *specifiedLoc = self.searchBar.text;
-    
-    [self.geocoder geocodeAddressString:specifiedLoc
-         completionHandler:^(NSArray *placemarks, NSError *error) {
-             if (!error) {
-                 CLPlacemark *placemark = [placemarks firstObject];
-                 self.currentLocation = placemark.location;
-                 [self.locationManager stopUpdatingLocation];
-                 NSLog(@"New loc: %f, %f", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
 
-             } else {
-                 NSLog(@"There was a forward geocoding error\n%@",
-                       [error localizedDescription]);
-             }
-         }
-     ];
-    
+    [self.locationTracker setLocationToAddress:specifiedLoc];
+
     [self.searchBar resignFirstResponder];
     self.searchBar.hidden = YES;
 }
@@ -160,78 +110,39 @@
 }
 
 - (void) loadFirstSuggestion {
-    NSUUID *uuid = [[UIDevice currentDevice] identifierForVendor];
-    
-    NSDictionary *parameters = @{@"deviceid": uuid};
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:@"http://grapevine.stanford.edu:8080/VentureBrain/Device" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dict = (NSDictionary *)(responseObject);
-        self.userID = [[dict objectForKey:@"uid"] integerValue];
-        
-        //Loads first suggestion
-        [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
 }
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
     [self.spinner startAnimating];
-    [self.model downloadActivity:indexOfTransport atFeeling:indexOfFeeling withUser:self.userID atLatitude:currentLocation.coordinate.latitude atLongitude:currentLocation.coordinate.longitude withCallback:^(VentureActivity* activity) {
-        
-        self.activityName.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityName.alpha = 1;}
-                         completion:nil];
-        self.activityName.text = activity.title;
-        
-        self.activityAddress.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityAddress.alpha = 1;}
-                         completion:nil];
-        self.activityAddress.text = activity.address;
-        
-        self.activityJustification.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityJustification.alpha = 1;}
-                         completion:nil];
-        self.activityJustification.text = activity.justification;
-        
-        self.activityImgStr = activity.imageURL;
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.activityImgStr]];
-        self.imageView.image = [UIImage imageWithData:imageData];
-        self.imageView.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.imageView.alpha = 1;}
-                         completion:nil];
-
-        self.activityYelpRating.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityYelpRating.alpha = 1;}
-                         completion:nil];
-        NSString *yelpURL = activity.yelpRatingImageURL;
-        NSData *imageDataYelp = [NSData dataWithContentsOfURL:[NSURL URLWithString:yelpURL]];
-        self.activityYelpRating.image = [UIImage imageWithData:imageDataYelp];
-        
-        //Do google maps stuff to get time of travel and distance away
-        CLLocation *loc1 = currentLocation;
-        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[activity.lat doubleValue] longitude:[activity.lng doubleValue]];
-        
-        double distance = [loc1 distanceFromLocation:loc2];
-        distance /= 1000.0;
-        
-        self.activityDistanceAway.alpha = 0;
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ self.activityDistanceAway.alpha = 1;}
-                         completion:nil];
-        self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
-        
-        //stop spinner
+    [self.serverLayer getNewAdventureSuggestion:^(NSDictionary *suggestion) {
         [self.spinner stopAnimating];
 
-     }];
+        self.activityName.text = [suggestion objectForKey:@"title"];
+        self.activityAddress.text = [suggestion objectForKey:@"address"];
+        self.activityJustification.text = @"... todo/remove";
+
+        // Pull down the image async
+
+
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[suggestion valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+
+        [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            if (!error) {
+                NSData* imageData = [NSData dataWithContentsOfURL:location];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.imageView.image = [UIImage imageWithData:imageData];
+                });
+            }
+        }];
+
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[suggestion objectForKey:@"lat"] doubleValue] longitude:[[suggestion objectForKey:@"lng"] doubleValue]];
+
+        double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
+        distance /= 1000.0;
+        self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
+    }];
 }
 
 /*** GESTURE RECOGNIZERS ***/
