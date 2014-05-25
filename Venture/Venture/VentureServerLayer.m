@@ -113,11 +113,11 @@
         if (!error) {
             NSData* data = [NSData dataWithContentsOfURL:location];
             NSError* decodeJsonError = nil;
-            NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:0
                                                                    error:&decodeJsonError];
             dispatch_async(dispatch_get_main_queue(), ^{
-                callback(json);
+                callback([json mutableCopy]);
             });
         }
         else {

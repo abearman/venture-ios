@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityAddress;
 @property (weak, nonatomic) IBOutlet UILabel *activityDistanceAway;
 @property (weak, nonatomic) IBOutlet UIImageView *activityYelpRating;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *activityJustification;
 @property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
 
@@ -119,6 +119,19 @@
     }];
 }
 
+-(void)updateImageView {
+    // Clear all the old images out
+    for (UIView *view in self.imageView.subviews) {
+        [view removeFromSuperview];
+    }
+
+    // Add images for all the pictures in the cache
+    for (UIImage *image in [self.currentAdventure objectForKey:@"image_cache"]) {
+        UIImageView *picture = [[UIImageView alloc] initWithImage:image];
+        [self.imageView addSubview:picture];
+    }
+}
+
 - (void)setCurrentAdventure:(NSMutableDictionary *)currentAdventure {
     self.activityName.text = [currentAdventure objectForKey:@"title"];
     self.activityAddress.text = [currentAdventure objectForKey:@"address"];
@@ -147,21 +160,28 @@
 
         // Download all the images asynchronously
 
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[currentAdventure valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        for (NSString *imageURL in images) {
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
 
-        [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-            if (!error) {
-                if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
+            [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                if (!error) {
                     NSData *imageData = [NSData dataWithContentsOfURL:location];
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        NSLog(@"Got image %@",imageURL);
                         [[currentAdventure objectForKey:@"image_cache"] addObject:[UIImage imageWithData:imageData]];
-                        //self.imageView.image = ;
+                        if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
+                            NSLog(@"Adding image as subview");
+                            [self updateImageView];
+                        }
                     });
                 }
-            }
-        }];
+            }];
+        }
+    }
+    else {
+        [self updateImageView];
     }
 
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[currentAdventure objectForKey:@"lat"] doubleValue] longitude:[[currentAdventure objectForKey:@"lng"] doubleValue]];
