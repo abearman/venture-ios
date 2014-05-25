@@ -14,10 +14,10 @@
 -(id)initWithLocationTracker:(VentureLocationTracker *)tracker;
 
 -(int)numberOfCachedAdventures;
--(NSDictionary *)getCachedAdventureAtIndex:(int)i;
--(NSDictionary *)getPreviousCachedAdventureOrNull:(NSDictionary *)cachedAdventure;
--(NSDictionary *)getNextCachedAdventureOrNull:(NSDictionary *)cachedAdventure;
--(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback;
+-(NSMutableDictionary *)getCachedAdventureAtIndex:(int)i;
+-(NSMutableDictionary *)getPreviousCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure;
+-(NSMutableDictionary *)getNextCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure;
+-(void)getNewAdventureSuggestion:(void (^)(NSMutableDictionary *))callback;
 -(void)rateAdventure:(int)adventureId rating:(int)rating;
 -(void)associateFacebook:(NSString*)fuid;
 -(void)submitAdventure:(NSDictionary *)adventure;

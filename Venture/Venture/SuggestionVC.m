@@ -24,7 +24,7 @@
 @property (nonatomic) NSInteger activityType;
 @property (nonatomic) VentureLocationTracker *locationTracker;
 @property (nonatomic) VentureServerLayer *serverLayer;
-@property (nonatomic) NSDictionary *currentAdventure;
+@property (nonatomic) NSMutableDictionary *currentAdventure;
 
 /* UI Outlets */
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -113,34 +113,56 @@
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
     [self.spinner startAnimating];
     NSLog(@"Making call to server %@",self.serverLayer);
-    [self.serverLayer getNewAdventureSuggestion:^(NSDictionary *suggestion) {
+    [self.serverLayer getNewAdventureSuggestion:^(NSMutableDictionary *suggestion) {
         [self.spinner stopAnimating];
         self.currentAdventure = suggestion;
     }];
 }
 
-- (void)setCurrentAdventure:(NSDictionary *)currentAdventure {
+- (void)setCurrentAdventure:(NSMutableDictionary *)currentAdventure {
     self.activityName.text = [currentAdventure objectForKey:@"title"];
     self.activityAddress.text = [currentAdventure objectForKey:@"address"];
     self.activityJustification.text = @"... todo/remove";
 
-    // Pull down the image async
+    // Check if we've already downloaded the images for this guy in the past
 
+    if (![[currentAdventure allKeys] containsObject:@"image_cache"]) {
 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[currentAdventure valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        // Figure out a list of images to download
 
-    [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
-                NSData *imageData = [NSData dataWithContentsOfURL:location];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.imageView.image = [UIImage imageWithData:imageData];
-                });
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+
+        NSArray *metadataSources = [currentAdventure objectForKey:@"metadata"];
+        for (NSDictionary *metadataSource in metadataSources) {
+            NSString *source = [metadataSource objectForKey:@"source"];
+            if ([source isEqualToString:@"urbanspoon.com"]) {
+                NSArray *urbanspoonImages = [metadataSource objectForKey:@"urbanspoon_images"];
+                [images addObjectsFromArray:urbanspoonImages];
             }
         }
-    }];
+
+        // Setup the image cache to receive images
+
+        [currentAdventure setValue:[[NSMutableArray alloc] init] forKey:@"image_cache"];
+
+        // Download all the images asynchronously
+
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[currentAdventure valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+
+        [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            if (!error) {
+                if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
+                    NSData *imageData = [NSData dataWithContentsOfURL:location];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[currentAdventure objectForKey:@"image_cache"] addObject:[UIImage imageWithData:imageData]];
+                        //self.imageView.image = ;
+                    });
+                }
+            }
+        }];
+    }
 
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[currentAdventure objectForKey:@"lat"] doubleValue] longitude:[[currentAdventure objectForKey:@"lng"] doubleValue]];
 
