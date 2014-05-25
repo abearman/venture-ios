@@ -25,20 +25,20 @@
                                 <rect key="frame" x="0.0" y="108" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5b3-6w-4Dv">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5b3-6w-4Dv">
                                         <rect key="frame" x="13" y="0.0" width="287" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ln6-f1-z9O">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ln6-f1-z9O">
                                         <rect key="frame" x="9" y="20" width="295" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRs-U4-qB7">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRs-U4-qB7">
                                         <rect key="frame" x="9" y="55" width="295" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
@@ -56,12 +56,12 @@
                                             <constraint firstAttribute="height" constant="20" id="nRn-Wn-UYi"/>
                                         </constraints>
                                     </imageView>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ylr-oe-3jf" userLabel="spinner">
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ylr-oe-3jf" userLabel="spinner">
                                         <rect key="frame" x="146" y="131" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="QeY-yJ-4Tl" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO">
-                                        <rect key="frame" x="0" y="86" width="320" height="189"/>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeY-yJ-4Tl">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="189"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </scrollView>
                                 </subviews>
@@ -71,18 +71,18 @@
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="centerX" secondItem="ylr-oe-3jf" secondAttribute="centerX" id="CMK-iS-1DX"/>
                                     <constraint firstAttribute="trailing" secondItem="5b3-6w-4Dv" secondAttribute="trailing" constant="20" symbolic="YES" id="EAF-d7-aH4"/>
                                     <constraint firstItem="ln6-f1-z9O" firstAttribute="leading" secondItem="0Gj-wh-7IF" secondAttribute="leading" constant="9" id="Hn1-OP-hhd"/>
+                                    <constraint firstAttribute="bottom" secondItem="Aur-Jc-1aR" secondAttribute="bottom" constant="157" id="IxH-4g-ebA"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="top" secondItem="5b3-6w-4Dv" secondAttribute="bottom" constant="34" id="Kn8-Nd-uQq"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="trailing" secondItem="ln6-f1-z9O" secondAttribute="trailing" id="M6m-Kb-Ndx"/>
+                                    <constraint firstAttribute="bottom" secondItem="ylr-oe-3jf" secondAttribute="bottom" constant="309" id="N45-XZ-eyw"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="top" secondItem="ln6-f1-z9O" secondAttribute="bottom" constant="8" symbolic="YES" id="OI5-TR-nI4"/>
+                                    <constraint firstAttribute="bottom" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="382" id="PXQ-kf-P6H"/>
+                                    <constraint firstItem="Aur-Jc-1aR" firstAttribute="centerX" secondItem="0Gj-wh-7IF" secondAttribute="centerX" id="RqE-C5-wbQ"/>
                                     <constraint firstItem="ln6-f1-z9O" firstAttribute="centerX" secondItem="5b3-6w-4Dv" secondAttribute="centerX" id="YS9-yI-tU9"/>
                                     <constraint firstItem="5b3-6w-4Dv" firstAttribute="top" secondItem="0Gj-wh-7IF" secondAttribute="top" id="dw6-O0-beq"/>
                                     <constraint firstItem="5b3-6w-4Dv" firstAttribute="leading" secondItem="0Gj-wh-7IF" secondAttribute="leading" constant="13" id="eFb-s5-aEK"/>
-                                    <constraint firstItem="ylr-oe-3jf" firstAttribute="top" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="53" id="msb-iF-X5X"/>
-                                    <constraint firstItem="0Gj-wh-7IF" firstAttribute="bottom" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="382" id="PXQ-kf-P6H"/>
                                     <constraint firstItem="ylr-oe-3jf" firstAttribute="leading" secondItem="0Gj-wh-7IF" secondAttribute="leading" constant="147" id="klk-gV-ZX0"/>
-                                    <constraint firstItem="0Gj-wh-7IF" firstAttribute="bottom" secondItem="ylr-oe-3jf" secondAttribute="bottom" constant="309" id="N45-XZ-eyw"/>
-                                    <constraint firstItem="Aur-Jc-1aR" firstAttribute="centerX" secondItem="0Gj-wh-7IF" secondAttribute="centerX" constant="0" id="RqE-C5-wbQ"/>
-                                    <constraint firstItem="0Gj-wh-7IF" firstAttribute="bottom" secondItem="Aur-Jc-1aR" secondAttribute="bottom" constant="157" id="IxH-4g-ebA"/>
+                                    <constraint firstItem="ylr-oe-3jf" firstAttribute="top" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="53" id="msb-iF-X5X"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -570,7 +570,7 @@
             </objects>
             <point key="canvasLocation" x="-2141" y="-474"/>
         </scene>
-        <!--SuggestionVC-->
+        <!--GroupVC-->
         <scene sceneID="rBW-rK-hPn">
             <objects>
                 <viewController id="E78-Ai-arX" customClass="GroupVC" sceneMemberID="viewController">
@@ -582,7 +582,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="UGy-XG-div" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" customClass="FBLoginView">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UGy-XG-div" customClass="FBLoginView">
                                 <rect key="frame" x="20" y="77" width="280" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -590,10 +590,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Lql-il-pVx">
-                    </navigationItem>
-                    <connections>
-                    </connections>
+                    <navigationItem key="navigationItem" id="Lql-il-pVx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4c-Vq-ghG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
