@@ -263,21 +263,24 @@
     [self.actionSheet showInView:self.view];
 }
 
-- (IBAction)submitAdventure:(UIBarButtonItem *)sender {
+- (NSArray *)getBase64Images {
     NSMutableArray *mutablePhotosArray = [[NSMutableArray alloc] init]; // Array of photo data
     for (UIImageView *imageView in self.imageViews) {
         UIImage *image = imageView.image;
         NSData *imageData = UIImagePNGRepresentation(image);
-        [mutablePhotosArray addObject:imageData];
+        NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [mutablePhotosArray addObject:imageBase64];
     }
     
-    NSArray *photosArray = [[NSArray alloc] initWithArray:mutablePhotosArray];
-    
+    return [[NSArray alloc] initWithArray:mutablePhotosArray];
+}
+
+- (IBAction)submitAdventure:(UIBarButtonItem *)sender {
     self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                    nameTextField.text , @"title",
                                    descriptionTextField.text , @"description",
                                    categoryTextField.text , @"type",
-                                   //photosArray, @"photos",
+                                   [self getBase64Images], @"photos",
                                    nil];
     
     if ([nameTextField.text isEqualToString:@""]) {
@@ -285,7 +288,7 @@
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
     } else {
-        //[self.serverLayer submitAdventure:adventureDict];
+        [self.serverLayer submitAdventure:self.adventureDict];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -298,10 +301,10 @@
                               titleText, @"title",
                               descriptionTextField.text , @"description",
                               categoryTextField.text , @"type",
-                              //photosArray, @"photos",
+                              [self getBase64Images], @"photos",
                               nil];
         
-        //[self.serverLayer submitAdventure:adventureDict];
+        [self.serverLayer submitAdventure:self.adventureDict];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
