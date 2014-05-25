@@ -41,6 +41,13 @@
     [self setUpDelegates];
     [self initializeAllProperties];
     [self setUpGrid];
+    [self setUpUIofTable];
+}
+
+- (void) setUpUIofTable {
+    self.descriptionCell.textLabel.text = @"Description";
+    self.nameCell.textLabel.text = @"Name";
+    self.categoryCell.textLabel.text = @"Category";
 }
 
 - (void) initializeAllProperties {
@@ -52,7 +59,6 @@
     self.nameTextField.delegate = self;
     self.descriptionTextField.delegate = self;
     self.categoryTextField.delegate = self;
-    
 }
 
 - (void) setUpGrid {
@@ -133,20 +139,17 @@
         }
         
     } else if ([actionSheet.title isEqualToString:@"Photos"]) {
-        if (buttonIndex == 0) { // Take Photo
+        // If they didn't hit the Cancel button
+        if (buttonIndex < 2) {
             UIImagePickerController *picker = [[UIImagePickerController alloc] init];
             picker.delegate = self;
             picker.allowsEditing = YES;
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:picker animated:YES completion:NULL];
             
-        } else if (buttonIndex == 1) { // Choose Existing
-            
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-            picker.delegate = self;
-            picker.allowsEditing = YES;
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            
+            if (buttonIndex == 0) { // Take Photo
+                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            } else if (buttonIndex == 1) { // Choose Existing
+                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            }
             [self presentViewController:picker animated:YES completion:NULL];
         }
     }
@@ -186,6 +189,10 @@
             if (index >= self.grid.minimumNumberOfCells - 1) break;
             UIImageView *imageView = [self.imageViews objectAtIndex:index];
             CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
+            
+            viewRect.size = CGSizeMake(viewRect.size.width - 4, viewRect.size.height - 4);
+            viewRect.origin = CGPointMake(viewRect.origin.x + 2, viewRect.origin.y + 2);
+            
             imageView.frame = viewRect;
             index++;
         }
@@ -205,6 +212,10 @@
             imageView.userInteractionEnabled = YES;
             index++;
             CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
+            
+            viewRect.size = CGSizeMake(viewRect.size.width - 4, viewRect.size.height - 4);
+            viewRect.origin = CGPointMake(viewRect.origin.x + 2, viewRect.origin.y + 2);
+            
             imageView.frame = viewRect;
             [self.photosView addSubview:imageView];
         }
