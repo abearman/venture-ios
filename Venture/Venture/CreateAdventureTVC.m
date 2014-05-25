@@ -128,7 +128,9 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex: (NSInteger)buttonIndex {
 	NSLog(@"Index is %i", buttonIndex);
     if ([actionSheet.title isEqualToString:@"Category"]) {
-        self.categoryTextField.text = NSLocalizedString([self.categories objectAtIndex:buttonIndex], @"");
+        if (buttonIndex < [self.categories count]) {
+            self.categoryTextField.text = NSLocalizedString([self.categories objectAtIndex:buttonIndex], @"");
+        }
         
     } else if ([actionSheet.title isEqualToString:@"Photos"]) {
         if (buttonIndex == 0) { // Take Photo
@@ -200,6 +202,7 @@
             if (i > row) j = 0;
             if (index >= self.grid.minimumNumberOfCells) return;
             UIImageView *imageView = [self.imageViews objectAtIndex:index];
+            imageView.userInteractionEnabled = YES;
             index++;
             CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
             imageView.frame = viewRect;

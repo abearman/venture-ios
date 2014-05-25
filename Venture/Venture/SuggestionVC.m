@@ -107,7 +107,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"You have pressed the %@ button", [actionSheet buttonTitleAtIndex:buttonIndex]);
-    self.modeOfTransportation = buttonIndex;
+    if (buttonIndex < 4) self.modeOfTransportation = buttonIndex;
 }
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
