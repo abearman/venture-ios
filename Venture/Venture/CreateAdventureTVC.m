@@ -8,22 +8,37 @@
 
 #import "CreateAdventureTVC.h"
 
-@interface CreateAdventureTVC () <UIPickerViewDataSource,UIPickerViewDelegate>
+@interface CreateAdventureTVC () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
 
-@property (strong, nonatomic) NSArray *categoryArray;
+@property (strong, nonatomic) NSArray *categories;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *nameCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *descriptionCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *categoryCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *photosCell;
+
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet UITextField *categoryTextField;
+
+@property (strong, nonatomic) UITextField *submitButton;
 
 @end
 
 @implementation CreateAdventureTVC
 
+@synthesize nameCell, descriptionCell, categoryCell, photosCell;
+@synthesize nameTextField, descriptionTextField, categoryTextField, submitButton;
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     [self setUpNavigationBar];
-    self.picker.delegate = self;
-    self.picker.dataSource = self;
-    self.categoryArray = [[NSArray alloc] initWithObjects:@"Restaurant", @"Park", @"Movie", @"Bar", @"Arts", @"Shopping" , nil];
+    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Category"];
+    self.categories = [[NSArray alloc] initWithObjects:@"Restaurant", @"Park", @"Movie", @"Bar", @"Arts", @"Shopping", nil];
 
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Category"];
+    self.nameTextField.delegate = self;
+    self.descriptionTextField.delegate = self;
+    self.categoryTextField.delegate = self;
 }
 
 - (void) setUpNavigationBar {
@@ -48,86 +63,66 @@
     return 4;
 }
 
-- (void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return self.nameCell;
+    }
+    if (indexPath.row == 1) {
+        return self.descriptionCell;
+    }
+    if (indexPath.row == 2) {
+        return self.categoryCell;
+    }
+    return self.photosCell;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self insertRowsAtIndexPaths:[[NSArray alloc] initWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationRight];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	return YES;
 }
 
-/*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Category" forIndexPath:indexPath];
-    
-    return cell;
-}*/
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+	if (textField == self.categoryTextField) {
+		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:
+                                      NSLocalizedString(@"Category", @"")
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:
+                                      NSLocalizedString(@"Restaurant", @""),
+                                      NSLocalizedString(@"Park", @""),
+                                      NSLocalizedString(@"Movie", @""),
+                                       NSLocalizedString(@"Bar", @""),
+                                       NSLocalizedString(@"Arts", @""),
+                                       NSLocalizedString(@"Shopping", @""),
+                                      nil];
+		[actionSheet showInView:self.view];
+	
+    }
 }
 
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger)component {
-    return 6;
+// Called when a button is clicked. The view will be automatically dismissed after this call returns
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex: (NSInteger)buttonIndex {
+	NSLog(@"Index is %i", buttonIndex);
+    self.categoryTextField.text = NSLocalizedString([self.categories objectAtIndex:buttonIndex], @"");
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [self.categoryArray objectAtIndex:row];
+- (IBAction)uploadPhotosClicked:(UIButton *)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:
+                                  NSLocalizedString(@"Category", @"")
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:
+                                  NSLocalizedString(@"Take Photo", @""),
+                                  NSLocalizedString(@"Choose Existing", @""),
+                                  nil];
+    [actionSheet showInView:self.view];
 }
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    // Do something
-}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
