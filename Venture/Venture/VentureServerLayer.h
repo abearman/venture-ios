@@ -15,6 +15,8 @@
 
 -(int)numberOfCachedAdventures;
 -(NSDictionary *)getCachedAdventureAtIndex:(int)i;
+-(NSDictionary *)getPreviousCachedAdventureOrNull:(NSDictionary *)cachedAdventure;
+-(NSDictionary *)getNextCachedAdventureOrNull:(NSDictionary *)cachedAdventure;
 -(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback;
 -(void)rateAdventure:(int)adventureId rating:(int)rating;
 -(void)associateFacebook:(NSString*)fuid;
