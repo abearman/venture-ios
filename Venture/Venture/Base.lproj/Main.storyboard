@@ -522,7 +522,13 @@
                             <outlet property="delegate" destination="H4X-af-A9N" id="ciA-dm-ouM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="zgb-TT-RyW"/>
+                    <navigationItem key="navigationItem" id="zgb-TT-RyW">
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="DuF-R0-Vi0">
+                            <connections>
+                                <action selector="submitAdventure:" destination="H4X-af-A9N" id="quI-R0-yo4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="categoryCell" destination="Kpw-aq-xXy" id="meY-XO-47k"/>
                         <outlet property="categoryTextField" destination="Ucj-K8-q0n" id="AYh-Zt-mJT"/>
@@ -537,54 +543,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-D9-bXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1201" y="-1162"/>
-        </scene>
-        <!--Photo PickerVC-->
-        <scene sceneID="lEF-Wn-Q0U">
-            <objects>
-                <viewController id="O0q-cu-qcc" customClass="PhotoPickerVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="cUv-O4-dsV"/>
-                        <viewControllerLayoutGuide type="bottom" id="Rdk-Pp-FNj"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="o8y-uT-Xze">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b9e-23-f6o">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="470"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gty-nk-L5a">
-                                <rect key="frame" x="120" y="478" width="80" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Take Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePhoto:" destination="O0q-cu-qcc" eventType="touchUpInside" id="boA-Ke-0rO"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXy-0u-CRU">
-                                <rect key="frame" x="103" y="518" width="114" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Select Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectPhoto:" destination="O0q-cu-qcc" eventType="touchUpInside" id="6xC-aJ-QXy"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="I2B-ye-c83"/>
-                    <connections>
-                        <outlet property="imageView" destination="b9e-23-f6o" id="H4f-PP-mAH"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vHq-UB-bLK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-805" y="-1162"/>
         </scene>
         <!--Navigation Controller - Submit-->
         <scene sceneID="ZhA-PZ-m6C">

@@ -8,9 +8,11 @@
 
 #import "CreateAdventureTVC.h"
 #import "Grid.h"
+#import "VentureServerLayer.h"
 
 @interface CreateAdventureTVC () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
+@property (nonatomic) VentureServerLayer *serverLayer;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) NSMutableArray *imageViews;
 
@@ -257,8 +259,38 @@
     [actionSheet showInView:self.view];
 }
 
+- (IBAction)submitAdventure:(UIBarButtonItem *)sender {
+    NSMutableArray *mutablePhotosArray = [[NSMutableArray alloc] init]; // Array of photo data
+    for (UIImageView *imageView in self.imageViews) {
+        UIImage *image = imageView.image;
+        NSData *imageData = UIImagePNGRepresentation(image);
+        [mutablePhotosArray addObject:imageData];
+    }
+    
+    NSArray *photosArray = [[NSArray alloc] initWithArray:mutablePhotosArray];
+    
+    NSDictionary *adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   nameTextField.text , @"title",
+                                   descriptionTextField.text , @"description",
+                                   categoryTextField.text , @"type",
+                                   photosArray, @"photos",
+                                   nil];
+    
+    [self.serverLayer submitAdventure:adventureDict];
+}
+
 
 @end
+
+
+
+
+
+
+
+
+
+
 
 
 

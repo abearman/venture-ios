@@ -8,7 +8,7 @@
 #import "VentureLocationTracker.h"
 #import "NSDictionary+URLEncoding.h"
 
-#define SERVER_BASE_URL @"http://128.12.18.127:9000"
+#define SERVER_BASE_URL @"http://localhost:9000"
 
 @implementation VentureServerLayer {
     VentureLocationTracker *tracker;
