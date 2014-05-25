@@ -10,7 +10,7 @@
 #import "Grid.h"
 #import "VentureServerLayer.h"
 
-@interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
+@interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) VentureServerLayer *serverLayer;
 @property (strong, nonatomic) NSArray *categories;
@@ -32,6 +32,7 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (strong, nonatomic) UIImageView *imageViewToDelete;
+@property (strong, nonatomic) NSDictionary *adventureDict;
 
 @end
 
@@ -272,15 +273,46 @@
     
     NSArray *photosArray = [[NSArray alloc] initWithArray:mutablePhotosArray];
     
-    NSDictionary *adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+    self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                    nameTextField.text , @"title",
                                    descriptionTextField.text , @"description",
                                    categoryTextField.text , @"type",
                                    //photosArray, @"photos",
                                    nil];
     
-    //[self.serverLayer submitAdventure:adventureDict];
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([nameTextField.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Field" message:@"You must enter a title for this activity" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Submit", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [alert show];
+    } else {
+        //[self.serverLayer submitAdventure:adventureDict];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"Submit"]) {
+        self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              [alertView textFieldAtIndex:0] , @"title",
+                              descriptionTextField.text , @"description",
+                              categoryTextField.text , @"type",
+                              //photosArray, @"photos",
+                              nil];
+        
+        //[self.serverLayer submitAdventure:adventureDict];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    NSString *nameInput = [[alertView textFieldAtIndex:0] text];
+    if( [nameInput length] > 0) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
 }
 
 
