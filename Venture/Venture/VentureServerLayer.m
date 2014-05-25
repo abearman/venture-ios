@@ -8,7 +8,7 @@
 #import "VentureLocationTracker.h"
 #import "NSDictionary+URLEncoding.h"
 
-#define SERVER_BASE_URL @"http://localhost:9000"
+#define SERVER_BASE_URL @"http://128.12.18.127:9000"
 
 @implementation VentureServerLayer {
     VentureLocationTracker *tracker;
@@ -30,24 +30,24 @@
     return [cachedAdventures count];
 }
 
--(NSDictionary *)getCachedAdventureAtIndex:(int)i {
+-(NSMutableDictionary *)getCachedAdventureAtIndex:(int)i {
     return [cachedAdventures objectAtIndex:i];
 }
 
--(NSDictionary *)getPreviousCachedAdventureOrNull:(NSDictionary *)cachedAdventure {
+-(NSMutableDictionary *)getPreviousCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure {
     int index = [cachedAdventures indexOfObject:cachedAdventure];
     if (index > 0) return [cachedAdventures objectAtIndex:index-1];
     return NULL;
 }
 
--(NSDictionary *)getNextCachedAdventureOrNull:(NSDictionary *)cachedAdventure {
+-(NSMutableDictionary *)getNextCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure {
     int index = [cachedAdventures indexOfObject:cachedAdventure];
     if (index < [cachedAdventures count] - 1) return [cachedAdventures objectAtIndex:index+1];
     return NULL;
 }
 
--(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback {
-    [self makeCallToVentureServer:@"/get-suggestion" callback:^(NSDictionary *adventure) {
+-(void)getNewAdventureSuggestion:(void (^)(NSMutableDictionary *))callback {
+    [self makeCallToVentureServer:@"/get-suggestion" callback:^(NSMutableDictionary *adventure) {
         if ([cachedAdventures containsObject:adventure]) [cachedAdventures removeObject:adventure];
         [cachedAdventures addObject:adventure];
         callback(adventure);
@@ -86,11 +86,11 @@
     [self makeCallToVentureServer:uri additionalData:additionalData callback:^(NSDictionary * dict){}];
 }
 
--(void)makeCallToVentureServer:(NSString *)uri callback:(void (^)(NSDictionary *))callback {
+-(void)makeCallToVentureServer:(NSString *)uri callback:(void (^)(NSMutableDictionary *))callback {
     [self makeCallToVentureServer:uri additionalData:[[NSDictionary alloc] init] callback:callback];
 }
 
--(void)makeCallToVentureServer:(NSString *)uri additionalData:(NSDictionary *)additionalData callback:(void (^)(NSDictionary *))callback {
+-(void)makeCallToVentureServer:(NSString *)uri additionalData:(NSDictionary *)additionalData callback:(void (^)(NSMutableDictionary *))callback {
     NSMutableDictionary *serverData = [[NSMutableDictionary alloc] init];
     [serverData addEntriesFromDictionary:additionalData];
     [serverData setValue:[[[UIDevice currentDevice] identifierForVendor] UUIDString] forKey:@"uid"];
@@ -113,7 +113,7 @@
         if (!error) {
             NSData* data = [NSData dataWithContentsOfURL:location];
             NSError* decodeJsonError = nil;
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+            NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:0
                                                                    error:&decodeJsonError];
             dispatch_async(dispatch_get_main_queue(), ^{

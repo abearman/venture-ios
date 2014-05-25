@@ -46,6 +46,7 @@
 		85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA532C7024A73A8B7A877F /* VentureServerLayer.m */; };
 		85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */; };
 		85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */; };
+		85BA5E6A375FBC168007C5FB /* GroupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA5CAD508A9401656FF10F /* GroupVC.m */; };
 		E6D4937B19327788007572CD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D4937A19327788007572CD /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,9 +108,11 @@
 		78645C9CFDEA406684F25E34 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureLocationTracker.m; sourceTree = "<group>"; };
 		85BA532C7024A73A8B7A877F /* VentureServerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureServerLayer.m; sourceTree = "<group>"; };
+		85BA54304C7D9836FB543428 /* GroupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupVC.h; sourceTree = "<group>"; };
 		85BA55E7EB26E41339110E12 /* NSDictionary+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+URLEncoding.h"; sourceTree = "<group>"; };
 		85BA57D199588471DBD81856 /* VentureServerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureServerLayer.h; sourceTree = "<group>"; };
 		85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+URLEncoding.m"; sourceTree = "<group>"; };
+		85BA5CAD508A9401656FF10F /* GroupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupVC.m; sourceTree = "<group>"; };
 		85BA5FAFBBB6D3C4FB1A0D32 /* VentureLocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureLocationTracker.h; sourceTree = "<group>"; };
 		B8C0485417A148F58CAAE8E5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E6D4937A19327788007572CD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */,
 				659C9B80192F157700F1AF59 /* CreateAdventureTVC.h */,
 				659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */,
+				85BA5CAD508A9401656FF10F /* GroupVC.m */,
+				85BA54304C7D9836FB543428 /* GroupVC.h */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */,
 				85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */,
 				85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */,
+				85BA5E6A375FBC168007C5FB /* GroupVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
