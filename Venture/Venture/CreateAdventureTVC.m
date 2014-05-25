@@ -293,8 +293,9 @@
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"Submit"]) {
+        NSString *titleText = [alertView textFieldAtIndex:0].text;
         self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              [alertView textFieldAtIndex:0] , @"title",
+                              titleText, @"title",
                               descriptionTextField.text , @"description",
                               categoryTextField.text , @"type",
                               //photosArray, @"photos",
