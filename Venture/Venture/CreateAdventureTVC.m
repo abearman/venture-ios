@@ -9,6 +9,7 @@
 #import "CreateAdventureTVC.h"
 #import "Grid.h"
 #import "VentureServerLayer.h"
+#import "TrackAdventureVC.h"
 
 @interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -274,27 +275,40 @@
     return [[NSArray alloc] initWithArray:mutablePhotosArray];
 }
 
+- (void) constructAndSubmitAdventureWithTitle: (NSString *)title {
+    NSNumber *lat = [NSNumber numberWithFloat:self.annotation.coordinate.latitude];
+    NSNumber *lng = [NSNumber numberWithFloat:self.annotation.coordinate.longitude];
+    NSArray *imagesBase64 = [self getBase64Images];
+    
+    self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          title, @"title",
+                          descriptionTextField.text , @"description",
+                          categoryTextField.text , @"type",
+                          lat, @"lat",
+                          lng, @"lng",
+                          imagesBase64, @"photos",
+                          nil];
+    
+    [self.serverLayer submitAdventure:self.adventureDict];
+    
+    TrackAdventureVC *tavc = [[self.navigationController viewControllers] objectAtIndex:0];
+    [tavc.mapView removeAnnotation:tavc.selectedAnnotation];
+    
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = tavc.selectedAnnotation.coordinate;
+    annotation.title = title;
+    [tavc.mapView addAnnotation:annotation];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (IBAction)submitAdventure:(UIBarButtonItem *)sender {
     if ([nameTextField.text isEqualToString:@""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Field" message:@"You must enter a title for this activity" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Submit", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
     } else {
-        NSNumber *lat = [NSNumber numberWithFloat:self.annotation.coordinate.latitude];
-        NSNumber *lng = [NSNumber numberWithFloat:self.annotation.coordinate.longitude];
-        NSArray *imagesBase64 = [self getBase64Images];
-        
-        self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              nameTextField.text , @"title",
-                              descriptionTextField.text , @"description",
-                              categoryTextField.text , @"type",
-                              lat, @"lat",
-                              lng, @"lng",
-                              imagesBase64, @"photos",
-                              nil];
-        
-        [self.serverLayer submitAdventure:self.adventureDict];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self constructAndSubmitAdventureWithTitle:nameTextField.text];
     }
 }
 
@@ -302,21 +316,7 @@
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"Submit"]) {
         NSString *titleText = [alertView textFieldAtIndex:0].text;
-        NSNumber *lat = [NSNumber numberWithFloat:self.annotation.coordinate.latitude];
-        NSNumber *lng = [NSNumber numberWithFloat:self.annotation.coordinate.longitude];
-        NSArray *imagesBase64 = [self getBase64Images];
-        
-        self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              titleText, @"title",
-                              descriptionTextField.text , @"description",
-                              categoryTextField.text , @"type",
-                              lat, @"lat",
-                              lng, @"lng",
-                              imagesBase64, @"photos",
-                              nil];
-        
-        [self.serverLayer submitAdventure:self.adventureDict];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self constructAndSubmitAdventureWithTitle:titleText];
     }
 }
 

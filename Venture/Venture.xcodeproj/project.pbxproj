@@ -17,6 +17,8 @@
 		659C9B79192F072D00F1AF59 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659C9B78192F072D00F1AF59 /* MapKit.framework */; };
 		659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */; };
 		65DDF647193274DF0034C60D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF646193274DF0034C60D /* Grid.m */; };
+		65DDF64B1932A2D40034C60D /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */; };
+		65DDF64E1932A2F30034C60D /* VentureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF64C1932A2F30034C60D /* VentureModel.xcdatamodeld */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -75,6 +77,9 @@
 		659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAdventureTVC.m; sourceTree = "<group>"; };
 		65DDF645193274DF0034C60D /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		65DDF646193274DF0034C60D /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid.m; sourceTree = "<group>"; };
+		65DDF6491932A2D40034C60D /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		65DDF64D1932A2F30034C60D /* VentureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VentureModel.xcdatamodel; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -173,6 +178,16 @@
 			name = iPad;
 			sourceTree = "<group>";
 		};
+		65DDF6481932A2A90034C60D /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				65DDF6491932A2D40034C60D /* CoreDataTableViewController.h */,
+				65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */,
+				65DDF64C1932A2F30034C60D /* VentureModel.xcdatamodeld */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		65F459A418F908D5007761AA = {
 			isa = PBXGroup;
 			children = (
@@ -225,14 +240,15 @@
 		65F459B618F908D5007761AA /* Venture */ = {
 			isa = PBXGroup;
 			children = (
-				65332DA618FC7BBC00E5C5EC /* Resources */,
-				65DDF63E19306CC70034C60D /* iPad */,
+				65F459EB18F9B924007761AA /* Model */,
 				65F459ED18F9B93B007761AA /* View */,
 				65F459EC18F9B933007761AA /* Controller */,
 				65F459C818F908D5007761AA /* Images.xcassets */,
+				65DDF6481932A2A90034C60D /* Core Data */,
 				65F459B718F908D5007761AA /* Supporting Files */,
-				65F459EB18F9B924007761AA /* Model */,
 				85BA5B66B9485B69D2C14C19 /* Utils */,
+				65DDF63E19306CC70034C60D /* iPad */,
+				65332DA618FC7BBC00E5C5EC /* Resources */,
 			);
 			path = Venture;
 			sourceTree = "<group>";
@@ -452,7 +468,9 @@
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,
 				65F459BD18F908D5007761AA /* main.m in Sources */,
+				65DDF64E1932A2F30034C60D /* VentureModel.xcdatamodeld in Sources */,
 				659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */,
+				65DDF64B1932A2D40034C60D /* CoreDataTableViewController.m in Sources */,
 				85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */,
 				85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */,
 				85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */,
@@ -688,6 +706,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		65DDF64C1932A2F30034C60D /* VentureModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				65DDF64D1932A2F30034C60D /* VentureModel.xcdatamodel */,
+			);
+			currentVersion = 65DDF64D1932A2F30034C60D /* VentureModel.xcdatamodel */;
+			path = VentureModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 65F459A518F908D5007761AA /* Project object */;
 }

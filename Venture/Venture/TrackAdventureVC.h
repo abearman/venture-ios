@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 @interface TrackAdventureVC : UIViewController
+
+@property (strong, nonatomic) MKPointAnnotation *selectedAnnotation;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
