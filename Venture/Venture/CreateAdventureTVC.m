@@ -27,6 +27,9 @@
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) UITextField *submitButton;
 
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
+@property (strong, nonatomic) UIImageView *imageViewToDelete;
+
 @end
 
 @implementation CreateAdventureTVC
@@ -48,6 +51,10 @@
     self.descriptionCell.textLabel.text = @"Description";
     self.nameCell.textLabel.text = @"Name";
     self.categoryCell.textLabel.text = @"Category";
+    
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    self.tapRecognizer.numberOfTapsRequired = 1;
+    [self.photosView addGestureRecognizer:self.tapRecognizer];
 }
 
 - (void) initializeAllProperties {
@@ -152,6 +159,13 @@
             }
             [self presentViewController:picker animated:YES completion:NULL];
         }
+    } else if ([actionSheet.title isEqualToString:@""]) {
+        if (buttonIndex == 0) { // Delete Photo
+            [self.imageViews removeObject:self.imageViewToDelete];
+            self.grid.minimumNumberOfCells--;
+            [self.imageViewToDelete removeFromSuperview];
+            [self resizeExistingPhotos:NO];
+        }
     }
 }
 
@@ -176,17 +190,22 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:chosenImage];
     [self.imageViews addObject:imageView];
     
-    [self resizeExistingPhotos];
+    [self resizeExistingPhotos:YES];
     [self addPhoto];
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)resizeExistingPhotos {
+- (void)resizeExistingPhotos: (BOOL)isAdditive {
     int index = 0;
     for (int i = 0; i < self.grid.rowCount; i++) {
         for (int j = 0; j < self.grid.columnCount; j++) {
-            if (index >= self.grid.minimumNumberOfCells - 1) break;
+            if (isAdditive) {
+                if (index >= self.grid.minimumNumberOfCells - 1) break;
+            } else {
+                if (index >= self.grid.minimumNumberOfCells) break;
+            }
+            
             UIImageView *imageView = [self.imageViews objectAtIndex:index];
             CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
             
@@ -217,9 +236,25 @@
             viewRect.origin = CGPointMake(viewRect.origin.x + 2, viewRect.origin.y + 2);
             
             imageView.frame = viewRect;
+            
             [self.photosView addSubview:imageView];
         }
     }
+}
+
+-(void)tapAction {
+    CGPoint point = [self.tapRecognizer locationInView:self.photosView];
+    UIView *tappedView = [self.photosView hitTest:point withEvent:nil];
+    UIImageView *tappedImageView = (UIImageView *)tappedView;
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"", @"")
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Delete"
+                                                    otherButtonTitles:nil];
+    
+    self.imageViewToDelete = tappedImageView;
+    [actionSheet showInView:self.view];
 }
 
 
