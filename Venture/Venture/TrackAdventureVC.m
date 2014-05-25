@@ -27,20 +27,9 @@
     [super viewDidLoad];
     [self setUpNavigationBar];
     [self setUpGestureRecognizersForMap];
-    
-    [self.mapView.userLocation addObserver:self forKeyPath:@"location" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
-}
-
-- (void) viewWillAppear:(BOOL)animated {
     self.mapView.delegate = self;
     
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = 40.740384;
-    coordinate.longitude = -73.991146;
-    
-    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-    point.coordinate = coordinate;
-    [self.mapView addAnnotation:point];
+    [self.mapView.userLocation addObserver:self forKeyPath:@"location" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 }
 
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered {
