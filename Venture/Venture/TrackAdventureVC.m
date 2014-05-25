@@ -9,12 +9,10 @@
 #import "TrackAdventureVC.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreLocation/CoreLocation.h>
-#import <AFHTTPRequestOperationManager.h>
 #import <GoogleMaps/GoogleMaps.h>
-#import <pthread.h>
 #import <QuartzCore/QuartzCore.h>
-#import "RatingViewController.h"
 #import <MapKit/MapKit.h>
+#import "CreateAdventureTVC.h"
 
 #define METERS_PER_MILE 1609.344
 #define DURATION_LONG_PRESS 0.5
@@ -26,6 +24,7 @@
 @property (strong, nonatomic) CLGeocoder *geocoder;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) MKPointAnnotation *selectedAnnotation;
 
 @end
 
@@ -103,17 +102,20 @@
     
     point.coordinate = touchMapCoordinate;
     [self.mapView addAnnotation:point];
+    self.selectedAnnotation = point;
     [self performSegueWithIdentifier:@"Selected Annotation" sender:self.mapView];
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
     NSLog(@"Selected annotation!");
+    self.selectedAnnotation = view.annotation;
     [self performSegueWithIdentifier:@"Selected Annotation" sender:self.mapView];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Selected Annotation"]) {
-        
+        CreateAdventureTVC *catvc = segue.destinationViewController;
+        catvc.annotation = self.selectedAnnotation;
     }
 }
 
