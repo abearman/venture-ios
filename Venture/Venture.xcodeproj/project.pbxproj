@@ -46,6 +46,7 @@
 		85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA532C7024A73A8B7A877F /* VentureServerLayer.m */; };
 		85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */; };
 		85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */; };
+		E6D4937B19327788007572CD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D4937A19327788007572CD /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+URLEncoding.m"; sourceTree = "<group>"; };
 		85BA5FAFBBB6D3C4FB1A0D32 /* VentureLocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureLocationTracker.h; sourceTree = "<group>"; };
 		B8C0485417A148F58CAAE8E5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E6D4937A19327788007572CD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				659C9B79192F072D00F1AF59 /* MapKit.framework in Frameworks */,
+				E6D4937B19327788007572CD /* FacebookSDK.framework in Frameworks */,
 				65F45A0B18F9ED39007761AA /* SystemConfiguration.framework in Frameworks */,
 				65F45A0918F9ED30007761AA /* QuartzCore.framework in Frameworks */,
 				65F45A0718F9ED28007761AA /* OpenGLES.framework in Frameworks */,
@@ -191,6 +194,7 @@
 		65F459AF18F908D5007761AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6D4937A19327788007572CD /* FacebookSDK.framework */,
 				659C9B78192F072D00F1AF59 /* MapKit.framework */,
 				657C9F2B18FCD24D000792DB /* GoogleMaps.bundle */,
 				657C9F2918FCCF51000792DB /* GoogleMaps.framework */,
