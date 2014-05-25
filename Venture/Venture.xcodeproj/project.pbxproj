@@ -166,6 +166,13 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		65DDF63E19306CC70034C60D /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		65F459A418F908D5007761AA = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				65332DA618FC7BBC00E5C5EC /* Resources */,
+				65DDF63E19306CC70034C60D /* iPad */,
 				65F459ED18F9B93B007761AA /* View */,
 				65F459EC18F9B933007761AA /* Controller */,
 				65F459C818F908D5007761AA /* Images.xcassets */,
@@ -579,8 +587,10 @@
 				INFOPLIST_FILE = "Venture/Venture-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Venture/Venture-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F4EB6BEB-EF5B-4711-8858-32EA5654AC7F";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -601,8 +611,10 @@
 				GCC_PREFIX_HEADER = "Venture/Venture-Prefix.pch";
 				INFOPLIST_FILE = "Venture/Venture-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F4EB6BEB-EF5B-4711-8858-32EA5654AC7F";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
