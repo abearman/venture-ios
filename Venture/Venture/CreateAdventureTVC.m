@@ -10,7 +10,7 @@
 #import "Grid.h"
 #import "VentureServerLayer.h"
 
-@interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
+@interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) VentureServerLayer *serverLayer;
 @property (strong, nonatomic) NSArray *categories;
@@ -32,6 +32,7 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (strong, nonatomic) UIImageView *imageViewToDelete;
+@property (strong, nonatomic) NSDictionary *adventureDict;
 
 @end
 
@@ -262,25 +263,60 @@
     [self.actionSheet showInView:self.view];
 }
 
-- (IBAction)submitAdventure:(UIBarButtonItem *)sender {
+- (NSArray *)getBase64Images {
     NSMutableArray *mutablePhotosArray = [[NSMutableArray alloc] init]; // Array of photo data
     for (UIImageView *imageView in self.imageViews) {
         UIImage *image = imageView.image;
         NSData *imageData = UIImagePNGRepresentation(image);
-        [mutablePhotosArray addObject:imageData];
+        NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [mutablePhotosArray addObject:imageBase64];
     }
     
-    NSArray *photosArray = [[NSArray alloc] initWithArray:mutablePhotosArray];
-    
-    NSDictionary *adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+    return [[NSArray alloc] initWithArray:mutablePhotosArray];
+}
+
+- (IBAction)submitAdventure:(UIBarButtonItem *)sender {
+    self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                    nameTextField.text , @"title",
                                    descriptionTextField.text , @"description",
                                    categoryTextField.text , @"type",
-                                   //photosArray, @"photos",
+                                   [self getBase64Images], @"photos",
                                    nil];
     
-    //[self.serverLayer submitAdventure:adventureDict];
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([nameTextField.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Field" message:@"You must enter a title for this activity" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Submit", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [alert show];
+    } else {
+        [self.serverLayer submitAdventure:self.adventureDict];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"Submit"]) {
+        NSString *titleText = [alertView textFieldAtIndex:0].text;
+        self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              titleText, @"title",
+                              descriptionTextField.text , @"description",
+                              categoryTextField.text , @"type",
+                              [self getBase64Images], @"photos",
+                              nil];
+        
+        [self.serverLayer submitAdventure:self.adventureDict];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    NSString *nameInput = [[alertView textFieldAtIndex:0] text];
+    if( [nameInput length] > 0) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
 }
 
 
