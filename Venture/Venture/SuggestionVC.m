@@ -119,15 +119,19 @@
     }];
 }
 
--(void)updateImageView {
+-(void)updateImageView:(NSArray*)images {
     // Clear all the old images out
     for (UIView *view in self.imageView.subviews) {
         [view removeFromSuperview];
     }
 
     // Add images for all the pictures in the cache
-    for (UIImage *image in [self.currentAdventure objectForKey:@"image_cache"]) {
+    int x = 0;
+    for (UIImage *image in images) {
         UIImageView *picture = [[UIImageView alloc] initWithImage:image];
+        picture.frame = CGRectOffset(picture.frame, x, 0);
+        x += picture.frame.size.width;
+        self.imageView.contentSize = CGSizeMake(x,self.imageView.contentSize.height);
         [self.imageView addSubview:picture];
     }
 }
@@ -165,23 +169,21 @@
             NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
             NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
 
-            [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            [[session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
                 if (!error) {
                     NSData *imageData = [NSData dataWithContentsOfURL:location];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        NSLog(@"Got image %@",imageURL);
                         [[currentAdventure objectForKey:@"image_cache"] addObject:[UIImage imageWithData:imageData]];
                         if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
-                            NSLog(@"Adding image as subview");
-                            [self updateImageView];
+                            [self updateImageView:[currentAdventure objectForKey:@"image_cache"]];
                         }
                     });
                 }
-            }];
+            }] resume];
         }
     }
     else {
-        [self updateImageView];
+        [self updateImageView:[currentAdventure objectForKey:@"image_cache"]];
     }
 
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[currentAdventure objectForKey:@"lat"] doubleValue] longitude:[[currentAdventure objectForKey:@"lng"] doubleValue]];
