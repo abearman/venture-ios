@@ -10,7 +10,7 @@
 #import "Grid.h"
 #import "VentureServerLayer.h"
 
-@interface CreateAdventureTVC () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface CreateAdventureTVC () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
 
 @property (nonatomic) VentureServerLayer *serverLayer;
 @property (strong, nonatomic) NSArray *categories;
@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *categoryTextField;
 
+@property (strong, nonatomic) UIActionSheet *actionSheet;
 @property (weak, nonatomic) IBOutlet UIView *photosView;
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) UITextField *submitButton;
@@ -49,6 +50,13 @@
     [self setUpUIofTable];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    //if (self.actionSheet.window) { // If the action sheet is on screen, window is non-nil
+        [self.actionSheet dismissWithClickedButtonIndex:self.actionSheet.cancelButtonIndex animated:animated];
+    //}
+}
+
 - (void) setUpUIofTable {
     self.descriptionCell.textLabel.text = @"Description";
     self.nameCell.textLabel.text = @"Name";
@@ -62,6 +70,7 @@
 - (void) initializeAllProperties {
     self.imageViews = [[NSMutableArray alloc] init];
     self.grid = [[Grid alloc] init];
+    self.serverLayer = [[VentureServerLayer alloc] init];
 }
 
 - (void) setUpDelegates {
@@ -121,7 +130,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 	if (textField == self.categoryTextField) {
-		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:
+		self.actionSheet = [[UIActionSheet alloc] initWithTitle:
                                       NSLocalizedString(@"Category", @"")
                                                                  delegate:self
                                                         cancelButtonTitle:@"Cancel"
@@ -134,7 +143,7 @@
                                        NSLocalizedString(@"Arts", @""),
                                        NSLocalizedString(@"Shopping", @""),
                                       nil];
-		[actionSheet showInView:self.view];
+		[self.actionSheet showInView:self.view];
 	
     }
 }
@@ -172,7 +181,7 @@
 }
 
 - (IBAction)uploadPhotosClicked:(UIButton *)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:
                                   NSLocalizedString(@"Photos", @"")
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
@@ -181,7 +190,7 @@
                                   NSLocalizedString(@"Take Photo", @""),
                                   NSLocalizedString(@"Choose Existing", @""),
                                   nil];
-    [actionSheet showInView:self.view];
+    [self.actionSheet showInView:self.view];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -249,14 +258,14 @@
     UIView *tappedView = [self.photosView hitTest:point withEvent:nil];
     UIImageView *tappedImageView = (UIImageView *)tappedView;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"", @"")
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"", @"")
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:@"Delete"
                                                     otherButtonTitles:nil];
     
     self.imageViewToDelete = tappedImageView;
-    [actionSheet showInView:self.view];
+    [self.actionSheet showInView:self.view];
 }
 
 - (IBAction)submitAdventure:(UIBarButtonItem *)sender {
@@ -273,10 +282,13 @@
                                    nameTextField.text , @"title",
                                    descriptionTextField.text , @"description",
                                    categoryTextField.text , @"type",
-                                   photosArray, @"photos",
+                                   //photosArray, @"photos",
                                    nil];
     
-    [self.serverLayer submitAdventure:adventureDict];
+    //[self.serverLayer submitAdventure:adventureDict];
+    
+    [self.categoryTextField resignFirstResponder];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

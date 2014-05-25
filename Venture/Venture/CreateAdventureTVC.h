@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateAdventureTVC : UITableViewController <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate,UITextFieldDelegate>
+@interface CreateAdventureTVC : UITableViewController 
 
 @end

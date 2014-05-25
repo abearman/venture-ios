@@ -525,7 +525,7 @@
                     <navigationItem key="navigationItem" id="zgb-TT-RyW">
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="DuF-R0-Vi0">
                             <connections>
-                                <action selector="submitAdventure:" destination="H4X-af-A9N" id="quI-R0-yo4"/>
+                                <action selector="submitAdventure:" destination="H4X-af-A9N" id="1ws-Un-2wF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -542,7 +542,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-D9-bXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1201" y="-1162"/>
+            <point key="canvasLocation" x="-1264" y="-1150"/>
         </scene>
         <!--Navigation Controller - Submit-->
         <scene sceneID="ZhA-PZ-m6C">
