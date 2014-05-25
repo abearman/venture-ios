@@ -50,10 +50,12 @@
     self.serverLayer = [[VentureServerLayer alloc] initWithLocationTracker:self.locationTracker];
 
     self.modeOfTransportation = self.activityType = 0;
+
     [self setUpNavigationBar];
     [self setUpSearchBar];
     [self setUpGestureRecognizers];
-    [self loadFirstSuggestion];
+
+    [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
 }
 
 /*** NAVIGATION BAR AND SEARCH BAR ***/
@@ -119,10 +121,21 @@
         self.activityAddress.text = [suggestion objectForKey:@"address"];
         self.activityJustification.text = @"... todo/remove";
 
-        // TODO: Pull this down async
+        // Pull down the image async
 
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[suggestion valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
-        self.imageView.image = [UIImage imageWithData:imageData];
+
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[suggestion valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+
+        [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+            if (!error) {
+                NSData* imageData = [NSData dataWithContentsOfURL:location];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.imageView.image = [UIImage imageWithData:imageData];
+                });
+            }
+        }];
 
         CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[suggestion objectForKey:@"lat"] doubleValue] longitude:[[suggestion objectForKey:@"lng"] doubleValue]];
 
