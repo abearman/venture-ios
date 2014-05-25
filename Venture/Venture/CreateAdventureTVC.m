@@ -130,6 +130,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 	if (textField == self.categoryTextField) {
+        [textField resignFirstResponder];
 		self.actionSheet = [[UIActionSheet alloc] initWithTitle:
                                       NSLocalizedString(@"Category", @"")
                                                                  delegate:self
@@ -286,8 +287,6 @@
                                    nil];
     
     //[self.serverLayer submitAdventure:adventureDict];
-    
-    [self.categoryTextField resignFirstResponder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
