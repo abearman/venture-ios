@@ -111,6 +111,7 @@
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
     [self.spinner startAnimating];
+    NSLog(@"Making call to server %@",self.serverLayer);
     [self.serverLayer getNewAdventureSuggestion:^(NSDictionary *suggestion) {
         [self.spinner stopAnimating];
 

@@ -85,8 +85,10 @@
     [serverData setValue:tracker.lng forKey:@"lng"];
 
     NSString *url = [NSString stringWithFormat:@"%@%@", SERVER_BASE_URL, uri];
+    NSLog(@"URL: %@",url);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
+    [request setValue:@"text/json" forHTTPHeaderField:@"Content-Type"];
 
     NSError *jsonError;
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:serverData options:0 error:&jsonError]];
@@ -94,17 +96,20 @@
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
 
-    [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+    [[session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         if (!error) {
             NSData* data = [NSData dataWithContentsOfURL:location];
-            NSError* jsonError = nil;
+            NSError* decodeJsonError = nil;
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:0
-                                                                   error:&jsonError];
+                                                                   error:&decodeJsonError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 callback(json);
             });
         }
-    }];
+        else {
+            callback(nil);
+        }
+    }] resume];
 }
 @end
