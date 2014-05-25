@@ -109,9 +109,6 @@
     self.modeOfTransportation = buttonIndex;
 }
 
-- (void) loadFirstSuggestion {
-}
-
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
     [self.spinner startAnimating];
     [self.serverLayer getNewAdventureSuggestion:^(NSDictionary *suggestion) {
@@ -130,10 +127,12 @@
 
         [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
             if (!error) {
-                NSData* imageData = [NSData dataWithContentsOfURL:location];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.imageView.image = [UIImage imageWithData:imageData];
-                });
+                if ([self.activityName.text isEqualToString:[suggestion objectForKey:@"title"]]) {
+                    NSData *imageData = [NSData dataWithContentsOfURL:location];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.imageView.image = [UIImage imageWithData:imageData];
+                    });
+                }
             }
         }];
 
