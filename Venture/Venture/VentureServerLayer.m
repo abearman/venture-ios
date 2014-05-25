@@ -12,16 +12,58 @@
 
 @implementation VentureServerLayer {
     VentureLocationTracker *tracker;
+    NSMutableArray *cachedAdventures;
 }
 
 -(id)initWithLocationTracker:(VentureLocationTracker *)t {
     self = [super init];
     if (self) {
         tracker = t;
-        _suggestions = [[NSArray alloc] init];
+        _suggestions = [[NSMutableArray alloc] init];
     }
     return self;
 }
+
+#pragma mark public
+
+-(int)numberOfCachedAdventures {
+    return [cachedAdventures count];
+}
+
+-(NSDictionary *)getCachedAdventureAtIndex:(int)i {
+    return [cachedAdventures objectAtIndex:i];
+}
+
+-(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback {
+    [self makeCallToVentureServer:@"/get-suggestion" callback:^(NSDictionary *adventure) {
+        [cachedAdventures addObject:adventure];
+        callback(adventure);
+    }];
+}
+
+-(void)rateAdventure:(int)adventureId rating:(int)rating {
+    NSDictionary *data = @{
+            @"adventure_id" : [NSString stringWithFormat:@"%i",adventureId],
+            @"rating" : [NSString stringWithFormat:@"%i",rating],
+    };
+    [self makeCallToVentureServer:@"/rate-adventure" additionalData:data];
+}
+
+-(void)associateFacebook:(NSString*)fb_uid {
+    NSDictionary *data = @{
+            @"fb_uid" : fb_uid
+    };
+    [self makeCallToVentureServer:@"/associate-facebook" additionalData:data];
+}
+
+-(void)submitAdventure:(NSDictionary *)adventure {
+    NSDictionary *data = @{
+            @"adventure" : adventure
+    };
+    [self makeCallToVentureServer:@"/submit-adventure" additionalData:data];
+}
+
+#pragma mark private
 
 -(void)makeCallToVentureServer:(NSString *)uri {
     [self makeCallToVentureServer:uri callback:^(NSDictionary * dict){}];
@@ -65,31 +107,4 @@
         }
     }];
 }
-
--(void)getAdventureSuggestion:(void (^)(NSDictionary *))callback {
-    [self makeCallToVentureServer:@"/get-suggestion" callback:callback];
-}
-
--(void)rateAdventure:(int)adventureId rating:(int)rating {
-    NSDictionary *data = @{
-            @"adventure_id" : [NSString stringWithFormat:@"%i",adventureId],
-            @"rating" : [NSString stringWithFormat:@"%i",rating],
-    };
-    [self makeCallToVentureServer:@"/rate-adventure" additionalData:data];
-}
-
--(void)associateFacebook:(NSString*)fb_uid {
-    NSDictionary *data = @{
-            @"fb_uid" : fb_uid
-    };
-    [self makeCallToVentureServer:@"/associate-facebook" additionalData:data];
-}
-
--(void)submitAdventure:(NSDictionary *)adventure {
-    NSDictionary *data = @{
-            @"adventure" : adventure
-    };
-    [self makeCallToVentureServer:@"/submit-adventure" additionalData:data];
-}
-
 @end
