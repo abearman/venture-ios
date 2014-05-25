@@ -19,13 +19,6 @@
 
 @interface TrackAdventureVC () <CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation *currentLocation;
-@property (strong, nonatomic) CLGeocoder *geocoder;
-
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) MKPointAnnotation *selectedAnnotation;
-
 @end
 
 @implementation TrackAdventureVC
@@ -33,13 +26,14 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     [self setUpNavigationBar];
-    [self startUpdatingLocation];
     [self setUpGestureRecognizersForMap];
+    
+    [self.mapView.userLocation addObserver:self forKeyPath:@"location" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     self.mapView.delegate = self;
-    //5
+    
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = 40.740384;
     coordinate.longitude = -73.991146;
@@ -47,6 +41,28 @@
     MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
     point.coordinate = coordinate;
     [self.mapView addAnnotation:point];
+}
+
+- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered {
+    @try {
+        [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+    }@catch(id anException) {
+        // Do nothing
+    }
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([self.mapView showsUserLocation]) {
+        MKCoordinateRegion region;
+        region.center = self.mapView.userLocation.coordinate;
+        
+        MKCoordinateSpan span;
+        span.latitudeDelta  = 1; // Change these values to change the zoom
+        span.longitudeDelta = 1;
+        region.span = span;
+        
+        [self.mapView setRegion:region animated:YES];
+    }
 }
 
 - (void) setUpNavigationBar {
@@ -61,30 +77,6 @@
     self.navigationItem.titleView = label;
 }
 
-- (void) startUpdatingLocation {
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.currentLocation = [[CLLocation alloc] init];
-    self.geocoder = [[CLGeocoder alloc] init];
-    
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-}
-
-#pragma mark CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //NSLog(@"didUpdateToLocation: %@", newLocation);
-    self.currentLocation = newLocation;
-}
-
 - (void) setUpGestureRecognizersForMap {
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = DURATION_LONG_PRESS; //user needs to press for half a second
@@ -92,18 +84,14 @@
 }
 
 - (void) handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
-        return;
-    }
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) return;
     
     CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
-    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-    
-    point.coordinate = touchMapCoordinate;
-    [self.mapView addAnnotation:point];
-    self.selectedAnnotation = point;
-    [self performSegueWithIdentifier:@"Selected Annotation" sender:self.mapView];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = touchMapCoordinate;
+    [self.mapView addAnnotation:annotation];
+    self.selectedAnnotation = annotation;
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
