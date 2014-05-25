@@ -8,7 +8,7 @@
 
 
 @implementation VentureLocationTracker {
-    CLLocation *currentLocation;
+    CLGeocoder *_geocoder;
 }
 
 #pragma mark Constructor
@@ -21,34 +21,56 @@
         _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.delegate = self;
         [_locationManager startUpdatingLocation];
+        _geocoder = [[CLGeocoder alloc] init];
     }
     return self;
 }
 
 #pragma mark LocationGetters
 
--(NSString*)getLat {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.coordinate.latitude];
+-(NSString*)lat {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.coordinate.latitude];
 }
 
--(NSString*)getLng {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.coordinate.longitude];
+-(NSString*)lng {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.coordinate.longitude];
 }
 
--(NSString*)getLatAcc {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.verticalAccuracy];
+-(NSString*)latAcc {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.verticalAccuracy];
 }
 
--(NSString*)getLngAcc {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.horizontalAccuracy];
+-(NSString*)lngAcc {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.horizontalAccuracy];
 }
 
--(NSString*)getAltitude {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.altitude];
+-(NSString*)altitude {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.altitude];
 }
 
--(NSString*)getAltitudeAcc {
-    return [[NSString alloc] initWithFormat:@"%+.6f",currentLocation.verticalAccuracy];
+-(NSString*)altitudeAcc {
+    return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.verticalAccuracy];
+}
+
+#pragma mark Location override
+
+-(void)setLocationToAddress:(NSString *)location {
+    [_geocoder geocodeAddressString:location
+                      completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (!error) {
+            [_locationManager stopUpdatingLocation];
+            CLPlacemark *placemark = [placemarks firstObject];
+            _currentLocation = placemark.location;
+        } else {
+            NSLog(@"There was a forward geocoding error\n%@",
+                    [error localizedDescription]);
+            [self clearAddress];
+        }
+    }];
+}
+
+-(void)clearAddress {
+    [_locationManager startUpdatingLocation];
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -57,7 +79,7 @@
    didUpdateToLocation:(CLLocation *)newLocation
           fromLocation:(CLLocation *)oldLocation
 {
-    currentLocation = newLocation;
+    _currentLocation = newLocation;
 }
 
 @end

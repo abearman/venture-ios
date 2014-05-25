@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Amy Bearman. All rights reserved.
 //
 
+/*
+
 #import "VentureViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreLocation/CoreLocation.h>
@@ -31,14 +33,11 @@
 @property (strong, nonatomic) NSString *activityImgStr;
 @property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
 
-@property (strong, nonatomic) HomeModel *model;
 @property (strong, nonatomic) NSMutableArray *activities; // of VentureActivity
 
 @property (strong, nonatomic) NSMutableDictionary *activitiesDict; // Keys: "Hungry", "Adventurous", "Bored"
 
 @property (weak, nonatomic) IBOutlet UIView *activityView;
-
-@property (strong, nonatomic) VentureActivity *savedActivity;
 
 @end
 
@@ -62,14 +61,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Became active" object:nil];
 }
 
-/***** To register and unregister for notification on recieving messages *****/
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(displayRatingsView:)
                                                  name:@"Became active" object:nil];
 }
 
-/*** Your custom method called on notification ***/
 -(void)displayRatingsView:(NSNotification*)_notification {
     [[self navigationController] popToRootViewControllerAnimated:YES];
     NSString *retrievedActivityTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"Saved Activity Title"];
@@ -206,7 +203,6 @@
     distance /= 1000.0;
     self.activityDistanceAway1.text = [NSString stringWithFormat:@"%f km", distance];
     
-    /* Display image as circle*/
     NSString *ImageURL = activity.imageURL;
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
     UIImage *image = [UIImage imageWithData:imageData];
@@ -381,7 +377,6 @@
                          animations:^{ imageView.alpha = 1;}
                          completion:nil];
         
-        /* Display image as circle*/
         double x = (self.view.frame.size.width / 2.0) - 75;
         double y = 100;
         [imageView setFrame:CGRectMake(x,y,150,150)];
@@ -422,3 +417,4 @@
 
 @end
 
+*/

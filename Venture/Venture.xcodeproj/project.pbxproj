@@ -30,8 +30,6 @@
 		65F459D118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459D218F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
 		65F459DC18F908D5007761AA /* VentureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459DB18F908D5007761AA /* VentureTests.m */; };
-		65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E618F9B3A7007761AA /* VentureActivity.m */; };
-		65F459EA18F9B91C007761AA /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F459E918F9B91C007761AA /* HomeModel.m */; };
 		65F459EF18F9C5AD007761AA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 65F459EE18F9C5AD007761AA /* Podfile */; };
 		65F459F518F9ECDE007761AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F418F9ECDE007761AA /* AVFoundation.framework */; };
 		65F459F718F9ECE4007761AA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459F618F9ECE4007761AA /* CoreData.framework */; };
@@ -92,10 +90,6 @@
 		65F459CE18F908D5007761AA /* VentureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VentureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459CF18F908D5007761AA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		65F459DB18F908D5007761AA /* VentureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VentureTests.m; sourceTree = "<group>"; };
-		65F459E518F9B3A7007761AA /* VentureActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureActivity.h; sourceTree = "<group>"; };
-		65F459E618F9B3A7007761AA /* VentureActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureActivity.m; sourceTree = "<group>"; };
-		65F459E818F9B91C007761AA /* HomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeModel.h; sourceTree = "<group>"; };
-		65F459E918F9B91C007761AA /* HomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeModel.m; sourceTree = "<group>"; };
 		65F459EE18F9C5AD007761AA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		65F459F418F9ECDE007761AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		65F459F618F9ECE4007761AA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -260,10 +254,6 @@
 		65F459EB18F9B924007761AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				65F459E518F9B3A7007761AA /* VentureActivity.h */,
-				65F459E618F9B3A7007761AA /* VentureActivity.m */,
-				65F459E818F9B91C007761AA /* HomeModel.h */,
-				65F459E918F9B91C007761AA /* HomeModel.m */,
 				85BA532C7024A73A8B7A877F /* VentureServerLayer.m */,
 				85BA57D199588471DBD81856 /* VentureServerLayer.h */,
 				85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */,
@@ -446,7 +436,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65F459EA18F9B91C007761AA /* HomeModel.m in Sources */,
 				659C9B85192F1FE300F1AF59 /* CreateAdventureVC.m in Sources */,
 				659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */,
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
@@ -455,7 +444,6 @@
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,
 				65F459BD18F908D5007761AA /* main.m in Sources */,
 				659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */,
-				65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */,
 				85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */,
 				85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */,
 				85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */,
