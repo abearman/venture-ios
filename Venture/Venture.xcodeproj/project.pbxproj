@@ -45,6 +45,9 @@
 		65F45A0718F9ED28007761AA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F45A0618F9ED28007761AA /* OpenGLES.framework */; };
 		65F45A0918F9ED30007761AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F45A0818F9ED30007761AA /* QuartzCore.framework */; };
 		65F45A0B18F9ED39007761AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F45A0A18F9ED39007761AA /* SystemConfiguration.framework */; };
+		85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA532C7024A73A8B7A877F /* VentureServerLayer.m */; };
+		85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */; };
+		85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,12 @@
 		65F45A0818F9ED30007761AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65F45A0A18F9ED39007761AA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		78645C9CFDEA406684F25E34 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureLocationTracker.m; sourceTree = "<group>"; };
+		85BA532C7024A73A8B7A877F /* VentureServerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentureServerLayer.m; sourceTree = "<group>"; };
+		85BA55E7EB26E41339110E12 /* NSDictionary+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+URLEncoding.h"; sourceTree = "<group>"; };
+		85BA57D199588471DBD81856 /* VentureServerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureServerLayer.h; sourceTree = "<group>"; };
+		85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+URLEncoding.m"; sourceTree = "<group>"; };
+		85BA5FAFBBB6D3C4FB1A0D32 /* VentureLocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentureLocationTracker.h; sourceTree = "<group>"; };
 		B8C0485417A148F58CAAE8E5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +223,7 @@
 				65F459C818F908D5007761AA /* Images.xcassets */,
 				65F459B718F908D5007761AA /* Supporting Files */,
 				65F459EB18F9B924007761AA /* Model */,
+				85BA5B66B9485B69D2C14C19 /* Utils */,
 			);
 			path = Venture;
 			sourceTree = "<group>";
@@ -246,6 +256,10 @@
 				65F459E618F9B3A7007761AA /* VentureActivity.m */,
 				65F459E818F9B91C007761AA /* HomeModel.h */,
 				65F459E918F9B91C007761AA /* HomeModel.m */,
+				85BA532C7024A73A8B7A877F /* VentureServerLayer.m */,
+				85BA57D199588471DBD81856 /* VentureServerLayer.h */,
+				85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */,
+				85BA5FAFBBB6D3C4FB1A0D32 /* VentureLocationTracker.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -275,6 +289,15 @@
 				657C9F4718FE357F000792DB /* RatingViewController.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		85BA5B66B9485B69D2C14C19 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				85BA5C4DBC5D5B7B677D38B0 /* NSDictionary+URLEncoding.m */,
+				85BA55E7EB26E41339110E12 /* NSDictionary+URLEncoding.h */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -425,6 +448,9 @@
 				65F459BD18F908D5007761AA /* main.m in Sources */,
 				659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */,
 				65F459E718F9B3A7007761AA /* VentureActivity.m in Sources */,
+				85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */,
+				85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */,
+				85BA5794DCFFCDD9B1532F07 /* NSDictionary+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
