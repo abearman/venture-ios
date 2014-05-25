@@ -24,11 +24,11 @@
 }
 
 -(void)makeCallToVentureServer:(NSString *)uri {
-    [self makeCallToVentureServer:uri callback:^(NSDictionary *){}];
+    [self makeCallToVentureServer:uri callback:^(NSDictionary * dict){}];
 }
 
 -(void)makeCallToVentureServer:(NSString *)uri additionalData:(NSDictionary *)additionalData {
-    [self makeCallToVentureServer:uri additionalData:additionalData callback:^(NSDictionary *){}];
+    [self makeCallToVentureServer:uri additionalData:additionalData callback:^(NSDictionary * dict){}];
 }
 
 -(void)makeCallToVentureServer:(NSString *)uri callback:(void (^)(NSDictionary *))callback {
