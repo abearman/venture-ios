@@ -28,7 +28,6 @@
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 @property (weak, nonatomic) IBOutlet UIView *photosView;
 @property (strong, nonatomic) Grid *grid;
-@property (strong, nonatomic) UITextField *submitButton;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (strong, nonatomic) UIImageView *imageViewToDelete;
@@ -39,7 +38,7 @@
 @implementation CreateAdventureTVC
 
 @synthesize nameCell, descriptionCell, categoryCell, photosCell;
-@synthesize nameTextField, descriptionTextField, categoryTextField, submitButton;
+@synthesize nameTextField, descriptionTextField, categoryTextField;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
@@ -276,18 +275,24 @@
 }
 
 - (IBAction)submitAdventure:(UIBarButtonItem *)sender {
-    self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                   nameTextField.text , @"title",
-                                   descriptionTextField.text , @"description",
-                                   categoryTextField.text , @"type",
-                                   [self getBase64Images], @"photos",
-                                   nil];
-    
     if ([nameTextField.text isEqualToString:@""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Field" message:@"You must enter a title for this activity" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Submit", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
     } else {
+        NSNumber *lat = [NSNumber numberWithFloat:self.annotation.coordinate.latitude];
+        NSNumber *lng = [NSNumber numberWithFloat:self.annotation.coordinate.longitude];
+        NSArray *imagesBase64 = [self getBase64Images];
+        
+        self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              nameTextField.text , @"title",
+                              descriptionTextField.text , @"description",
+                              categoryTextField.text , @"type",
+                              lat, @"lat",
+                              lng, @"lng",
+                              imagesBase64, @"photos",
+                              nil];
+        
         [self.serverLayer submitAdventure:self.adventureDict];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -297,11 +302,17 @@
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"Submit"]) {
         NSString *titleText = [alertView textFieldAtIndex:0].text;
+        NSNumber *lat = [NSNumber numberWithFloat:self.annotation.coordinate.latitude];
+        NSNumber *lng = [NSNumber numberWithFloat:self.annotation.coordinate.longitude];
+        NSArray *imagesBase64 = [self getBase64Images];
+        
         self.adventureDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                               titleText, @"title",
                               descriptionTextField.text , @"description",
                               categoryTextField.text , @"type",
-                              [self getBase64Images], @"photos",
+                              lat, @"lat",
+                              lng, @"lng",
+                              imagesBase64, @"photos",
                               nil];
         
         [self.serverLayer submitAdventure:self.adventureDict];
