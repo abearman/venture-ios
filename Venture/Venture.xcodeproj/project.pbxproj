@@ -16,6 +16,7 @@
 		659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */; };
 		659C9B79192F072D00F1AF59 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659C9B78192F072D00F1AF59 /* MapKit.framework */; };
 		659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */; };
+		65DDF6441932375E0034C60D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6431932375E0034C60D /* Grid.m */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -70,6 +71,8 @@
 		659C9B78192F072D00F1AF59 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		659C9B80192F157700F1AF59 /* CreateAdventureTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAdventureTVC.h; sourceTree = "<group>"; };
 		659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAdventureTVC.m; sourceTree = "<group>"; };
+		65DDF6421932375E0034C60D /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Grid.h; path = ../../../../../../afs/ir.stanford.edu/users/a/b/abearman/CS193P/HW4/Matchismo/Matchismo/Grid.h; sourceTree = "<group>"; };
+		65DDF6431932375E0034C60D /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Grid.m; path = ../../../../../../afs/ir.stanford.edu/users/a/b/abearman/CS193P/HW4/Matchismo/Matchismo/Grid.m; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -251,6 +254,8 @@
 		65F459EB18F9B924007761AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				65DDF6421932375E0034C60D /* Grid.h */,
+				65DDF6431932375E0034C60D /* Grid.m */,
 				85BA532C7024A73A8B7A877F /* VentureServerLayer.m */,
 				85BA57D199588471DBD81856 /* VentureServerLayer.h */,
 				85BA52DAFF00157A61891B80 /* VentureLocationTracker.m */,
@@ -433,6 +438,7 @@
 			files = (
 				659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */,
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
+				65DDF6441932375E0034C60D /* Grid.m in Sources */,
 				652B1EC2192EE8D600CD967C /* SuggestionVC.m in Sources */,
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,

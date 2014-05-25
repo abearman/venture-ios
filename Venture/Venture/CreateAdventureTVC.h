@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateAdventureTVC : UITableViewController
-
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
+@interface CreateAdventureTVC : UITableViewController <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate,UITextFieldDelegate>
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import "CreateAdventureTVC.h"
+#import "Grid.h"
 
-@interface CreateAdventureTVC () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
+@interface CreateAdventureTVC () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) NSMutableArray *imageViews;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *nameCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *descriptionCell;
@@ -21,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *categoryTextField;
 
+@property (weak, nonatomic) IBOutlet UIView *photosView;
+@property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) UITextField *submitButton;
 
 @end
@@ -33,12 +37,31 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     [self setUpNavigationBar];
-    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Category"];
     self.categories = [[NSArray alloc] initWithObjects:@"Restaurant", @"Park", @"Movie", @"Bar", @"Arts", @"Shopping", nil];
+    [self setUpDelegates];
+    [self initializeAllProperties];
+    [self setUpGrid];
+}
 
+- (void) initializeAllProperties {
+    self.imageViews = [[NSMutableArray alloc] init];
+    self.grid = [[Grid alloc] init];
+}
+
+- (void) setUpDelegates {
     self.nameTextField.delegate = self;
     self.descriptionTextField.delegate = self;
     self.categoryTextField.delegate = self;
+    
+}
+
+- (void) setUpGrid {
+    CGFloat width = self.photosView.frame.size.width;
+    CGFloat height = self.photosView.frame.size.height;
+    self.grid.size = CGSizeMake(width, height);
+    self.grid.cellAspectRatio = 1;
+    
+    self.grid.minimumNumberOfCells = 0;
 }
 
 - (void) setUpNavigationBar {
@@ -104,12 +127,32 @@
 // Called when a button is clicked. The view will be automatically dismissed after this call returns
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex: (NSInteger)buttonIndex {
 	NSLog(@"Index is %i", buttonIndex);
-    self.categoryTextField.text = NSLocalizedString([self.categories objectAtIndex:buttonIndex], @"");
+    if ([actionSheet.title isEqualToString:@"Category"]) {
+        self.categoryTextField.text = NSLocalizedString([self.categories objectAtIndex:buttonIndex], @"");
+        
+    } else if ([actionSheet.title isEqualToString:@"Photos"]) {
+        if (buttonIndex == 0) { // Take Photo
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:picker animated:YES completion:NULL];
+            
+        } else if (buttonIndex == 1) { // Choose Existing
+            
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            
+            [self presentViewController:picker animated:YES completion:NULL];
+        }
+    }
 }
 
 - (IBAction)uploadPhotosClicked:(UIButton *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:
-                                  NSLocalizedString(@"Category", @"")
+                                  NSLocalizedString(@"Photos", @"")
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
@@ -119,6 +162,52 @@
                                   nil];
     [actionSheet showInView:self.view];
 }
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    self.grid.minimumNumberOfCells++;
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:chosenImage];
+    [self.imageViews addObject:imageView];
+    
+    [self resizeExistingPhotos];
+    [self addPhoto];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)resizeExistingPhotos {
+    int index = 0;
+    for (int i = 0; i < self.grid.rowCount; i++) {
+        for (int j = 0; j < self.grid.columnCount; j++) {
+            if (index >= self.grid.minimumNumberOfCells - 1) break;
+            UIImageView *imageView = [self.imageViews objectAtIndex:index];
+            CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
+            imageView.frame = viewRect;
+            index++;
+        }
+    }
+}
+
+- (void)addPhoto {
+    int col = (int)((self.grid.minimumNumberOfCells - 1) % self.grid.columnCount);
+    int row = (int)((self.grid.minimumNumberOfCells - 1) / self.grid.columnCount);
+    
+    int index = (int)(self.grid.minimumNumberOfCells - 1);
+    for (int i = row; i < self.grid.rowCount; i++) {
+        for (int j = col; j < self.grid.columnCount; j++) {
+            if (i > row) j = 0;
+            if (index >= self.grid.minimumNumberOfCells) return;
+            UIImageView *imageView = [self.imageViews objectAtIndex:index];
+            index++;
+            CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
+            imageView.frame = viewRect;
+            [self.photosView addSubview:imageView];
+        }
+    }
+}
+
 
 @end
 
