@@ -52,6 +52,23 @@
     return [[NSString alloc] initWithFormat:@"%+.6f",_currentLocation.verticalAccuracy];
 }
 
+#pragma mark Backwards
+
+-(void)reverseGeocodeLat:(NSString*)lat lng:(NSString*)lng callback:(void (^)(NSString*))callback {
+    [_geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]] completionHandler:^(NSArray *placemarks, NSError *error){
+        CLPlacemark *place = [placemarks firstObject];
+        NSDictionary *address = [place addressDictionary];
+        callback([NSString stringWithFormat:@"%@, %@",[address objectForKey:@"Name"],[address objectForKey:@"City"]]);
+    }];
+}
+
+-(void)geocode:(NSString *)address callback:(void (^)(double,double))callback {
+    [_geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error){
+        CLPlacemark *place = [placemarks firstObject];
+        callback(place.location.coordinate.latitude,place.location.coordinate.longitude);
+    }];
+}
+
 #pragma mark Location override
 
 -(void)setLocationToAddress:(NSString *)location {

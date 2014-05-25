@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *activityJustification;
 @property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
+@property (weak, nonatomic) IBOutlet UIView *dragView;
 
 @end
 
@@ -138,8 +139,34 @@
 
 - (void)setCurrentAdventure:(NSMutableDictionary *)currentAdventure {
     self.activityName.text = [currentAdventure objectForKey:@"title"];
-    self.activityAddress.text = [currentAdventure objectForKey:@"address"];
-    self.activityJustification.text = @"... todo/remove";
+    NSString* lat = [currentAdventure objectForKey:@"latitude"];
+    NSString* lng = [currentAdventure objectForKey:@"longitude"];
+    NSString* address = [currentAdventure objectForKey:@"address"];
+    if (address == nil && lat != nil && lng != nil) {
+        [self.locationTracker reverseGeocodeLat:lat lng:lng callback:^(NSString *foundAddress) {
+            self.activityAddress.text = foundAddress;
+        }];
+    }
+    else if (address != nil) {
+        self.activityAddress.text = address;
+    }
+
+    if (lat == nil && lng == nil && address != nil) {
+        [self.locationTracker geocode:address callback:^(double latDouble, double lngDouble) {
+            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:latDouble longitude:lngDouble];
+            double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
+            distance /= 1000.0;
+            self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
+        }];
+    }
+    else if (lat != nil && lng != nil) {
+        NSLog(@"Doing lat and lng using current values");
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]];
+
+        double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
+        distance /= 1000.0;
+        self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
+    }
 
     // Check if we've already downloaded the images for this guy in the past
 
@@ -185,12 +212,6 @@
     else {
         [self updateImageView:[currentAdventure objectForKey:@"image_cache"]];
     }
-
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[currentAdventure objectForKey:@"lat"] doubleValue] longitude:[[currentAdventure objectForKey:@"lng"] doubleValue]];
-
-    double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
-    distance /= 1000.0;
-    self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
 }
 
 /*** GESTURE RECOGNIZERS ***/
