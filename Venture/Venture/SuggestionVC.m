@@ -24,6 +24,7 @@
 @property (nonatomic) NSInteger activityType;
 @property (nonatomic) VentureLocationTracker *locationTracker;
 @property (nonatomic) VentureServerLayer *serverLayer;
+@property (nonatomic) NSDictionary *currentAdventure;
 
 /* UI Outlets */
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -114,35 +115,38 @@
     NSLog(@"Making call to server %@",self.serverLayer);
     [self.serverLayer getNewAdventureSuggestion:^(NSDictionary *suggestion) {
         [self.spinner stopAnimating];
-
-        self.activityName.text = [suggestion objectForKey:@"title"];
-        self.activityAddress.text = [suggestion objectForKey:@"address"];
-        self.activityJustification.text = @"... todo/remove";
-
-        // Pull down the image async
-
-
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[suggestion valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-
-        [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-            if (!error) {
-                if ([self.activityName.text isEqualToString:[suggestion objectForKey:@"title"]]) {
-                    NSData *imageData = [NSData dataWithContentsOfURL:location];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.imageView.image = [UIImage imageWithData:imageData];
-                    });
-                }
-            }
-        }];
-
-        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[suggestion objectForKey:@"lat"] doubleValue] longitude:[[suggestion objectForKey:@"lng"] doubleValue]];
-
-        double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
-        distance /= 1000.0;
-        self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
+        self.currentAdventure = suggestion;
     }];
+}
+
+- (void)setCurrentAdventure:(NSDictionary *)currentAdventure {
+    self.activityName.text = [currentAdventure objectForKey:@"title"];
+    self.activityAddress.text = [currentAdventure objectForKey:@"address"];
+    self.activityJustification.text = @"... todo/remove";
+
+    // Pull down the image async
+
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[[currentAdventure valueForKeyPath:@"metadata/urbanspoon_images"] objectAtIndex:0]]];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+
+    [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            if ([self.activityName.text isEqualToString:[currentAdventure objectForKey:@"title"]]) {
+                NSData *imageData = [NSData dataWithContentsOfURL:location];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.imageView.image = [UIImage imageWithData:imageData];
+                });
+            }
+        }
+    }];
+
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:[[currentAdventure objectForKey:@"lat"] doubleValue] longitude:[[currentAdventure objectForKey:@"lng"] doubleValue]];
+
+    double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
+    distance /= 1000.0;
+    self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
 }
 
 /*** GESTURE RECOGNIZERS ***/
@@ -163,21 +167,19 @@
 }
 
 -(void)respondToSwipeLeft {
-    /*if (indexActivitiesArray > 0) {
-        //[imageView removeFromSuperview];
-        NSLog(@"Swiped left");
-        indexActivitiesArray--;
-        NSLog(@"Index: %d", indexActivitiesArray);
-        
-        NSLog(@"Index: %d", indexActivitiesArray);
-        [self getActivityAtIndex];
-        self.savedActivity = [self.activities objectAtIndex:indexActivitiesArray];
-    }*/
+    if (self.currentAdventure != NULL && [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure] != NULL) {
+        self.currentAdventure = [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure];
+    }
 }
 
 -(void)respondToSwipeRight {
     NSLog(@"Swiped right");
-    [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
+    if (self.currentAdventure != NULL && [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure] != NULL) {
+        self.currentAdventure = [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure];
+    }
+    else {
+        [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
+    }
 }
 
 -(void)respondToSwipeUp {

@@ -34,8 +34,21 @@
     return [cachedAdventures objectAtIndex:i];
 }
 
+-(NSDictionary *)getPreviousCachedAdventureOrNull:(NSDictionary *)cachedAdventure {
+    int index = [cachedAdventures indexOfObject:cachedAdventure];
+    if (index > 0) return [cachedAdventures objectAtIndex:index-1];
+    return NULL;
+}
+
+-(NSDictionary *)getNextCachedAdventureOrNull:(NSDictionary *)cachedAdventure {
+    int index = [cachedAdventures indexOfObject:cachedAdventure];
+    if (index < [cachedAdventures count] - 1) return [cachedAdventures objectAtIndex:index+1];
+    return NULL;
+}
+
 -(void)getNewAdventureSuggestion:(void (^)(NSDictionary *))callback {
     [self makeCallToVentureServer:@"/get-suggestion" callback:^(NSDictionary *adventure) {
+        if ([cachedAdventures containsObject:adventure]) [cachedAdventures removeObject:adventure];
         [cachedAdventures addObject:adventure];
         callback(adventure);
     }];
