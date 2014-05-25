@@ -99,6 +99,14 @@
     self.searchBar.hidden = YES;
 }
 
+- (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer {
+    CGPoint translation = [recognizer translationInView:self.view];
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
+            recognizer.view.center.y + translation.y);
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
+
+}
+
 /*** MODE OF TRANSPORT ***/
 
 - (IBAction)modeOfTransportButtonClicked:(UIBarButtonItem *)sender {
