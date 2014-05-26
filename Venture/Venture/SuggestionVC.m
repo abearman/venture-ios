@@ -230,6 +230,7 @@
 }
 
 - (void)setCurrentAdventure:(NSMutableDictionary *)currentAdventure {
+    self->_currentAdventure = currentAdventure;
     self.activityName.text = [currentAdventure objectForKey:@"title"];
     NSString* lat = [currentAdventure objectForKey:@"latitude"];
     NSString* lng = [currentAdventure objectForKey:@"longitude"];
@@ -278,7 +279,8 @@
                     [images addObject:[metadataSource objectForKey:@"urbanspoon_images"]];
             }
             if ([source isEqualToString:@"opentable.com"]) {
-                [images addObject:[metadataSource objectForKey:@"opentable_image"]];
+                if ([[metadataSource objectForKey:@"opentable_image"] isKindOfClass:[NSString class]])
+                    [images addObject:[metadataSource objectForKey:@"opentable_image"]];
             }
         }
 
@@ -312,7 +314,6 @@
 }
 
 -(void)respondToSwipeLeft {
-    NSLog(@"Respond to swipe left %@",self.currentAdventure);
     if (self.currentAdventure != NULL && [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure] != NULL) {
         self.dragView.center = CGPointMake(-EDGE_OFFSET,slidingViewHome.y);
         self.currentAdventure = [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure];
@@ -321,7 +322,6 @@
 }
 
 -(void)respondToSwipeRight {
-    NSLog(@"Swiped right");
     if (self.currentAdventure != NULL && [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure] != NULL) {
         self.currentAdventure = [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure];
     }
