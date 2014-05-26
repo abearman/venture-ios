@@ -20,6 +20,7 @@
     if (self) {
         tracker = t;
         _suggestions = [[NSMutableArray alloc] init];
+        cachedAdventures = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -36,6 +37,7 @@
 
 -(NSMutableDictionary *)getPreviousCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure {
     int index = [cachedAdventures indexOfObject:cachedAdventure];
+    NSLog(@"Cached adventure has index for this adventure of %i",index);
     if (index > 0) return [cachedAdventures objectAtIndex:index-1];
     return NULL;
 }
@@ -48,9 +50,11 @@
 
 -(void)getNewAdventureSuggestion:(void (^)(NSMutableDictionary *))callback {
     [self makeCallToVentureServer:@"/get-suggestion" callback:^(NSMutableDictionary *adventure) {
-        if ([cachedAdventures containsObject:adventure]) [cachedAdventures removeObject:adventure];
-        [cachedAdventures addObject:adventure];
-        callback(adventure);
+        if (adventure != nil) {
+            if ([cachedAdventures containsObject:adventure]) [cachedAdventures removeObject:adventure];
+            [cachedAdventures addObject:adventure];
+            callback(adventure);
+        }
     }];
 }
 

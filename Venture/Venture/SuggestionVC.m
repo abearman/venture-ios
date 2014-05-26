@@ -18,6 +18,10 @@
 #import "VentureServerLayer.h"
 
 @interface SuggestionVC() <UISearchBarDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
+{
+    CGPoint slidingViewHome;
+    CGPoint cachedTouchLocation;
+}
 
 /* Model */
 @property (nonatomic) NSInteger modeOfTransportation;
@@ -40,7 +44,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ventureBotImageView;
 @property (weak, nonatomic) IBOutlet UIView *dragView;
 
+@property (weak, nonatomic) IBOutlet UIView *leftBumper;
+@property (weak, nonatomic) IBOutlet UIView *rightBumper;
+@property (weak, nonatomic) IBOutlet UIView *topBumper;
+
 @end
+
+#define EDGE_OFFSET 600
 
 @implementation SuggestionVC
 
@@ -55,7 +65,12 @@
 
     [self setUpNavigationBar];
     [self setUpSearchBar];
-    [self setUpGestureRecognizers];
+
+    slidingViewHome = self.dragView.center;
+
+    [self.leftBumper setAlpha:0];
+    [self.rightBumper setAlpha:0];
+    [self.topBumper setAlpha:0];
 
     [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
 }
@@ -105,6 +120,75 @@
             recognizer.view.center.y + translation.y);
     [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 
+    CGFloat bumperWidth = 150;
+
+    if ([recognizer numberOfTouches] > 0) {
+        CGPoint touchLocation = [recognizer locationOfTouch:0 inView:self.view];
+
+        [self.leftBumper setAlpha:1 - (touchLocation.x / bumperWidth)];
+        [self.rightBumper setAlpha:1 - (([UIScreen mainScreen].bounds.size.width -
+                touchLocation.x) / bumperWidth)];
+        [self.topBumper setAlpha:1 - ((touchLocation.y-15) / bumperWidth)];
+
+        cachedTouchLocation = touchLocation;
+    }
+
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+
+        [self.leftBumper setAlpha:0];
+        [self.rightBumper setAlpha:0];
+        [self.topBumper setAlpha:0];
+
+        int edgeOffset = 600;
+
+        CGPoint touchLocation = cachedTouchLocation;
+        if (touchLocation.x < bumperWidth/2) {
+            [UIView animateWithDuration:0.5
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                recognizer.view.center = CGPointMake(-edgeOffset,slidingViewHome.y);
+            } completion:^(BOOL finished) {
+                [self respondToSwipeRight];
+            }];
+        }
+        else if (touchLocation.x > [[UIScreen mainScreen] bounds].size.width - (bumperWidth/2)) {
+            [UIView animateWithDuration:0.5
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                recognizer.view.center = CGPointMake(edgeOffset,slidingViewHome.y);
+            } completion:^(BOOL finished) {
+                [self respondToSwipeLeft];
+            }];
+        }
+        else if (touchLocation.y < 15 + (bumperWidth/2)) {
+            [UIView animateWithDuration:0.5
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                recognizer.view.center = CGPointMake(slidingViewHome.x,-300);
+            } completion:^(BOOL finished) {
+                [self respondToSwipeUp];
+                [self animatedSuggestionReset];
+            }];
+        }
+        else {
+            [self animatedSuggestionReset];
+        }
+
+    }
+}
+
+- (void)animatedSuggestionReset {
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+        self.dragView.center = slidingViewHome;
+    } completion:^(BOOL finished) {
+        // Don't do anything, since we're just resetting
+    }];
 }
 
 /*** MODE OF TRANSPORT ***/
@@ -146,6 +230,7 @@
 }
 
 - (void)setCurrentAdventure:(NSMutableDictionary *)currentAdventure {
+    self->_currentAdventure = currentAdventure;
     self.activityName.text = [currentAdventure objectForKey:@"title"];
     NSString* lat = [currentAdventure objectForKey:@"latitude"];
     NSString* lng = [currentAdventure objectForKey:@"longitude"];
@@ -188,8 +273,14 @@
         for (NSDictionary *metadataSource in metadataSources) {
             NSString *source = [metadataSource objectForKey:@"source"];
             if ([source isEqualToString:@"urbanspoon.com"]) {
-                NSArray *urbanspoonImages = [metadataSource objectForKey:@"urbanspoon_images"];
-                [images addObjectsFromArray:urbanspoonImages];
+                if ([[metadataSource objectForKey:@"urbanspoon_images"] isKindOfClass:[NSArray class]])
+                    [images addObjectsFromArray:[metadataSource objectForKey:@"urbanspoon_images"]];
+                else if ([[metadataSource objectForKey:@"urbanspoon_images"] isKindOfClass:[NSString class]])
+                    [images addObject:[metadataSource objectForKey:@"urbanspoon_images"]];
+            }
+            if ([source isEqualToString:@"opentable.com"]) {
+                if ([[metadataSource objectForKey:@"opentable_image"] isKindOfClass:[NSString class]])
+                    [images addObject:[metadataSource objectForKey:@"opentable_image"]];
             }
         }
 
@@ -222,37 +313,23 @@
     }
 }
 
-/*** GESTURE RECOGNIZERS ***/
-
-- (void) setUpGestureRecognizers {
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeRight)];
-    swipeRight.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeUp)];
-    swipeUp.direction = UISwipeGestureRecognizerDirectionUp;
-    
-    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipeLeft)];
-    swipeLeft.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.activityView addGestureRecognizer:swipeRight];
-    [self.activityView addGestureRecognizer:swipeUp];
-    [self.activityView addGestureRecognizer:swipeLeft];
-}
-
 -(void)respondToSwipeLeft {
     if (self.currentAdventure != NULL && [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure] != NULL) {
+        self.dragView.center = CGPointMake(-EDGE_OFFSET,slidingViewHome.y);
         self.currentAdventure = [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure];
     }
+    [self animatedSuggestionReset];
 }
 
 -(void)respondToSwipeRight {
-    NSLog(@"Swiped right");
     if (self.currentAdventure != NULL && [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure] != NULL) {
         self.currentAdventure = [self.serverLayer getNextCachedAdventureOrNull:self.currentAdventure];
     }
     else {
         [self getNewActivity:self.modeOfTransportation atFeeling:self.activityType];
     }
+    self.dragView.center = CGPointMake(EDGE_OFFSET,slidingViewHome.y);
+    [self animatedSuggestionReset];
 }
 
 -(void)respondToSwipeUp {
