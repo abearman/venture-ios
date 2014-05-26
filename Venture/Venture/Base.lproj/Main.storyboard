@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BUZ-cx-lhq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BUZ-cx-lhq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -650,23 +650,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8H-BM-pF8" userLabel="Right">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8H-BM-pF8" userLabel="Right">
                                 <rect key="frame" x="35" y="0.0" width="285" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="0.55206857170000001" blue="0.071089166080000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-fi-Xvk" userLabel="Left">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-fi-Xvk" userLabel="Left">
                                 <rect key="frame" x="0.0" y="0.0" width="281" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cC-xd-9Xr">
+                                        <rect key="frame" x="-20" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="zvr-Au-8FC" kind="embed" id="GRp-pw-KlN"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="4cC-xd-9Xr" secondAttribute="bottom" id="4F0-19-EDB"/>
+                                    <constraint firstItem="4cC-xd-9Xr" firstAttribute="leading" secondItem="Tto-fi-Xvk" secondAttribute="leading" constant="-20" id="LjB-c5-fa7"/>
+                                    <constraint firstItem="4cC-xd-9Xr" firstAttribute="top" secondItem="Tto-fi-Xvk" secondAttribute="top" id="Zbu-Ez-Fdn"/>
+                                    <constraint firstItem="4cC-xd-9Xr" firstAttribute="centerX" secondItem="Tto-fi-Xvk" secondAttribute="centerX" id="mGJ-yR-apk"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vD3-A0-NCt" userLabel="Center">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vD3-A0-NCt" userLabel="Center">
+                                <rect key="frame" x="0.0" y="-2" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="L8H-BM-pF8" firstAttribute="bottom" secondItem="Tto-fi-Xvk" secondAttribute="bottom" id="5v5-Xs-2dd"/>
+                            <constraint firstAttribute="trailing" secondItem="L8H-BM-pF8" secondAttribute="trailing" id="8lL-RG-M0k"/>
+                            <constraint firstItem="Tto-fi-Xvk" firstAttribute="top" secondItem="vD3-A0-NCt" secondAttribute="top" id="FcI-1m-lkE"/>
+                            <constraint firstItem="vD3-A0-NCt" firstAttribute="bottom" secondItem="Tto-fi-Xvk" secondAttribute="bottom" id="JSt-Bz-Dox"/>
+                            <constraint firstAttribute="trailing" secondItem="Tto-fi-Xvk" secondAttribute="trailing" constant="39" id="KqP-YX-psP"/>
+                            <constraint firstAttribute="bottom" secondItem="vD3-A0-NCt" secondAttribute="bottom" id="SdQ-B1-TRp"/>
+                            <constraint firstItem="L8H-BM-pF8" firstAttribute="leading" secondItem="Gm1-dx-oR9" secondAttribute="leading" constant="35" id="SiY-7t-L3T"/>
+                            <constraint firstItem="vD3-A0-NCt" firstAttribute="leading" secondItem="Tto-fi-Xvk" secondAttribute="leading" id="XI0-7x-AiK"/>
+                            <constraint firstItem="vD3-A0-NCt" firstAttribute="leading" secondItem="Gm1-dx-oR9" secondAttribute="leading" id="ccg-uk-xKe"/>
+                            <constraint firstItem="L8H-BM-pF8" firstAttribute="top" secondItem="Gm1-dx-oR9" secondAttribute="top" id="cex-8t-9rD"/>
+                            <constraint firstItem="Tto-fi-Xvk" firstAttribute="top" secondItem="L8H-BM-pF8" secondAttribute="top" id="lSI-9T-8pe"/>
+                            <constraint firstItem="vD3-A0-NCt" firstAttribute="trailing" secondItem="L8H-BM-pF8" secondAttribute="trailing" id="yVK-V2-MbA"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dYF-EA-Z83"/>
                     <connections>
@@ -677,7 +707,74 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lHO-eT-vD8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1264" y="-474"/>
+            <point key="canvasLocation" x="-1247" y="-474"/>
+        </scene>
+        <!--Groups ListTVC-->
+        <scene sceneID="3Pk-AT-gaY">
+            <objects>
+                <tableViewController id="zvr-Au-8FC" customClass="GroupsListTVC" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ZeN-u7-Hma">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Create New Group" id="LYD-uk-QgY">
+                                <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LYD-uk-QgY" id="SML-jV-RkU">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ShX-xf-RUb">
+                                            <rect key="frame" x="79" y="7" width="163" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Create New Group">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="createNewGroup:" destination="zvr-Au-8FC" eventType="touchUpInside" id="rKo-sB-UP2"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Group" id="A5E-Va-Dmb">
+                                <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A5E-Va-Dmb" id="Ypa-qp-Hzw">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zvr-Au-8FC" id="Gee-d5-Ewh"/>
+                            <outlet property="delegate" destination="zvr-Au-8FC" id="SPk-V8-HOm"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1rG-xh-sYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-864" y="-474"/>
+        </scene>
+        <!--View Controller - Create Group-->
+        <scene sceneID="31q-IZ-suO">
+            <objects>
+                <viewController storyboardIdentifier="Create Group" title="Create Group" id="o3m-6X-Wup" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VqE-aB-lHi"/>
+                        <viewControllerLayoutGuide type="bottom" id="j5g-Sz-ipK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j4P-Nw-d8I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="44I-C4-QXh"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o2o-aH-AbM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-370" y="-477"/>
         </scene>
     </scenes>
     <resources>
