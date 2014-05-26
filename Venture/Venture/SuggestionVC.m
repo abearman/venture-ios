@@ -275,6 +275,9 @@
                 NSArray *urbanspoonImages = [metadataSource objectForKey:@"urbanspoon_images"];
                 [images addObjectsFromArray:urbanspoonImages];
             }
+            if ([source isEqualToString:@"opentable.com"]) {
+                [images addObject:[metadataSource objectForKey:@"opentable_image"]];
+            }
         }
 
         // Setup the image cache to receive images
