@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BUZ-cx-lhq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BUZ-cx-lhq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -97,6 +97,9 @@
                             <constraint firstItem="by3-ow-tD9" firstAttribute="leading" secondItem="DRb-O0-Cbu" secondAttribute="leading" id="OIO-fR-fMm"/>
                             <constraint firstItem="by3-ow-tD9" firstAttribute="top" secondItem="KC7-f8-ne9" secondAttribute="bottom" constant="1" id="aZB-nx-aM4"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="VRd-wl-kv7" appends="YES" id="qo7-kH-cPf"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="KSt-y4-XZo">
                         <barButtonItem key="leftBarButtonItem" image="search" id="nAY-0y-MYt">
@@ -117,12 +120,18 @@
                         <outlet property="activityDistanceAway" destination="LRs-U4-qB7" id="LdB-f8-bDI"/>
                         <outlet property="activityName" destination="5b3-6w-4Dv" id="Nr1-uv-mlb"/>
                         <outlet property="activityYelpRating" destination="Aur-Jc-1aR" id="5pS-bp-Kwg"/>
+                        <outlet property="dragView" destination="by3-ow-tD9" id="86j-Yn-cA8"/>
                         <outlet property="imageView" destination="wVc-Im-V3v" id="ey1-6l-T91"/>
                         <outlet property="searchBar" destination="UPx-nU-qmN" id="PlE-wi-WBO"/>
                         <outlet property="spinner" destination="ylr-oe-3jf" id="tap-ml-ICR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLN-rG-Uop" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer id="VRd-wl-kv7">
+                    <connections>
+                        <action selector="handlePan:" destination="9AF-g9-vBA" id="cn1-5Q-dkO"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1696" y="-1866"/>
         </scene>

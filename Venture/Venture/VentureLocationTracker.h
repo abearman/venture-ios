@@ -19,6 +19,8 @@
 @property (readonly) NSString *altitudeAcc;
 @property CLLocation *currentLocation;
 
+-(void)reverseGeocodeLat:(NSString*)lat lng:(NSString*)lng callback:(void (^)(NSString*))callback;
+-(void)geocode:(NSString *)address callback:(void (^)(double,double))callback;
 -(void)setLocationToAddress:(NSString *)location;
 -(void)clearAddress;
 
