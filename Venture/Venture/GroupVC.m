@@ -32,8 +32,6 @@
 }
 
 - (void) panDetected:(UIPanGestureRecognizer *)gesture {
-    NSLog(@"Pan!");
-    
     CGPoint translation = [gesture translationInView:gesture.view];
     CGFloat xTranslate = gesture.view.center.x + translation.x;
     gesture.view.center = CGPointMake(xTranslate, gesture.view.center.y);
@@ -48,7 +46,6 @@
     }
     
     if (gesture.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Herp");
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
                              self.centerView.frame = CGRectMake(0, self.centerView.frame.origin.y, self.centerView.frame.size.width, self.centerView.frame.size.height);
@@ -58,7 +55,6 @@
 }
 
 - (void) swipeRight:(UISwipeGestureRecognizer *)gesture {
-     NSLog(@"Right swipe!");
     CGFloat x = self.centerView.frame.origin.x;
     if (x == 0.0) {
         self.leftView.hidden = NO;
@@ -78,7 +74,6 @@
 }
 
 - (void) swipeLeft:(UISwipeGestureRecognizer *)gesture {
-     NSLog(@"Left swipe!");
     CGFloat x = self.centerView.frame.origin.x;
     if (x == 240.0) {
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut
@@ -96,36 +91,5 @@
                          completion:nil];
     }
 }
-
-/*- (void) swipeDetected: (UISwipeGestureRecognizer *)gesture {
-    NSLog(@"X: %f", self.centerView.frame.origin.x);
-    
-    CGFloat x = self.centerView.frame.origin.x;
- 
-    
-    /*else if (xVelocity <= -500.0 && x <= 160.0 && x >= -90.0) {
-        self.leftView.hidden = YES;
-        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                             gesture.view.center = CGPointMake(-90.0, gesture.view.center.y);
-                         }
-                         completion:nil];
-    }*/
-    
-    // Displaying left view
-    
-    /*CGFloat xTranslate = gesture.view.center.x + translation.x;
-    if (xTranslate >= 160.0 && xTranslate <= 420.0) {
-        self.leftView.hidden = NO;
-        gesture.view.center = CGPointMake(xTranslate, gesture.view.center.y);
-    }
-    [gesture setTranslation:CGPointMake(0, 0) inView: gesture.view];*/
-    
-    // Displaying right view
-    /* else if (xTranslate <= 160.0 && xTranslate >= -90.0) {
-        self.leftView.hidden = YES;
-        gesture.view.center = CGPointMake(xTranslate, gesture.view.center.y);
-    }
-}*/
 
 @end
