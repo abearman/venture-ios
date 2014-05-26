@@ -592,17 +592,17 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="E78-Ai-arX" kind="relationship" relationship="rootViewController" id="jQP-Du-upu"/>
+                        <segue destination="sdG-Wo-Yrq" kind="relationship" relationship="rootViewController" id="QmN-7V-ATi"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fov-dz-Ejg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2141" y="-474"/>
         </scene>
-        <!--GroupVC-->
+        <!--View Controller-->
         <scene sceneID="rBW-rK-hPn">
             <objects>
-                <viewController id="E78-Ai-arX" customClass="GroupVC" sceneMemberID="viewController">
+                <viewController id="E78-Ai-arX" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2fK-qD-jmQ"/>
                         <viewControllerLayoutGuide type="bottom" id="McO-1l-ZEJ"/>
@@ -624,6 +624,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4c-Vq-ghG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1688" y="-474"/>
+        </scene>
+        <!--GroupVC-->
+        <scene sceneID="zWN-iv-IUr">
+            <objects>
+                <viewController id="sdG-Wo-Yrq" customClass="GroupVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jfn-FP-JVq"/>
+                        <viewControllerLayoutGuide type="bottom" id="bYb-RB-RpK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Gm1-dx-oR9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8H-BM-pF8" userLabel="Right">
+                                <rect key="frame" x="35" y="0.0" width="285" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="0.55206857170000001" blue="0.071089166080000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tto-fi-Xvk" userLabel="Left">
+                                <rect key="frame" x="0.0" y="0.0" width="281" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vD3-A0-NCt" userLabel="Center">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dYF-EA-Z83"/>
+                    <connections>
+                        <outlet property="centerView" destination="vD3-A0-NCt" id="PcQ-Gc-hlk"/>
+                        <outlet property="leftView" destination="Tto-fi-Xvk" id="Xjf-KM-vaE"/>
+                        <outlet property="rightView" destination="L8H-BM-pF8" id="hJI-sS-PJf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lHO-eT-vD8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1264" y="-474"/>
         </scene>
     </scenes>
     <resources>

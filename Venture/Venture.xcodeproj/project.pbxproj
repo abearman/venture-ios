@@ -19,6 +19,9 @@
 		65DDF647193274DF0034C60D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF646193274DF0034C60D /* Grid.m */; };
 		65DDF64B1932A2D40034C60D /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */; };
 		65DDF64E1932A2F30034C60D /* VentureModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF64C1932A2F30034C60D /* VentureModel.xcdatamodeld */; };
+		65DDF6511932A5390034C60D /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6501932A5390034C60D /* Message.m */; };
+		65DDF6541932A53A0034C60D /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6531932A53A0034C60D /* Person.m */; };
+		65DDF6571932A53A0034C60D /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6561932A53A0034C60D /* Group.m */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -80,6 +83,12 @@
 		65DDF6491932A2D40034C60D /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		65DDF64D1932A2F30034C60D /* VentureModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VentureModel.xcdatamodel; sourceTree = "<group>"; };
+		65DDF64F1932A5390034C60D /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		65DDF6501932A5390034C60D /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		65DDF6521932A53A0034C60D /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		65DDF6531932A53A0034C60D /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		65DDF6551932A53A0034C60D /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		65DDF6561932A53A0034C60D /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -184,6 +193,12 @@
 				65DDF6491932A2D40034C60D /* CoreDataTableViewController.h */,
 				65DDF64A1932A2D40034C60D /* CoreDataTableViewController.m */,
 				65DDF64C1932A2F30034C60D /* VentureModel.xcdatamodeld */,
+				65DDF6551932A53A0034C60D /* Group.h */,
+				65DDF6561932A53A0034C60D /* Group.m */,
+				65DDF6521932A53A0034C60D /* Person.h */,
+				65DDF6531932A53A0034C60D /* Person.m */,
+				65DDF64F1932A5390034C60D /* Message.h */,
+				65DDF6501932A5390034C60D /* Message.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -300,8 +315,8 @@
 				659C9B76192F010E00F1AF59 /* TrackAdventureVC.m */,
 				659C9B80192F157700F1AF59 /* CreateAdventureTVC.h */,
 				659C9B81192F157700F1AF59 /* CreateAdventureTVC.m */,
-				85BA5CAD508A9401656FF10F /* GroupVC.m */,
 				85BA54304C7D9836FB543428 /* GroupVC.h */,
+				85BA5CAD508A9401656FF10F /* GroupVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -461,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DDF6571932A53A0034C60D /* Group.m in Sources */,
 				659C9B77192F010E00F1AF59 /* TrackAdventureVC.m in Sources */,
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
 				65DDF647193274DF0034C60D /* Grid.m in Sources */,
@@ -468,8 +484,10 @@
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,
 				65F459BD18F908D5007761AA /* main.m in Sources */,
+				65DDF6511932A5390034C60D /* Message.m in Sources */,
 				65DDF64E1932A2F30034C60D /* VentureModel.xcdatamodeld in Sources */,
 				659C9B82192F157700F1AF59 /* CreateAdventureTVC.m in Sources */,
+				65DDF6541932A53A0034C60D /* Person.m in Sources */,
 				65DDF64B1932A2D40034C60D /* CoreDataTableViewController.m in Sources */,
 				85BA5716F54396E9BBB9A656 /* VentureServerLayer.m in Sources */,
 				85BA5D7ACC62CBD11F9AE06F /* VentureLocationTracker.m in Sources */,
