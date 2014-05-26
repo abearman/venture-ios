@@ -272,8 +272,10 @@
         for (NSDictionary *metadataSource in metadataSources) {
             NSString *source = [metadataSource objectForKey:@"source"];
             if ([source isEqualToString:@"urbanspoon.com"]) {
-                NSArray *urbanspoonImages = [metadataSource objectForKey:@"urbanspoon_images"];
-                [images addObjectsFromArray:urbanspoonImages];
+                if ([[metadataSource objectForKey:@"urbanspoon_images"] isKindOfClass:[NSArray class]])
+                    [images addObjectsFromArray:[metadataSource objectForKey:@"urbanspoon_images"]];
+                else if ([[metadataSource objectForKey:@"urbanspoon_images"] isKindOfClass:[NSString class]])
+                    [images addObject:[metadataSource objectForKey:@"urbanspoon_images"]];
             }
             if ([source isEqualToString:@"opentable.com"]) {
                 [images addObject:[metadataSource objectForKey:@"opentable_image"]];
@@ -310,6 +312,7 @@
 }
 
 -(void)respondToSwipeLeft {
+    NSLog(@"Respond to swipe left %@",self.currentAdventure);
     if (self.currentAdventure != NULL && [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure] != NULL) {
         self.dragView.center = CGPointMake(-EDGE_OFFSET,slidingViewHome.y);
         self.currentAdventure = [self.serverLayer getPreviousCachedAdventureOrNull:self.currentAdventure];

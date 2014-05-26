@@ -36,6 +36,7 @@
 
 -(NSMutableDictionary *)getPreviousCachedAdventureOrNull:(NSMutableDictionary *)cachedAdventure {
     int index = [cachedAdventures indexOfObject:cachedAdventure];
+    NSLog(@"Cached adventure has index for this adventure of %i",index);
     if (index > 0) return [cachedAdventures objectAtIndex:index-1];
     return NULL;
 }
