@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="by3-ow-tD9">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="by3-ow-tD9">
                                 <rect key="frame" x="0.0" y="109" width="320" height="410"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -44,22 +44,35 @@
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aur-Jc-1aR" userLabel="Rating">
-                                        <rect key="frame" x="105" y="331" width="111" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="111" id="9Ef-Cp-yGe"/>
-                                            <constraint firstAttribute="height" constant="20" id="nRn-Wn-UYi"/>
-                                        </constraints>
-                                    </imageView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ylr-oe-3jf" userLabel="spinner">
                                         <rect key="frame" x="150" y="232" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wVc-Im-V3v">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wVc-Im-V3v">
                                         <rect key="frame" x="0.0" y="97" width="320" height="226"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </scrollView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="OpenTable Rating:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEC-8l-3hH">
+                                        <rect key="frame" x="20" y="331" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yelp Rating:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV3-Jv-Mg9">
+                                        <rect key="frame" x="20" y="360" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UrbanSpoon Rating:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXZ-Ry-Y87">
+                                        <rect key="frame" x="20" y="389" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -67,22 +80,20 @@
                                     <constraint firstAttribute="bottom" secondItem="wVc-Im-V3v" secondAttribute="bottom" constant="87" id="3dJ-ya-HHk"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" constant="13" id="5cb-jc-vuJ"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="centerX" secondItem="ylr-oe-3jf" secondAttribute="centerX" id="8PO-ll-11Z"/>
-                                    <constraint firstItem="Aur-Jc-1aR" firstAttribute="top" secondItem="by3-ow-tD9" secondAttribute="top" constant="384" id="AVG-16-EH8"/>
                                     <constraint firstItem="5b3-6w-4Dv" firstAttribute="top" secondItem="by3-ow-tD9" secondAttribute="top" constant="56" id="Av4-Uq-9Lp"/>
                                     <constraint firstItem="wVc-Im-V3v" firstAttribute="top" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="8" symbolic="YES" id="CA4-yz-dnb"/>
                                     <constraint firstItem="wVc-Im-V3v" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" id="DVu-FP-V8N"/>
-                                    <constraint firstItem="Aur-Jc-1aR" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" constant="108" id="EDC-X4-nbu"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="centerX" secondItem="5b3-6w-4Dv" secondAttribute="centerX" id="It7-kC-nFb"/>
                                     <constraint firstItem="5b3-6w-4Dv" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" constant="17" id="ODU-zW-SCu"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" constant="13" id="Ob5-ou-peJ"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="top" secondItem="ln6-f1-z9O" secondAttribute="bottom" constant="8" symbolic="YES" id="QLW-qg-EoQ"/>
-                                    <constraint firstItem="Aur-Jc-1aR" firstAttribute="top" secondItem="wVc-Im-V3v" secondAttribute="bottom" constant="17" id="SIU-Al-YSf"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="top" secondItem="5b3-6w-4Dv" secondAttribute="bottom" constant="34" id="ci0-hT-gI8"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="centerX" secondItem="by3-ow-tD9" secondAttribute="centerX" id="dBT-zv-w5T"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="trailing" secondItem="ln6-f1-z9O" secondAttribute="trailing" id="fli-kN-3id"/>
                                     <constraint firstItem="ylr-oe-3jf" firstAttribute="top" secondItem="LRs-U4-qB7" secondAttribute="bottom" constant="99" id="fzR-rj-LfX"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="leading" secondItem="ln6-f1-z9O" secondAttribute="leading" id="imz-jW-lJX"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="top" secondItem="by3-ow-tD9" secondAttribute="top" constant="110" id="maL-FZ-2cP"/>
+                                    <constraint firstAttribute="bottom" secondItem="wVc-Im-V3v" secondAttribute="bottom" constant="87" id="mcW-mr-QDb"/>
                                     <constraint firstItem="wVc-Im-V3v" firstAttribute="leading" secondItem="by3-ow-tD9" secondAttribute="leading" id="mxA-ul-0KJ"/>
                                     <constraint firstItem="LRs-U4-qB7" firstAttribute="centerX" secondItem="wVc-Im-V3v" secondAttribute="centerX" id="tXJ-2O-GCi"/>
                                 </constraints>
@@ -135,10 +146,12 @@
                         <outlet property="activityAddress" destination="ln6-f1-z9O" id="xXY-84-Tkl"/>
                         <outlet property="activityDistanceAway" destination="LRs-U4-qB7" id="LdB-f8-bDI"/>
                         <outlet property="activityName" destination="5b3-6w-4Dv" id="Nr1-uv-mlb"/>
-                        <outlet property="activityYelpRating" destination="Aur-Jc-1aR" id="5pS-bp-Kwg"/>
                         <outlet property="dragView" destination="by3-ow-tD9" id="86j-Yn-cA8"/>
                         <outlet property="imageView" destination="wVc-Im-V3v" id="ey1-6l-T91"/>
                         <outlet property="leftBumper" destination="aik-fg-EXt" id="V4L-fA-WeH"/>
+                        <outlet property="rating1" destination="yEC-8l-3hH" id="EfO-vz-MFD"/>
+                        <outlet property="rating2" destination="IV3-Jv-Mg9" id="hKr-kf-LyX"/>
+                        <outlet property="rating3" destination="pXZ-Ry-Y87" id="QVZ-Nv-k7p"/>
                         <outlet property="rightBumper" destination="Ajq-j6-rAL" id="cva-gZ-RQz"/>
                         <outlet property="searchBar" destination="UPx-nU-qmN" id="PlE-wi-WBO"/>
                         <outlet property="spinner" destination="ylr-oe-3jf" id="tap-ml-ICR"/>

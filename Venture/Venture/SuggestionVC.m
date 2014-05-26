@@ -48,6 +48,10 @@
 @property (weak, nonatomic) IBOutlet UIView *rightBumper;
 @property (weak, nonatomic) IBOutlet UIView *topBumper;
 
+@property (weak, nonatomic) IBOutlet UILabel *rating1;
+@property (weak, nonatomic) IBOutlet UILabel *rating2;
+@property (weak, nonatomic) IBOutlet UILabel *rating3;
+
 @end
 
 #define EDGE_OFFSET 600
@@ -67,6 +71,7 @@
     [self setUpSearchBar];
 
     slidingViewHome = self.dragView.center;
+    slidingViewHome.y -= 65;
 
     [self.leftBumper setAlpha:0];
     [self.rightBumper setAlpha:0];
@@ -205,7 +210,6 @@
 
 -(void)getNewActivity:(int)indexOfTransport atFeeling:(int)indexOfFeeling {
     [self.spinner startAnimating];
-    NSLog(@"Making call to server %@",self.serverLayer);
     [self.serverLayer getNewAdventureSuggestion:^(NSMutableDictionary *suggestion) {
         [self.spinner stopAnimating];
         self.currentAdventure = suggestion;
@@ -259,6 +263,42 @@
         double distance = [self.locationTracker.currentLocation distanceFromLocation:loc2];
         distance /= 1000.0;
         self.activityDistanceAway.text = [NSString stringWithFormat:@"%f km", distance];
+    }
+
+    // Get ratings
+
+    self.rating1.alpha = 0;
+    self.rating2.alpha = 0;
+    self.rating3.alpha = 0;
+
+    int ratingNumber = 0;
+
+    NSArray *metadataSources = [currentAdventure objectForKey:@"metadata"];
+    for (NSDictionary *metadataSource in metadataSources) {
+        NSString *source = [metadataSource objectForKey:@"source"];
+        NSString *rating = @"";
+        if ([source isEqualToString:@"urbanspoon.com"]) {
+            rating = [NSString stringWithFormat:@"Urbanspoon %@/100 from %@ reviews",[metadataSource objectForKey:@"urbanspoon_rating"],[metadataSource objectForKey:@"urbanspoon_votes"]];
+        }
+        if ([source isEqualToString:@"opentable.com"]) {
+            rating = [NSString stringWithFormat:@"OpenTable %@/5 from %@ reviews",[metadataSource objectForKey:@"opentable_rating"],[metadataSource objectForKey:@"opentable_ratings_count"]];
+        }
+        if ([source isEqualToString:@"yelp.com"]) {
+            rating = [NSString stringWithFormat:@"Yelp %@/5 from %@ reviews",[metadataSource objectForKey:@"yelp_rating"],[metadataSource objectForKey:@"yelp_review_count"]];
+        }
+        if (ratingNumber == 0) {
+            self.rating1.alpha = 1;
+            self.rating1.text = rating;
+        }
+        else if (ratingNumber == 1) {
+            self.rating2.alpha = 1;
+            self.rating2.text = rating;
+        }
+        else if (ratingNumber == 2) {
+            self.rating3.alpha = 1;
+            self.rating3.text = rating;
+        }
+        ratingNumber++;
     }
 
     // Check if we've already downloaded the images for this guy in the past
