@@ -18,6 +18,19 @@
 
 - (void) viewDidLoad {
     [self setUpGestureRecognizers];
+    [self setUpNavigationBar];
+}
+
+- (void) setUpNavigationBar {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"purple-gradient"] forBarMetrics:UIBarMetricsDefault];
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"Lobster" size:40];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Venture";
+    label.textAlignment = UITextAlignmentCenter;
+    self.navigationItem.titleView = label;
 }
 
 - (void) setUpGestureRecognizers {

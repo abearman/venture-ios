@@ -7,7 +7,6 @@
 //
 
 #import "CreateAdventureTVC.h"
-#import "Grid.h"
 #import "VentureServerLayer.h"
 #import "TrackAdventureVC.h"
 
@@ -28,11 +27,10 @@
 
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 @property (weak, nonatomic) IBOutlet UIView *photosView;
-@property (strong, nonatomic) Grid *grid;
 
-@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (strong, nonatomic) UIImageView *imageViewToDelete;
 @property (strong, nonatomic) NSDictionary *adventureDict;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -47,7 +45,6 @@
     self.categories = [[NSArray alloc] initWithObjects:@"Restaurant", @"Park", @"Movie", @"Bar", @"Arts", @"Shopping", nil];
     [self setUpDelegates];
     [self initializeAllProperties];
-    [self setUpGrid];
     [self setUpUIofTable];
 }
 
@@ -55,15 +52,10 @@
     self.descriptionCell.textLabel.text = @"Description";
     self.nameCell.textLabel.text = @"Name";
     self.categoryCell.textLabel.text = @"Category";
-    
-    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    self.tapRecognizer.numberOfTapsRequired = 1;
-    [self.photosView addGestureRecognizer:self.tapRecognizer];
 }
 
 - (void) initializeAllProperties {
     self.imageViews = [[NSMutableArray alloc] init];
-    self.grid = [[Grid alloc] init];
     self.serverLayer = [[VentureServerLayer alloc] init];
 }
 
@@ -71,15 +63,6 @@
     self.nameTextField.delegate = self;
     self.descriptionTextField.delegate = self;
     self.categoryTextField.delegate = self;
-}
-
-- (void) setUpGrid {
-    CGFloat width = self.photosView.frame.size.width;
-    CGFloat height = self.photosView.frame.size.height;
-    self.grid.size = CGSizeMake(width, height);
-    self.grid.cellAspectRatio = 1;
-    
-    self.grid.minimumNumberOfCells = 0;
 }
 
 - (void) setUpNavigationBar {
@@ -165,13 +148,6 @@
             }
             [self presentViewController:picker animated:YES completion:NULL];
         }
-    } else if ([actionSheet.title isEqualToString:@""]) {
-        if (buttonIndex == 0) { // Delete Photo
-            [self.imageViews removeObject:self.imageViewToDelete];
-            self.grid.minimumNumberOfCells--;
-            [self.imageViewToDelete removeFromSuperview];
-            [self resizeExistingPhotos:NO];
-        }
     }
 }
 
@@ -189,78 +165,25 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    self.grid.minimumNumberOfCells++;
-    
+   
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:chosenImage];
     [self.imageViews addObject:imageView];
     
-    [self resizeExistingPhotos:YES];
     [self addPhoto];
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)resizeExistingPhotos: (BOOL)isAdditive {
-    int index = 0;
-    for (int i = 0; i < self.grid.rowCount; i++) {
-        for (int j = 0; j < self.grid.columnCount; j++) {
-            if (isAdditive) {
-                if (index >= self.grid.minimumNumberOfCells - 1) break;
-            } else {
-                if (index >= self.grid.minimumNumberOfCells) break;
-            }
-            
-            UIImageView *imageView = [self.imageViews objectAtIndex:index];
-            CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
-            
-            viewRect.size = CGSizeMake(viewRect.size.width - 4, viewRect.size.height - 4);
-            viewRect.origin = CGPointMake(viewRect.origin.x + 2, viewRect.origin.y + 2);
-            
-            imageView.frame = viewRect;
-            index++;
-        }
-    }
-}
-
-- (void)addPhoto {
-    int col = (int)((self.grid.minimumNumberOfCells - 1) % self.grid.columnCount);
-    int row = (int)((self.grid.minimumNumberOfCells - 1) / self.grid.columnCount);
+-(void)addPhoto {
+    int x = self.scrollView.frame.size.height * ([self.imageViews count] - 1);
+    UIImageView *imageView = [self.imageViews lastObject];
     
-    int index = (int)(self.grid.minimumNumberOfCells - 1);
-    for (int i = row; i < self.grid.rowCount; i++) {
-        for (int j = col; j < self.grid.columnCount; j++) {
-            if (i > row) j = 0;
-            if (index >= self.grid.minimumNumberOfCells) return;
-            UIImageView *imageView = [self.imageViews objectAtIndex:index];
-            imageView.userInteractionEnabled = YES;
-            index++;
-            CGRect viewRect = [self.grid frameOfCellAtRow:i inColumn:j];
-            
-            viewRect.size = CGSizeMake(viewRect.size.width - 4, viewRect.size.height - 4);
-            viewRect.origin = CGPointMake(viewRect.origin.x + 2, viewRect.origin.y + 2);
-            
-            imageView.frame = viewRect;
-            
-            [self.photosView addSubview:imageView];
-        }
-    }
-}
-
--(void)tapAction {
-    CGPoint point = [self.tapRecognizer locationInView:self.photosView];
-    UIView *tappedView = [self.photosView hitTest:point withEvent:nil];
-    UIImageView *tappedImageView = (UIImageView *)tappedView;
+    imageView.frame = CGRectMake(x, 0, self.scrollView.frame.size.height, self.scrollView.frame.size.height);
     
-    self.actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"", @"")
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:@"Delete"
-                                                    otherButtonTitles:nil];
-    
-    self.imageViewToDelete = tappedImageView;
-    [self.actionSheet showInView:self.view];
+    x += imageView.frame.size.width;
+    self.scrollView.contentSize = CGSizeMake(x, self.scrollView.contentSize.height);
+    [self.scrollView addSubview:imageView];
 }
 
 - (NSArray *)getBase64Images {
