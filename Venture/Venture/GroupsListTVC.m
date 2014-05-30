@@ -46,8 +46,11 @@
 - (IBAction)createNewGroup:(UIButton *)sender {
     NSLog(@"Create new group");
     
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"Create Group"];
-    [self.navigationController pushViewController:vc animated:NO];
+    // Send notification to central view
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateGroup" object:self];
+    
+    //UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"Create Group"];
+    //[self.navigationController pushViewController:vc animated:NO];
 }
 
 

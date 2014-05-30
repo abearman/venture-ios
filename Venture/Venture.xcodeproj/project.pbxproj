@@ -24,6 +24,7 @@
 		65DDF6571932A53A0034C60D /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6561932A53A0034C60D /* Group.m */; };
 		65DDF65D1932CD890034C60D /* GroupsListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF65C1932CD890034C60D /* GroupsListTVC.m */; };
 		65DDF660193830F30034C60D /* FacebookLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF65F193830F30034C60D /* FacebookLoginVC.m */; };
+		65DDF6661939094F0034C60D /* CreateGroupTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DDF6651939094F0034C60D /* CreateGroupTVC.m */; };
 		65F459B118F908D5007761AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B018F908D5007761AA /* Foundation.framework */; };
 		65F459B318F908D5007761AA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B218F908D5007761AA /* CoreGraphics.framework */; };
 		65F459B518F908D5007761AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F459B418F908D5007761AA /* UIKit.framework */; };
@@ -95,6 +96,8 @@
 		65DDF65C1932CD890034C60D /* GroupsListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsListTVC.m; sourceTree = "<group>"; };
 		65DDF65E193830F30034C60D /* FacebookLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginVC.h; sourceTree = "<group>"; };
 		65DDF65F193830F30034C60D /* FacebookLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginVC.m; sourceTree = "<group>"; };
+		65DDF6641939094F0034C60D /* CreateGroupTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGroupTVC.h; sourceTree = "<group>"; };
+		65DDF6651939094F0034C60D /* CreateGroupTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGroupTVC.m; sourceTree = "<group>"; };
 		65F459AD18F908D5007761AA /* Venture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F459B018F908D5007761AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F459B218F908D5007761AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -327,6 +330,8 @@
 				65DDF65C1932CD890034C60D /* GroupsListTVC.m */,
 				65DDF65E193830F30034C60D /* FacebookLoginVC.h */,
 				65DDF65F193830F30034C60D /* FacebookLoginVC.m */,
+				65DDF6641939094F0034C60D /* CreateGroupTVC.h */,
+				65DDF6651939094F0034C60D /* CreateGroupTVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -491,6 +496,7 @@
 				65F459C118F908D5007761AA /* VentureAppDelegate.m in Sources */,
 				65DDF647193274DF0034C60D /* Grid.m in Sources */,
 				652B1EC2192EE8D600CD967C /* SuggestionVC.m in Sources */,
+				65DDF6661939094F0034C60D /* CreateGroupTVC.m in Sources */,
 				65F459C718F908D5007761AA /* VentureViewController.m in Sources */,
 				65DDF660193830F30034C60D /* FacebookLoginVC.m in Sources */,
 				657C9F4818FE357F000792DB /* RatingViewController.m in Sources */,

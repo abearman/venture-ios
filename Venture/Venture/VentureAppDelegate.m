@@ -21,14 +21,6 @@
     
     return wasHandled;
 }
-
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    [GMSServices provideAPIKey:@"AIzaSyDqJgObRde_5kO8kyMR9-bMZ7OIbWDvTQY"];
-    [FBProfilePictureView class];
-    return YES;
-}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -56,12 +48,36 @@
                                                         object:self
                                                       userInfo:nil];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBAppEvents activateApp];
+    [FBAppCall handleDidBecomeActive];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    NSLog(@"About to terminate");
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // If you have not added the -ObjC linker flag, you may need to uncomment the following line because
+    // Nib files require the type to have been loaded before they can do the wireup successfully.
+    // http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
+    // [FBFriendPickerViewController class];
+    
+    // Override point for customization after application launch.
+    [GMSServices provideAPIKey:@"AIzaSyDqJgObRde_5kO8kyMR9-bMZ7OIbWDvTQY"];
+    [FBProfilePictureView class];
+    
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+// FBSample logic
+// It is important to close any FBSession object that is no longer useful
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Close the session before quitting
+    // this is a good idea because things may be hanging off the session, that need
+    // releasing (completion block, etc.) and other components in the app may be awaiting
+    // close notification in order to do cleanup
+    NSLog(@"Will terminate");
+    [FBSession.activeSession close];
 }
 
 @end

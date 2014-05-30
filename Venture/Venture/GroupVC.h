@@ -4,10 +4,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface GroupVC : UIViewController
 
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *personIcon;
 
 @end

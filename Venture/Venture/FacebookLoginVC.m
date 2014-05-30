@@ -8,30 +8,60 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import "FacebookLoginVC.h"
+#import "GroupVC.h"
 
-@interface FacebookLoginVC () <FBLoginViewDelegate>
+@interface FacebookLoginVC () <FBLoginViewDelegate, FBFriendPickerDelegate>
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+
+@property (strong) id<FBGraphUser> user;
 
 @end
 
 @implementation FacebookLoginVC
 
 - (void) viewDidLoad {
+    [self setUpNavigationBar];
     FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]];
     loginView.delegate = self;
-    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width / 2)), 250);
+    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width / 2)), 300);
     [self.view addSubview:loginView];
+}
+
+- (void) setUpNavigationBar {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"purple-gradient"] forBarMetrics:UIBarMetricsDefault];
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"Lobster" size:40];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Venture";
+    label.textAlignment = UITextAlignmentCenter;
+    self.navigationItem.titleView = label;
+}
+
+- (void) getAppUsers {
+    FBRequest *friendsRequest = [FBRequest requestForMyFriends];
+    [friendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary *result, NSError *error) {
+        NSArray *friends = [result objectForKey:@"data"];
+        
+        for (NSDictionary<FBGraphUser>* friend in friends) {
+            NSLog(@"%@",friend.username);
+        }
+        NSLog(@"%d", [friends count]);
+    }];
 }
 
 // This method will be called when the user information has been fetched
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
     self.profilePictureView.profileID = user.objectID;
     self.nameLabel.text = user.name;
+    self.user = user;
+    [self getAppUsers];
 }
-
+    
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     self.statusLabel.text = @"You're logged in as";

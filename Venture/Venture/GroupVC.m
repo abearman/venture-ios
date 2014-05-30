@@ -6,12 +6,20 @@
 #import "GroupVC.h"
 #import "GroupsListTVC.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface GroupVC()
+@interface GroupVC() <FBFriendPickerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
 @property (weak, nonatomic) IBOutlet UIView *rightView;
+
+@property (weak, nonatomic) IBOutlet UITextField *groupName;
+@property (weak, nonatomic) IBOutlet UIView *addMembersView;
+@property (weak, nonatomic) IBOutlet UIButton *addMembersButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *firstName;
 
 @end
 
@@ -20,20 +28,75 @@
 - (void) viewDidLoad {
     [self setUpGestureRecognizers];
     [self setUpNavigationBar];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTestNotification:)
+                                                 name:@"CreateGroup"
+                                               object:nil];
+    [self setUpAddMembersView];
 }
 
-////////////////////////////////////
+- (IBAction)addMembers:(UIButton *)sender {
+    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+# pragma mark People Picker
+
+- (void)peoplePickerNavigationControllerDidCancel: (ABPeoplePickerNavigationController *)peoplePicker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+    
+    NSString* name = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    self.firstName.text = name;
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+- (BOOL)peoplePickerNavigationController: (ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier {
+    return NO;
+}
+
+- (void) setUpAddMembersView {
+    // border radius
+    [self.addMembersView.layer setCornerRadius:20.0f];
+    [self.addMembersButton.layer setCornerRadius:8.0f];
+    
+    // border
+    [self.addMembersView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.addMembersView.layer setBorderWidth:0.5f];
+}
+
+- (void) receiveTestNotification:(NSNotification *) notification {
+    if ([[notification name] isEqualToString:@"CreateGroup"]) {
+        NSLog (@"Successfully received the test notification!");
+        
+        // Unroll the groups list view
+        self.leftView.hidden = NO;
+        self.rightView.hidden = YES;
+        
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.centerView.frame = CGRectMake(0.0, self.centerView.frame.origin.y, self.centerView.frame.size.width, self.centerView.frame.size.height);
+                         }
+                         completion:^(BOOL finished) {
+                             [self.groupName becomeFirstResponder];
+                         }];
+    }
+}
 
 - (void) setUpNavigationBar {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"purple-gradient"] forBarMetrics:UIBarMetricsDefault];
-    CGRect frame = CGRectMake(0, 0, 400, 44);
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Lobster" size:40];
-    label.textColor = [UIColor whiteColor];
-    label.text = @"Venture";
-    label.textAlignment = UITextAlignmentCenter;
-    self.navigationItem.titleView = label;
 }
 
 - (void) setUpGestureRecognizers {
