@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
 #import "CreateAdventureTVC.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 #define METERS_PER_MILE 1609.344
 #define DURATION_LONG_PRESS 0.5
