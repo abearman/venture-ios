@@ -7,7 +7,7 @@
 #import "GroupsListTVC.h"
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface GroupVC() <FBLoginViewDelegate>
+@interface GroupVC()
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
