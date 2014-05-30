@@ -35,7 +35,7 @@
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered {
     @try {
         [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
-    }@catch(id anException) {
+    } @catch(id anException) {
         // Do nothing
     }
 }
@@ -77,14 +77,37 @@
     
     CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
+    
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
     annotation.coordinate = touchMapCoordinate;
+    annotation.title = @"Point!";
+    
     [self.mapView addAnnotation:annotation];
+    [self.mapView selectAnnotation:annotation animated:YES];
     self.selectedAnnotation = annotation;
+    
 }
 
-- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
-    NSLog(@"Selected annotation!");
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKPinAnnotationView *pinView = nil;
+    if (annotation != mapView.userLocation) {
+        static NSString *defaultPin = @"pinID";
+        pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPin];
+        if (pinView == nil) {
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPin];
+            pinView.pinColor = MKPinAnnotationColorPurple;
+            pinView.canShowCallout = YES;
+            pinView.animatesDrop = YES;
+            pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        }
+    } else {
+        [mapView.userLocation setTitle:@"You are here!"];
+    }
+    return pinView;
+}
+
+- (void)mapView:(MKMapView *)_mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    NSLog(@"Selected annotation view!");
     self.selectedAnnotation = view.annotation;
     [self performSegueWithIdentifier:@"Selected Annotation" sender:self.mapView];
 }
