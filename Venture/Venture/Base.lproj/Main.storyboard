@@ -685,7 +685,13 @@
                             <constraint firstItem="vD3-A0-NCt" firstAttribute="trailing" secondItem="L8H-BM-pF8" secondAttribute="trailing" id="yVK-V2-MbA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="dYF-EA-Z83"/>
+                    <navigationItem key="navigationItem" id="dYF-EA-Z83">
+                        <barButtonItem key="rightBarButtonItem" title="Log In" id="gcJ-jb-RGo">
+                            <connections>
+                                <segue destination="bxU-zj-uWW" kind="modal" identifier="Facebook Login" id="MdB-GH-mco"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="centerView" destination="vD3-A0-NCt" id="PcQ-Gc-hlk"/>
                         <outlet property="leftView" destination="Tto-fi-Xvk" id="Xjf-KM-vaE"/>
@@ -694,7 +700,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lHO-eT-vD8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1678" y="-490"/>
+            <point key="canvasLocation" x="-1678" y="-480"/>
         </scene>
         <!--Groups ListTVC-->
         <scene sceneID="3Pk-AT-gaY">
@@ -743,6 +749,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rG-xh-sYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1264" y="-490"/>
+        </scene>
+        <!--Facebook LoginVC-->
+        <scene sceneID="2v3-Z5-KQ9">
+            <objects>
+                <viewController id="bxU-zj-uWW" customClass="FacebookLoginVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M11-DR-8WF"/>
+                        <viewControllerLayoutGuide type="bottom" id="jXu-Kl-uye"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fsi-bL-B5s">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You're not logged in!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKP-Lg-s0h">
+                                <rect key="frame" x="74" y="150" width="172" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIS-un-xAG">
+                                <rect key="frame" x="139" y="184" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="nameLabel" destination="eIS-un-xAG" id="hrZ-fA-bMZ"/>
+                        <outlet property="statusLabel" destination="EKP-Lg-s0h" id="jjZ-0o-3V8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ogi-P8-EzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1400" y="294"/>
         </scene>
         <!--View Controller - Create Group-->
         <scene sceneID="31q-IZ-suO">

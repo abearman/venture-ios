@@ -10,6 +10,8 @@
 
 @interface GroupsListTVC () <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic) BOOL isLoggedIn;
+
 @end
 
 @implementation GroupsListTVC

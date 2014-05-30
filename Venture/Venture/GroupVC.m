@@ -7,7 +7,7 @@
 #import "GroupsListTVC.h"
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface GroupVC()
+@interface GroupVC() <FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
@@ -20,14 +20,9 @@
 - (void) viewDidLoad {
     [self setUpGestureRecognizers];
     [self setUpNavigationBar];
-    [self setUpFacebook];
 }
 
-- (void) setUpFacebook {
-    FBLoginView *loginView = [[FBLoginView alloc] init];
-    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width / 2)), 50);
-    [self.centerView addSubview:loginView];
-}
+////////////////////////////////////
 
 - (void) setUpNavigationBar {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"purple-gradient"] forBarMetrics:UIBarMetricsDefault];
