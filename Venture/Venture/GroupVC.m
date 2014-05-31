@@ -8,8 +8,13 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "Person.h"
+#import <CoreData/CoreData.h>
 
 @interface GroupVC() <FBFriendPickerDelegate, ABPeoplePickerNavigationControllerDelegate>
+
+@property (nonatomic, retain) NSManagedObjectContext *context;
+@property (nonatomic, retain) UIManagedDocument *document;
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *centerView;
@@ -20,20 +25,60 @@
 @property (weak, nonatomic) IBOutlet UIButton *addMembersButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *firstName;
+@property (strong, nonatomic) NSMutableArray *contacts;
 
 @end
 
 @implementation GroupVC
 
+@synthesize contacts;
+@synthesize fetchedResultsController, context;
+
 - (void) viewDidLoad {
+    [super viewDidLoad];
     [self setUpGestureRecognizers];
     [self setUpNavigationBar];
+    [self initProperties];
+    [self setUpCoreData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveTestNotification:)
                                                  name:@"CreateGroup"
                                                object:nil];
     [self setUpAddMembersView];
+}
+
+- (void) setUpCoreData {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *documentsDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory
+                                                     inDomains:NSUserDomainMask] firstObject];
+    NSString *documentName = @"Venture Data";
+    NSURL *url = [documentsDirectory URLByAppendingPathComponent:documentName];
+    self.document = [[UIManagedDocument alloc] initWithFileURL:url];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[url path]]) {
+        [self.document openWithCompletionHandler:^(BOOL success) {
+            if (success) [self documentIsReady];
+            if (!success) NSLog(@"couldn’t open document at %@", url);
+        }];
+    } else {
+        [self.document saveToURL:url
+           forSaveOperation:UIDocumentSaveForCreating
+          completionHandler:^(BOOL success) {
+              if (success) [self documentIsReady];
+              if (!success) NSLog(@"couldn’t create document at %@", url);
+          }];
+    }
+}
+
+- (void) documentIsReady {
+    if (self.document.documentState == UIDocumentStateNormal) {
+        self.context = self.document.managedObjectContext;
+    }
+}
+
+- (void) initProperties {
+    self.contacts = [[NSMutableArray alloc] init];
 }
 
 - (IBAction)addMembers:(UIButton *)sender {
@@ -47,17 +92,34 @@
 
 - (void)peoplePickerNavigationControllerDidCancel: (ABPeoplePickerNavigationController *)peoplePicker {
     [self dismissViewControllerAnimated:YES completion:nil];
+    for (NSString *contact in self.contacts) {
+        NSLog(@"%@", contact);
+    }
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
-    NSString* name = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString *name = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSData *imageData = (__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
+    
     self.firstName.text = name;
+    [self.contacts addObject:name];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSManagedObject *friend = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.context];
+    [friend setValue:name forKey:@"name"];
+    [friend setValue:imageData forKey:@"image"];
     
-    return NO;
+    NSError *error;
+    if (![self.context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    } else {
+        NSLog(@"Saved!");
+    }
+    
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
+    return YES;
 }
 
 - (BOOL)peoplePickerNavigationController: (ABPeoplePickerNavigationController *)peoplePicker

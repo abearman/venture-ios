@@ -9,6 +9,8 @@
 #import "VentureAppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <CoreData/CoreData.h>
+#import "GroupVC.h"
 
 @implementation VentureAppDelegate
 
@@ -53,11 +55,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // If you have not added the -ObjC linker flag, you may need to uncomment the following line because
-    // Nib files require the type to have been loaded before they can do the wireup successfully.
-    // http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
-    // [FBFriendPickerViewController class];
-    
     // Override point for customization after application launch.
     [GMSServices provideAPIKey:@"AIzaSyDqJgObRde_5kO8kyMR9-bMZ7OIbWDvTQY"];
     [FBProfilePictureView class];
@@ -79,5 +76,7 @@
     NSLog(@"Will terminate");
     [FBSession.activeSession close];
 }
+
+
 
 @end

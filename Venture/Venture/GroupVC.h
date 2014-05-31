@@ -5,8 +5,14 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <CoreData/CoreData.h>
 
-@interface GroupVC : UIViewController
+@interface GroupVC : UIViewController {
+    NSFetchedResultsController *fetchedResultsController;
+    NSManagedObjectContext *managedObjectContext;
+}
+
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *personIcon;
 
